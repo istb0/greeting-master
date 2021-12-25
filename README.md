@@ -50,3 +50,6 @@
 - 12/31〆ER図作成
 - 1/31〆MVPリリース
 - 2/28〆本番リリース
+
+### 画面遷移図
+https://www.figma.com/file/rk7au8RENEd7LvVcVWUTkY/%E3%81%82%E3%81%84%E3%81%95%E3%81%A4%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%EF%BC%88%E4%BB%AE%EF%BC%89?node-id=0%3A1
