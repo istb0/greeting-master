@@ -1,0 +1,75 @@
+# This file overrides https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'spec/**/*'
+    - 'node_modules/**/*'
+  DisplayCopNames: true
+
+Layout/MultilineBlockLayout:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+Layout/LineLength:
+  Enabled: false
+
+# 変数への代入、関数呼び出し、条件文の評価基準値
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - 'Gemfile'
+    - 'config/**/*'
+    - 'spec/**/*_spec.rb'
+
+Metrics/ClassLength:
+  CountComments: false
+  Max: 300
+
+# 循環的複雑度
+Metrics/CyclomaticComplexity:
+  Max: 30
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 30
+
+# メソッド名に'set_'や'get_'を許可
+Naming/AccessorMethodName:
+  Exclude:
+    - 'app/controllers/**/*'
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+# Admin::BaseControllerのような書き方を許可
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# クラスやモジュール定義前の説明コメントを不要にする
+Style/Documentation:
+  Enabled: false
+
+# 'frozen_string_literal: true'を不要にする
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Gemの記載順を指定しない
+Bundler/OrderedGems:
+  Enabled: false
