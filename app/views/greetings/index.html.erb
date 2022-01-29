@@ -1,23 +1,19 @@
 <div class="container pt-3">
   <div class="row">
-    <div class="col-lg-10 offset-lg-1">
-      測定したい挨拶を選んでね
-    </div>
+    <h1>測定したい挨拶を選んでね</h1>
   </div>
   <div class="row">
     <div class="col-12">
-      <div class="row">
       <% if @greetings.present? %>
         <% @greetings.each do |greeting| %>
           <br>
           <%= greeting.subtitle %><br>
-          <%= greeting.phrase %><br>
+          <%= link_to greeting.phrase, greeting_path(greeting), class: 'btn btn-info' %><br>
           <br>
         <% end %>
       <% else %>
         <p>未登録</p>
       <% end %>
-      </div>
     </div>
   </div>
 </div>
