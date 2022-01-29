@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 offset-md-2">
+      <div class="card bg-info mb-3">
+        <div class="card-body">
+          <div class="row">
+            <p class= "text-start">
+              <%= @greeting.subtitle %>
+            </p>
+            <h1 class= "text-center">
+            <%= @greeting.phrase %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 offset-lg-2 text-center mb-3">
+      <h3>マスクフィルター</h3>
+      <p>音声加工によりマスク着用を想定した測定ができます。</p>
+      <div class="btn btn-dark">
+        ON
+      </div>
+      <div class="btn btn-outline-dark">
+        OFF
+      </div>
+    </div>
+    <div class="text-center">
+      <div class="btn btn-info">
+        録音開始！
+      </div>
+    </div>
+  </div>
+</div>
