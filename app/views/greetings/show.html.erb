@@ -23,10 +23,13 @@
         OFF
       </div>
     </div>
-    <div class="text-center">
-      <div class="btn btn-info">
-        録音開始！
-      </div>
+    <div class="col-lg-8 offset-lg-2 text-center mb-3">
+      <button class="record btn btn-info">録音開始！</button>
+      <button class="stop btn btn-outline-info">STOP！</button>
     </div>
+    <section class="sound-clips text-center">
+    </section>
   </div>
 </div>
+
+<%= javascript_pack_tag 'recording' %>
