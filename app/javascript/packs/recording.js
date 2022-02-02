@@ -1,106 +1,150 @@
-// set up basic variables for app
+import axios from 'axios';
+
+axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 
 const record = document.querySelector('.record');
 const stop = document.querySelector('.stop');
-const soundClips = document.querySelector('.sound-clips');
+const result = document.querySelector('.result');
 
-// disable stop button while not recording
+let audio_sample_rate = null;
+let audioContext = null;
+let audioBlob = null;
+let audioData = [];
+let bufferSize = 1024;
 
+record.disabled = false;
 stop.disabled = true;
+result.disabled = true;
 
-//main block for doing the audio recording
+//WAVに変換
+let exportWAV = function (audioData) {
+  let encodeWAV = function (samples, sampleRate) {
+    let buffer = new ArrayBuffer(44 + samples.length * 2);
+    let view = new DataView(buffer);
 
-if (navigator.mediaDevices.getUserMedia) {
-  console.log('getUserMedia supported.');
-
-  const constraints = { audio: true };
-  let chunks = [];
-
-  let onSuccess = function(stream) {
-    const mediaRecorder = new MediaRecorder(stream);
-
-    record.onclick = function() {
-      mediaRecorder.start();
-      console.log(mediaRecorder.state);
-      console.log("recorder started");
-      record.style.background = "red";
-
-      stop.disabled = false;
-      record.disabled = true;
-    }
-
-    stop.onclick = function() {
-      mediaRecorder.stop();
-      console.log(mediaRecorder.state);
-      console.log("recorder stopped");
-      record.style.background = "";
-      record.style.color = "";
-      // mediaRecorder.requestData();
-
-      stop.disabled = true;
-      record.disabled = false;
-    }
-
-    mediaRecorder.onstop = function(e) {
-      console.log("data available after MediaRecorder.stop() called.");
-
-      const clipName = prompt('Enter a name for your sound clip?','My unnamed clip');
-
-      const clipContainer = document.createElement('article');
-      const clipLabel = document.createElement('p');
-      const audio = document.createElement('audio');
-      const deleteButton = document.createElement('button');
-
-      clipContainer.classList.add('clip');
-      audio.setAttribute('controls', '');
-      deleteButton.textContent = 'Delete';
-      deleteButton.className = 'delete';
-
-      if(clipName === null) {
-        clipLabel.textContent = 'My unnamed clip';
-      } else {
-        clipLabel.textContent = clipName;
+    let writeString = function (view, offset, string) {
+      for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
       }
+    };
 
-      clipContainer.appendChild(audio);
-      clipContainer.appendChild(clipLabel);
-      clipContainer.appendChild(deleteButton);
-      soundClips.appendChild(clipContainer);
-
-      audio.controls = true;
-      const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-      chunks = [];
-      const audioURL = window.URL.createObjectURL(blob);
-      audio.src = audioURL;
-      console.log("recorder stopped");
-
-      deleteButton.onclick = function(e) {
-        let evtTgt = e.target;
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+    let floatTo16BitPCM = function (output, offset, input) {
+      for (let i = 0; i < input.length; i++ , offset += 2) {
+        let s = Math.max(-1, Math.min(1, input[i]));
+        output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
       }
+    };
 
-      clipLabel.onclick = function() {
-        const existingName = clipLabel.textContent;
-        const newClipName = prompt('Enter a new name for your sound clip?');
-        if(newClipName === null) {
-          clipLabel.textContent = existingName;
-        } else {
-          clipLabel.textContent = newClipName;
-        }
+    writeString(view, 0, 'RIFF');  // RIFFヘッダ
+    view.setUint32(4, 32 + samples.length * 2, true); // これ以降のファイルサイズ
+    writeString(view, 8, 'WAVE'); // WAVEヘッダ
+    writeString(view, 12, 'fmt '); // fmtチャンク
+    view.setUint32(16, 16, true); // fmtチャンクのバイト数
+    view.setUint16(20, 1, true); // フォーマットID
+    view.setUint16(22, 1, true); // チャンネル数
+    view.setUint32(24, sampleRate, true); // サンプリングレート
+    view.setUint32(28, sampleRate * 2, true); // データ速度
+    view.setUint16(32, 2, true); // ブロックサイズ
+    view.setUint16(34, 16, true); // サンプルあたりのビット数
+    writeString(view, 36, 'data'); // dataチャンク
+    view.setUint32(40, samples.length * 2, true); // 波形データのバイト数
+    floatTo16BitPCM(view, 44, samples); // 波形データ
+
+    return view;
+  };
+
+  let mergeBuffers = function (audioData) {
+    let sampleLength = 0;
+    for (let i = 0; i < audioData.length; i++) {
+      sampleLength += audioData[i].length;
+    }
+    let samples = new Float32Array(sampleLength);
+    let sampleIdx = 0;
+    for (let i = 0; i < audioData.length; i++) {
+      for (let j = 0; j < audioData[i].length; j++) {
+        samples[sampleIdx] = audioData[i][j];
+        sampleIdx++;
       }
     }
+    return samples;
+  };
 
-    mediaRecorder.ondataavailable = function(e) {
-      chunks.push(e.data);
-    }
+  let dataview = encodeWAV(mergeBuffers(audioData), audio_sample_rate);
+  audioBlob = new Blob([dataview], { type: 'audio/wav' });
+  console.log(dataview);
+
+  let myURL = window.URL || window.webkitURL;
+  let url = myURL.createObjectURL(audioBlob);
+  return url;
+};
+
+// save audio data
+const onAudioProcess = function (e) {
+  const input = e.inputBuffer.getChannelData(0);
+  const output = e.outputBuffer.getChannelData(0);
+  for (let i = 0; i < input.length; i++) output[i] = input[i];
+  const bufferData = new Float32Array(bufferSize);
+  for (let i = 0; i < bufferSize; i++) {
+    bufferData[i] = input[i];
   }
 
-  let onError = function(err) {
-    console.log('The following error occured: ' + err);
-  }
+  audioData.push(bufferData);
+};
 
-  navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+//getusermedia
+let handleSuccess = function (stream) {
+  audioContext = new AudioContext();
+  audio_sample_rate = audioContext.sampleRate;
+  let scriptProcessor = audioContext.createScriptProcessor(bufferSize, 1, 1);
+  let mediastreamsource = audioContext.createMediaStreamSource(stream);
+  mediastreamsource.connect(scriptProcessor);
+  scriptProcessor.onaudioprocess = onAudioProcess;
+  scriptProcessor.connect(audioContext.destination);
+  console.log('record start');
+  setTimeout(function () {
+    if (stop.disabled == false) {
+      stop.click();
+      console.log("10 sec");
+    }
+  }, 10000);
+};
 
-} else {
-   console.log('getUserMedia not supported on your browser!');
-}
+// 録音開始
+record.onclick = function () {
+  navigator.mediaDevices.getUserMedia({
+    video: false,
+    audio: true
+  })
+  .then((handleSuccess));
+  record.disabled = true;
+  stop.disabled = false;
+};
+
+//録音停止
+stop.onclick = function() {
+  exportWAV(audioData);
+  audioContext.close().then(function () {
+    stop.disabled = true;
+    result.disabled = false;
+  });
+  console.log(audioBlob);
+};
+
+//録音音声をサーバーへ送信
+result.onclick = function() {
+  let formData = new FormData();
+  formData.append('voice', audioBlob)
+  axios.post('/results',  formData, {
+    headers: {
+      'content-type': 'multipart/form-data',
+    }
+  })
+  .then(response => {
+    let data = response.data
+    window.location.href = data.url
+  })
+  .catch(error => {
+    console.log(error.response)
+  })
+};
