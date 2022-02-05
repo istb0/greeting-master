@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root 'top#index'
 
   resources :greetings, only: %i[index show]
+  resources :results, only: %i[create]
 end

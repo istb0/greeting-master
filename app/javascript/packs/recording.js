@@ -94,7 +94,7 @@ const onAudioProcess = function (e) {
 
 //getusermedia
 let handleSuccess = function (stream) {
-  audioContext = new AudioContext();
+  audioContext = new AudioContext({ sampleRate: 11025 });
   audio_sample_rate = audioContext.sampleRate;
   let scriptProcessor = audioContext.createScriptProcessor(bufferSize, 1, 1);
   let mediastreamsource = audioContext.createMediaStreamSource(stream);
@@ -112,10 +112,15 @@ let handleSuccess = function (stream) {
 
 // 録音開始
 record.onclick = function () {
-  navigator.mediaDevices.getUserMedia({
-    video: false,
-    audio: true
-  })
+  let constraints = {
+    audio: {
+      echoChancellation: true,
+      echoCancellationType: 'system',
+      noiseSuppression: false
+    },
+    video: false
+  }
+  navigator.mediaDevices.getUserMedia(constraints)
   .then((handleSuccess));
   record.disabled = true;
   stop.disabled = false;
