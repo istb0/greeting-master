@@ -26,7 +26,10 @@
     <div class="col-lg-8 offset-lg-2 text-center mb-3">
       <button class="record btn btn-outline-info">録音開始！</button>
       <button class="stop btn btn-outline-info">STOP！</button>
-      <button class="result btn btn-outline-info">結果！</button>
+      <%= form_with url: result_path do |f| %>
+        <%= f.hidden_field :greeting_id, value: @greeting.id %>
+        <%= f.submit "結果！", class: "result btn btn-outline-info" %>
+      <% end %>
     </div>
   </div>
 </div>

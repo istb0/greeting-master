@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 offset-md-2">
+      <div class="card bg-info mb-3">
+        <div class="card-body">
+          <div class="row">
+            <p class= "text-start">
+              <%= @greeting.subtitle %>
+            </p>
+            <h1 class= "text-center">
+            <%= @greeting.phrase %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 offset-lg-2 text-center mb-3">
+      結果は...
+      <div><%= @score.round %>点です！</div>
+    </div>
+  </div>
+</div>

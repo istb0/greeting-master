@@ -129,25 +129,32 @@ record.onclick = function () {
 //録音停止
 stop.onclick = function() {
   exportWAV(audioData);
-  audioContext.close().then(function () {
+  audioContext.close()
+  .then(function () {
     stop.disabled = true;
     result.disabled = false;
   });
   console.log(audioBlob);
-};
-
-//録音音声をサーバーへ送信
-result.onclick = function() {
   let formData = new FormData();
   formData.append('voice', audioBlob)
-  axios.post('/results',  formData, {
+  axios.post('/analyse',  formData, {
     headers: {
       'content-type': 'multipart/form-data',
     }
   })
   .then(response => {
-    let data = response.data
-    window.location.href = data.url
+    let data = response.data.body
+    console.log(data)
+    //window.location.href = data.url
+    function make_hidden(name, value, formname){
+      var q = document.createElement('input');
+      q.type = 'hidden';
+      q.name = name;
+      q.value = value;
+        if (formname){ document.forms[formname].appendChild(q); }
+      else{ document.forms[0].appendChild(q); }
+    }
+    make_hidden('data', data)
   })
   .catch(error => {
     console.log(error.response)
