@@ -15,7 +15,31 @@
     </div>
     <div class="col-lg-8 offset-lg-2 text-center mb-3">
       結果は...
-      <div><%= @score.round %>点です！</div>
+      <div><%= @score %>点です！</div>
+      <div>
+        <% if @score >= 70 %>
+          最っ高に気持ちの良い挨拶ですね！あなたは周りに幸せを運んでいます。<br>
+          <% if @energy >= @joy %>
+            元気度が非常に高く評価されています。パワー！！！
+          <% elsif @energy %>
+            喜びの数値が高く出ています。ハッピーハッピー
+          <% end %>
+        <% elsif @score < 70 && @score >= 50 %>
+          いよっ挨拶上手！<br>
+          <% if @anger >= @sorrow %>
+            ちょっとだけ怒りの感情も出ているので、気をつけてね〜〜
+          <% else %>
+            すこーしだけ悲しげな感じになってます。気持ち明るめでいくと最高です！
+          <% end %>
+        <% else %>
+          あららら、ちょっと元気ない感じに聞こえてしまってますよ。。<br>
+          <% if @anger >= @sorrow %>
+            めっちゃ怒ってますやん。嫌われても致し方なし。
+          <% else %>
+            え、なんか悲しいことあった？？
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

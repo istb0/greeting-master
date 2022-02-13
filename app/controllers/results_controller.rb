@@ -25,7 +25,7 @@ class ResultsController < ApplicationController
     @joy = hash['joy']
     @sorrow = hash['sorrow']
     @energy = hash['energy']
-    @score = 50 + @calm * 0.2 + (@joy + @energy) * 0.4 - (@anger + @sorrow) * 0.5
+    @score = (50 + @calm * 0.2 + (@joy + @energy) * 0.4 - (@anger + @sorrow) * 0.5).round
   end
 
 #  private
