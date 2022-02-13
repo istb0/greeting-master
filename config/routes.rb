@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   root 'top#index'
 
   resources :greetings, only: %i[index show]
+  post 'analyse', to: 'results#analyse'
+  get 'result', to: 'results#show'
+  post 'result', to: 'results#show'
 end
