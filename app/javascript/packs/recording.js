@@ -7,6 +7,7 @@ const record = document.querySelector('.record');
 const stop = document.querySelector('.stop');
 const result = document.querySelector('.result');
 
+let stream = null;
 let audio_sample_rate = null;
 let audioContext = null;
 let audioBlob = null;
@@ -105,9 +106,9 @@ let handleSuccess = function (stream) {
   setTimeout(function () {
     if (stop.disabled == false) {
       stop.click();
-      console.log("10 sec");
+      console.log("5 sec");
     }
-  }, 10000);
+  }, 5000);
 };
 
 // 録音開始
@@ -121,9 +122,15 @@ record.onclick = function () {
     video: false
   }
   navigator.mediaDevices.getUserMedia(constraints)
-  .then((handleSuccess));
-  record.disabled = true;
-  stop.disabled = false;
+  .then(function (audio) {
+    stream = audio;
+    handleSuccess(stream);
+    record.disabled = true;
+    stop.disabled = false;
+  })
+  .catch(function (error) {
+    console.error('mediaDevice.getUserMedia() error:', error);
+  })
 };
 
 //録音停止
