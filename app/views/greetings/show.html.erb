@@ -1,34 +1,26 @@
-<div class="container">
+<div class="container pt-3 pb-3">
   <div class="row">
-    <div class="col-md-4 offset-md-2">
-      <div class="card bg-info mb-3">
+    <div class="col-md-4 offset-md-2 mb-3">
+      <div class="card text-dark bg-info">
         <div class="card-body">
-          <div class="row">
-            <p class= "text-start">
-              <%= @greeting.subtitle %>
-            </p>
-            <h1 class= "text-center">
-            <%= @greeting.phrase %>
-          </div>
+          <p><%= @greeting.subtitle %></p>
+          <h1 class="text-center"><%= @greeting.phrase %></h1>
+          <p class="text-end">を測定する</p>
         </div>
       </div>
     </div>
-    <div class="col-lg-8 offset-lg-2 text-center mb-3">
+    <div class="col-md-8 offset-md-2 text-center mb-3">
       <h3>マスクフィルター</h3>
-      <p>音声加工によりマスク着用を想定した測定ができます。</p>
-      <div class="btn btn-dark">
-        ON
-      </div>
-      <div class="btn btn-outline-dark">
-        OFF
-      </div>
+      <div class="btn btn-outline-dark">ON</div>
+      <div class="btn btn-outline-dark">OFF</div>
+      <p class="pt-2">※音声加工によりマスク着用を想定した測定ができます。</p>
     </div>
-    <div class="col-lg-8 offset-lg-2 text-center mb-3">
-      <button class="record btn btn-outline-info">録音開始！</button>
-      <button class="stop btn btn-outline-info">STOP！</button>
+    <div class="col-md-8 offset-md-2 text-center mb-3">
+      <button class="record btn btn-outline-info">録音START</button>
+      <button class="stop btn btn-outline-info">録音STOP</button>
       <%= form_with url: result_path do |f| %>
         <%= f.hidden_field :greeting_id, value: @greeting.id %>
-        <%= f.submit "結果！", class: "result btn btn-outline-info" %>
+        <%= f.submit "結果をみる", class: "result btn btn-outline-info mt-3" %>
       <% end %>
     </div>
   </div>
