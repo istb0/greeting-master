@@ -1,15 +1,24 @@
-<div class="container pt-3">
+<div class="container pt-3 pb-3">
   <div class="row">
-    <h1>測定したい挨拶を選んでね</h1>
+    <div class="col-md-8 offset-md-2 mb-3">
+      <h3>〜測定したい挨拶を選んでね〜</h3>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-12">
+  <div class="col-md-8 offset-md-2 mb-3">
+    <div class="row row-cols-1 row-cols-sm-2 g-3">
       <% if @greetings.present? %>
         <% @greetings.each do |greeting| %>
-          <br>
-          <%= greeting.subtitle %><br>
-          <%= link_to greeting.phrase, greeting_path(greeting), class: 'btn btn-info' %><br>
-          <br>
+          <div class="col">
+            <%= link_to greeting_path(greeting), class: 'text-decoration-none' do %>
+              <div class="card text-dark bg-info">
+                <div class="card-body">
+                  <p><%= greeting.subtitle %></p>
+                  <h1 class="text-center"><%= greeting.phrase %></h1>
+                  <p class="text-end">を測定する</p>
+                </div>
+              </div>
+            <% end %>
+          </div>
         <% end %>
       <% else %>
         <p>未登録</p>
