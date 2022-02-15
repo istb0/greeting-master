@@ -110,6 +110,8 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
+    meta-tags (2.16.0)
+      actionpack (>= 3.2.0, < 7.1)
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
@@ -283,6 +285,7 @@ DEPENDENCIES
   faraday-multipart
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  meta-tags
   pg (~> 1.1)
   pry-byebug
   pry-rails
