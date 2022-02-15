@@ -1,118 +1,66 @@
 import axios from 'axios';
-
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 
-const record = document.querySelector('.record');
+const get = document.querySelector('.get');
+const start = document.querySelector('.start');
 const stop = document.querySelector('.stop');
 const result = document.querySelector('.result');
 
-let stream = null;
-let audio_sample_rate = null;
-let audioContext = null;
-let audioBlob = null;
-let audioData = [];
-let bufferSize = 1024;
-
-record.disabled = false;
+get.disabled = false;
+start.disabled = true;
 stop.disabled = true;
 result.disabled = true;
 
-//WAVに変換
-let exportWAV = function (audioData) {
-  let encodeWAV = function (samples, sampleRate) {
-    let buffer = new ArrayBuffer(44 + samples.length * 2);
-    let view = new DataView(buffer);
+let audioStream = null;
+let source = null;
+let processor = null;
+let audioBlob = null;
+let context = null;
 
-    let writeString = function (view, offset, string) {
-      for (let i = 0; i < string.length; i++) {
-        view.setUint8(offset + i, string.charCodeAt(i));
-      }
-    };
+let audioData = []; // 録音データ
+let bufferSize =1024;
 
-    let floatTo16BitPCM = function (output, offset, input) {
-      for (let i = 0; i < input.length; i++ , offset += 2) {
-        let s = Math.max(-1, Math.min(1, input[i]));
-        output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-      }
-    };
+//録音部分
+let handleSuccess = (audioStream) => {
 
-    writeString(view, 0, 'RIFF');  // RIFFヘッダ
-    view.setUint32(4, 32 + samples.length * 2, true); // これ以降のファイルサイズ
-    writeString(view, 8, 'WAVE'); // WAVEヘッダ
-    writeString(view, 12, 'fmt '); // fmtチャンク
-    view.setUint32(16, 16, true); // fmtチャンクのバイト数
-    view.setUint16(20, 1, true); // フォーマットID
-    view.setUint16(22, 1, true); // チャンネル数
-    view.setUint32(24, sampleRate, true); // サンプリングレート
-    view.setUint32(28, sampleRate * 2, true); // データ速度
-    view.setUint16(32, 2, true); // ブロックサイズ
-    view.setUint16(34, 16, true); // サンプルあたりのビット数
-    writeString(view, 36, 'data'); // dataチャンク
-    view.setUint32(40, samples.length * 2, true); // 波形データのバイト数
-    floatTo16BitPCM(view, 44, samples); // 波形データ
+  //EmpathAPI用にサンプリングレートを固定
+  context = new AudioContext({ sampleRate: 11025 });
+  console.log('sampleRate:', context.sampleRate);
 
-    return view;
-  };
+  //MediaStreamAudioSourceNodeオブジェクトを生成
+	source = context.createMediaStreamSource(audioStream);
 
-  let mergeBuffers = function (audioData) {
-    let sampleLength = 0;
-    for (let i = 0; i < audioData.length; i++) {
-      sampleLength += audioData[i].length;
-    }
-    let samples = new Float32Array(sampleLength);
-    let sampleIdx = 0;
-    for (let i = 0; i < audioData.length; i++) {
-      for (let j = 0; j < audioData[i].length; j++) {
-        samples[sampleIdx] = audioData[i][j];
-        sampleIdx++;
-      }
-    }
-    return samples;
-  };
+	//処理を行うプロセッサーを出力先とするために作成する
+	processor = context.createScriptProcessor(bufferSize,1,1);
+	//直接destinationに繋ぐとスピーカーからそのまま音が出てしまう
+	source.connect(processor);
+	processor.connect(context.destination);
 
-  let dataview = encodeWAV(mergeBuffers(audioData), audio_sample_rate);
-  audioBlob = new Blob([dataview], { type: 'audio/wav' });
-  console.log(dataview);
+	//1024bitのバッファサイズに達するごとにaudioDataにデータを追加する
+	processor.onaudioprocess = (e) => {
 
-  let myURL = window.URL || window.webkitURL;
-  let url = myURL.createObjectURL(audioBlob);
-  return url;
-};
+		let input = e.inputBuffer.getChannelData(0);
+		let bufferData = new Float32Array(bufferSize);
+			for (let i = 0; i < bufferSize; i++) {
+				bufferData[i] = input[i];
+			}
+		audioData.push(bufferData);
+	};
 
-// save audio data
-const onAudioProcess = function (e) {
-  const input = e.inputBuffer.getChannelData(0);
-  const output = e.outputBuffer.getChannelData(0);
-  for (let i = 0; i < input.length; i++) output[i] = input[i];
-  const bufferData = new Float32Array(bufferSize);
-  for (let i = 0; i < bufferSize; i++) {
-    bufferData[i] = input[i];
-  }
-
-  audioData.push(bufferData);
-};
-
-//getusermedia
-let handleSuccess = function (stream) {
-  audioContext = new AudioContext({ sampleRate: 11025 });
-  audio_sample_rate = audioContext.sampleRate;
-  let scriptProcessor = audioContext.createScriptProcessor(bufferSize, 1, 1);
-  let mediastreamsource = audioContext.createMediaStreamSource(stream);
-  mediastreamsource.connect(scriptProcessor);
-  scriptProcessor.onaudioprocess = onAudioProcess;
-  scriptProcessor.connect(audioContext.destination);
-  console.log('record start');
-  setTimeout(function () {
+  //5秒後に録音を停止
+	setTimeout( () => {
     if (stop.disabled == false) {
+      console.log("5 sec passed");
       stop.click();
-      console.log("5 sec");
     }
-  }, 5000);
+	}, 5000);
 };
 
-// 録音開始
-record.onclick = function () {
+//マイクデバイスの利用許可の確認を行う
+get.addEventListener("click", () => {
+  get.disabled = true;
+  start.disabled = false;
   let constraints = {
     audio: {
       echoChancellation: true,
@@ -122,26 +70,36 @@ record.onclick = function () {
     video: false
   }
   navigator.mediaDevices.getUserMedia(constraints)
-  .then(function (audio) {
-    stream = audio;
-    handleSuccess(stream);
-    record.disabled = true;
-    stop.disabled = false;
+  .then((stream) => {
+    audioStream = stream;
+    console.log('supported');
   })
-  .catch(function (error) {
-    console.error('mediaDevice.getUserMedia() error:', error);
+  .catch((error) => {
+    console.error('error:', error);
   })
-};
+});
 
-//録音停止
-stop.onclick = function() {
+//録音START
+start.addEventListener("click", () => {
+  console.log('record start');
+  start.disabled = true;
+  stop.disabled = false;
+  handleSuccess(audioStream);
+});
+
+//録音STOP
+stop.addEventListener("click", () => {
+  console.log('record stop');
+
+  //接続の停止
+  processor.disconnect();
+  source.disconnect();
+  context.close();
+
+  //取得した音声データをwavファイルに変換する
   exportWAV(audioData);
-  audioContext.close()
-  .then(function () {
-    stop.disabled = true;
-    result.disabled = false;
-  });
-  console.log(audioBlob);
+
+  //WAV音声データをバックエンドに送信
   let formData = new FormData();
   formData.append('voice', audioBlob)
   axios.post('/analyse',  formData, {
@@ -149,21 +107,94 @@ stop.onclick = function() {
       'content-type': 'multipart/form-data',
     }
   })
+  //バックエンドからのレスポンスをformに格納
   .then(response => {
     let data = response.data.body
     console.log(data)
     //window.location.href = data.url
-    function make_hidden(name, value, formname){
-      var q = document.createElement('input');
-      q.type = 'hidden';
-      q.name = name;
-      q.value = value;
-        if (formname){ document.forms[formname].appendChild(q); }
-      else{ document.forms[0].appendChild(q); }
-    }
-    make_hidden('data', data)
+    
+    let q = document.createElement('input');
+    q.type = 'hidden';
+    q.name = 'data';
+    q.value = data;
+    document.forms[0].appendChild(q);
+
+    stop.disabled = true;
+    result.disabled = false;
   })
   .catch(error => {
     console.log(error.response)
   })
+});
+
+//WAVに変換
+let exportWAV = (audioData) => {
+
+	let encodeWAV = (samples, sampleRate) =>{
+		let buffer = new ArrayBuffer(44 + samples.length * 2);
+		let view = new DataView(buffer);
+
+		let writeString = (view, offset, string) => {
+			for (let i = 0; i < string.length; i++){
+				view.setUint8(offset + i, string.charCodeAt(i));
+			}
+		};
+
+		let floatTo16BitPCM = (output, offset, input) => {
+			for (let i = 0; i < input.length; i++, offset += 2){
+				let s = Math.max(-1, Math.min(1, input[i]));
+				output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+			}
+		};
+
+		writeString(view, 0, 'RIFF');  // RIFFヘッダ
+		view.setUint32(4, 32 + samples.length * 2, true); // これ以降のファイルサイズ
+		writeString(view, 8, 'WAVE'); // WAVEヘッダ
+		writeString(view, 12, 'fmt '); // fmtチャンク
+		view.setUint32(16, 16, true); // fmtチャンクのバイト数
+		view.setUint16(20, 1, true); // フォーマットID
+		view.setUint16(22, 1, true); // チャンネル数
+		view.setUint32(24, sampleRate, true); // サンプリングレート
+		view.setUint32(28, sampleRate * 2, true); // データ速度
+		view.setUint16(32, 2, true); // ブロックサイズ
+		view.setUint16(34, 16, true); // サンプルあたりのビット数
+		writeString(view, 36, 'data'); // dataチャンク
+		view.setUint32(40, samples.length * 2, true); // 波形データのバイト数
+		floatTo16BitPCM(view, 44, samples); // 波形データ
+
+		return view;
+	};
+
+	let mergeBuffers = (audioData) => {
+		let sampleLength = 0;
+			for (let i = 0; i < audioData.length; i++) {
+				sampleLength += audioData[i].length;
+			}
+		let samples = new Float32Array(sampleLength);
+		let sampleIdx = 0;
+			for (let i = 0; i < audioData.length; i++) {
+				for (let j = 0; j < audioData[i].length; j++) {
+					samples[sampleIdx] = audioData[i][j];
+					sampleIdx++;
+				}
+			}
+		return samples;
+	};
+
+	let dataview = encodeWAV(mergeBuffers(audioData), context.sampleRate);
+  // console.log(dataview);
+	//できあがったwavデータをBlobにする
+	audioBlob = new Blob([dataview], { type: 'audio/wav' });
+  console.log(audioBlob);
+
+	// let downloadLink = document.getElementById('download');
+	// //BlobへのアクセスURLをダウンロードリンクに設定する
+	// downloadLink.href = URL.createObjectURL(audioBlob);
+	// downloadLink.download = 'test.wav';
+
+	let audio = document.getElementById('audio');
+	//オーディオ要素にもBlobをリンクする
+	audio.src = URL.createObjectURL(audioBlob);
+	//音声を再生する
+	//audio.play();
 };
