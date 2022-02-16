@@ -25,12 +25,11 @@ class ResultsController < ApplicationController
     @joy = hash['joy']
     @sorrow = hash['sorrow']
     @energy = hash['energy']
-    @score = (50 + @calm * 0.2 + (@joy + @energy) * 0.4 - (@anger + @sorrow) * 0.5).round
+    @score = (@calm*0.1 + @joy*0.95 + @energy*0.95 - @anger*0.7 - @sorrow*0.3).round
+    if score < 0
+      @score = 0
+    else
+      @score = score
+    end
   end
-
-#  private
-#
-#  def result_params
-#    params.permit(:voice, :data)
-#  end
 end
