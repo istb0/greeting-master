@@ -25,7 +25,7 @@ class ResultsController < ApplicationController
     @joy = hash['joy']
     @sorrow = hash['sorrow']
     @energy = hash['energy']
-    @score = (@calm*0.1 + @joy*0.95 + @energy*0.95 - @anger*0.7 - @sorrow*0.3).round
+    score = (@calm*0.1 + @joy*0.95 + @energy*0.95 - @anger*0.7 - @sorrow*0.3).round
     if score < 0
       @score = 0
     else

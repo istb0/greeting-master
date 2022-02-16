@@ -110,9 +110,9 @@ stop.addEventListener("click", () => {
   //バックエンドからのレスポンスをformに格納
   .then(response => {
     let data = response.data.body
-    console.log(data)
+    //console.log(data)
     //window.location.href = data.url
-    
+
     let q = document.createElement('input');
     q.type = 'hidden';
     q.name = 'data';
@@ -185,7 +185,7 @@ let exportWAV = (audioData) => {
   // console.log(dataview);
 	//できあがったwavデータをBlobにする
 	audioBlob = new Blob([dataview], { type: 'audio/wav' });
-  console.log(audioBlob);
+  //console.log(audioBlob);
 
 	// let downloadLink = document.getElementById('download');
 	// //BlobへのアクセスURLをダウンロードリンクに設定する
