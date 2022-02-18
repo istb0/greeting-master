@@ -10,36 +10,36 @@
     </div>
     <div class="col-md-8 offset-md-2 text-center mb-2">
       <p>結果は...　　　　　　　</p>
-      <p class="fs-1 fw-bold"><%= @score %></p>
+      <p class="fs-1 fw-bold"><%= @result.score %></p>
       <p>　　　　　　　点です！</p>
     </div>
     <div class="col-md-8 offset-md-2 text-center mb-4">
-      <% if @score >= 70 %>
+      <% if @result.score >= 70 %>
         最っ高に気持ちの良い挨拶ですね！あなたは周りに幸せを運んでいます。<br>
-        <% if @energy >= @joy %>
+        <% if @result.energy >= @result.joy %>
           元気度が非常に高く評価されています。パワー！！！
-        <% elsif @energy %>
+        <% elsif @result.energy %>
           喜びの数値が高く出ています。ハッピーハッピー
         <% end %>
-      <% elsif @score < 70 && @score >= 50 %>
+      <% elsif @result.score < 70 && @result.score >= 50 %>
         いよっ挨拶上手！<br>
-        <% if @anger == 0 && @sorrow == 0 %>
+        <% if @result.anger == 0 && @result.sorrow == 0 %>
           負の感情が一切出ていない。仏。
-        <% elsif @anger > @sorrow %>
+        <% elsif @result.anger > @result.sorrow %>
           ちょっとだけ怒りの感情も出ているので、気をつけてね〜〜
-        <% elsif @anger < @sorrow %>
+        <% elsif @result.anger < @result.sorrow %>
           すこーしだけ悲しげな感じになってます。気持ち明るめでいくと最高です！
         <% end %>
-      <% elsif @score < 50 && @score >= 30 %>
+      <% elsif @result.score < 50 && @result.score >= 30 %>
         うーん、あと一歩<br>
-        <% if @anger >= @sorrow %>
+        <% if @result.anger >= @result.sorrow %>
           怒りが強めです。一旦深呼吸を
         <% else %>
           悲しみがすごい。心配になります。
         <% end %>
       <% else %>
         ちょっとこれはまずいです<br>
-        <% if @anger >= @sorrow %>
+        <% if @result.anger >= @result.sorrow %>
           めっちゃ怒ってますよね。嫌われても致し方なし。
         <% else %>
           悲しみがすごい。心配になります。

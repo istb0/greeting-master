@@ -4,6 +4,7 @@
       <div class="card text-dark bg-info">
         <div class="card-body">
           <p><%= @greeting.subtitle %></p>
+          <input type="hidden" id="greeting_id" value="<%= @greeting.id %>">
           <h1 class="text-center"><%= @greeting.phrase %></h1>
           <p class="text-end">を測定する</p>
         </div>
@@ -24,12 +25,6 @@
       </div>
       <div class="col">
         <audio id="audio" controls></audio>
-      </div>
-      <div class="col">
-        <%= form_with url: result_path do |f| %>
-          <%= f.hidden_field :greeting_id, value: @greeting.id %>
-          <%= f.submit '結果をみる', class: 'result btn btn-outline-info mt-2' %>
-        <% end %>
       </div>
     </div>
   </div>
