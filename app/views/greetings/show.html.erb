@@ -10,22 +10,28 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-md-8 offset-md-2 text-center mb-3">
       <div class="col">
         <h3>マスクフィルター</h3>
         <div class="btn btn-outline-dark">ON</div>
         <div class="btn btn-outline-dark">OFF</div>
-        <p class="pt-2">※音声加工によりマスク着用を想定した測定ができます。(本リリース時に実装予定)</p>
-        <p>↓ ↓ ↓</p>
+        <p class="pt-2">※音声加工によりマスク着用を想定した測定ができます。</p>
       </div>
-      <div class="col mb-2">
-        <button class="get btn btn-outline-info">①マイク許可</button>
-        <button class="start btn btn-outline-info">②録音START</button>
-        <button class="stop btn btn-outline-info">③録音STOP</button>
-      </div>
-      <div class="col">
-        <audio id="audio" controls></audio>
-      </div>
+    </div>
+  </div>
+  <div class="row mt-5 mb-5">
+    <span class="record fa-layers h-auto">
+      <i class="fa-regular fa-circle text-info fa-8x"></i>
+      <i class="fa-solid fa-microphone text-info fa-6x"></i>
+      <i class="fa-solid fa-mask-face text-black fa-3x"></i>
+      <button><i class="fa-solid fa-circle text-white-50 fa-8x"></i></button>
+    </span>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-8 offset-md-2 text-center mt-5 mb-3">
+      <audio id="audio" controls></audio>
     </div>
   </div>
 </div>
