@@ -1,6 +1,6 @@
 class ResultsController < ApplicationController
 
-  def analyse
+  def create
     connection = Faraday.new(Rails.application.credentials[:empath][:endpoint]) do |f|
       f.request :multipart
       f.request :url_encoded
@@ -14,22 +14,30 @@ class ResultsController < ApplicationController
       }
     end
     p response.body
-    render json: response
+
+    hash = JSON.parse(response.body)
+    calm = hash['calm']
+    anger = hash['anger']
+    joy = hash['joy']
+    sorrow = hash['sorrow']
+    energy = hash['energy']
+    score = (50 + 0.5 * (joy + energy - anger - sorrow)).round
+    @result = Result.new(
+      score: score,
+      calm: calm,
+      anger: anger,
+      joy: joy,
+      sorrow: sorrow,
+      energy: energy,
+      greeting_id: params[:greeting_id]
+    )
+    if @result.save
+      render json: { url: result_path(@result) }
+    end
   end
 
   def show
-    @greeting = Greeting.find(params[:greeting_id])
-    hash = JSON.parse(params[:data])
-    @calm = hash['calm']
-    @anger = hash['anger']
-    @joy = hash['joy']
-    @sorrow = hash['sorrow']
-    @energy = hash['energy']
-    score = (@calm*0.1 + @joy*0.95 + @energy*0.95 - @anger*0.7 - @sorrow*0.3).round
-    if score < 0
-      @score = 0
-    else
-      @score = score
-    end
+    @result = Result.find(params[:id])
+    @greeting = Greeting.find(@result.greeting_id)
   end
 end

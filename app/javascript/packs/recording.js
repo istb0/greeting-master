@@ -5,12 +5,12 @@ axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token'
 const get = document.querySelector('.get');
 const start = document.querySelector('.start');
 const stop = document.querySelector('.stop');
-const result = document.querySelector('.result');
+//const result = document.querySelector('.result');
 
 get.disabled = false;
 start.disabled = true;
 stop.disabled = true;
-result.disabled = true;
+//result.disabled = true;
 
 let audioStream = null;
 let source = null;
@@ -101,27 +101,34 @@ stop.addEventListener("click", () => {
 
   //WAV音声データをバックエンドに送信
   let formData = new FormData();
+	const greeting_id = document.getElementById('greeting_id').value;
   formData.append('voice', audioBlob)
-  axios.post('/analyse',  formData, {
+	formData.append('greeting_id', greeting_id);
+	debugger;
+  axios.post(`/greetings/${greeting_id}/results`,  formData, {
     headers: {
       'content-type': 'multipart/form-data',
     }
   })
-  //バックエンドからのレスポンスをformに格納
   .then(response => {
-    let data = response.data.body
-    //console.log(data)
-    //window.location.href = data.url
-
-    let q = document.createElement('input');
-    q.type = 'hidden';
-    q.name = 'data';
-    q.value = data;
-    document.forms[0].appendChild(q);
-
-    stop.disabled = true;
-    result.disabled = false;
+    //console.log(response.data)
+    window.location.href = response.data.url
   })
+  //バックエンドからのレスポンスをformに格納
+	//.then(response => {
+  //  let data = response.data.body
+	////console.log(data)
+  ////window.location.href = data.url
+	//
+  //  let q = document.createElement('input');
+  //  q.type = 'hidden';
+  //  q.name = 'data';
+  //  q.value = data;
+  //  document.forms[0].appendChild(q);
+	//
+  //  stop.disabled = true;
+  //  result.disabled = false;
+  //})
   .catch(error => {
     console.log(error.response)
   })
