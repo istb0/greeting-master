@@ -15,18 +15,20 @@
     <div class="col-md-8 offset-md-2 text-center mb-3">
       <div class="col">
         <h3>マスクフィルター</h3>
-        <div class="btn btn-outline-dark">ON</div>
-        <div class="btn btn-outline-dark">OFF</div>
+        <div id="buttons">
+          <button class="btn btn-outline-dark" id="maskOn">ON</button>
+          <button class="btn btn-outline-dark" id="maskOff">OFF</button>
+        </div>
         <p class="pt-2">※音声加工によりマスク着用を想定した測定ができます。</p>
       </div>
     </div>
   </div>
   <div class="row mt-5 mb-5">
-    <span class="record fa-layers h-auto">
+    <span class="record fa-layers" id="mic">
       <i class="fa-regular fa-circle text-info fa-8x"></i>
       <i class="fa-solid fa-microphone text-info fa-6x"></i>
-      <i class="fa-solid fa-mask-face text-black fa-3x"></i>
-      <button><i class="fa-solid fa-circle text-white-50 fa-8x"></i></button>
+      <i class="fa-solid fa-mask-face text-black fa-3x" id="mask"></i>
+      <i class="fa-solid fa-circle text-white-50 fa-8x" style="cursor: pointer;"></i>
     </span>
   </div>
   <div class="row mt-5">

@@ -11,6 +11,7 @@ let isRecording = false;
 let audioStream = null;
 let source = null;
 let processor = null;
+let biquadFilter = null;
 let audioBlob = null;
 let context = null;
 
@@ -27,11 +28,24 @@ let handleSuccess = () => {
   //MediaStreamAudioSourceNodeオブジェクトを生成
 	source = context.createMediaStreamSource(audioStream);
 
-	//処理を行うプロセッサーを出力先とするために作成する
+	//ScriptProcessorNodeオブジェクトを作成
 	processor = context.createScriptProcessor(bufferSize,1,1);
-	//直接destinationに繋ぐとスピーカーからそのまま音が出てしまう
-	source.connect(processor);
-	processor.connect(context.destination);
+
+	//ローパスフィルターの設定
+	if (maskState == true) {
+		console.log(maskState);
+		biquadFilter = context.createBiquadFilter();
+		biquadFilter.type = "lowpass";
+		biquadFilter.frequency.value = 2000;
+		//マスクフィルターONの場合はBiquadFilterNodeを接続
+		source.connect(biquadFilter);
+		biquadFilter.connect(processor);
+		processor.connect(context.destination);
+	} else {
+		//各ノードの接続
+		source.connect(processor);
+		processor.connect(context.destination);
+	}
 
 	//1024bitのバッファサイズに達するごとにaudioDataにデータを追加する
 	processor.onaudioprocess = (e) => {
@@ -186,7 +200,7 @@ let stopRecording = () => {
 	sendToBackend(audioBlob);
 };
 
-//マイクデバイスの利用許可の確認を行う
+//マイク利用許可〜録音開始へ
 record.addEventListener("click", () => {
 	if (isRecording == true) {
 		stopRecording(audioData);
@@ -210,4 +224,48 @@ record.addEventListener("click", () => {
   	  console.error('error:', error);
   	})
 	}
+});
+
+
+//以下マスク表示部分
+let maskOn = document.getElementById('maskOn');
+let maskOff = document.getElementById('maskOff');
+let mic = document.getElementById('mic');
+let mask = document.getElementById('mask');
+
+let maskState = true;
+
+maskOn.disabled = true;
+maskOff.disabled = false;
+
+//console.log(mic.children);
+//console.log(mask.parentNode);
+//console.log(mic.children[2]);
+
+maskOn.addEventListener('click', function() {
+  if (maskState == true) {
+    console.log(maskState);
+		return;
+	} else {
+    maskState = true;
+    maskOn.disabled = true;
+    maskOff.disabled = false;
+    console.log(maskState);
+    //console.log(mic.children[2]);
+		//mic.appendChild(mask);
+		mic.children[2].before(mask);
+  }
+});
+maskOff.addEventListener('click', function() {
+  if (maskState == false) {
+    console.log(maskState);
+		return;
+	} else {
+    maskState = false;
+    console.log(maskState);
+    maskOn.disabled = false;
+    maskOff.disabled = true;
+    //console.log(mic.children[2]);
+    mic.removeChild(mic.children[2]);
+  }
 });
