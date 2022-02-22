@@ -9,7 +9,7 @@ module ApplicationHelper
       noindex: !Rails.env.production?,
       icon: [
         { href: image_url('mask.png') },
-        { href: image_url('mask.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' },
+        { href: image_url('mask.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' }
       ],
       og: {
         title: :title,
@@ -17,10 +17,10 @@ module ApplicationHelper
         type: 'website',
         url: request.original_url,
         image: image_url('mask.png'),
-        locale: 'ja_JP',
+        locale: 'ja_JP'
       },
       twitter: {
-        card: 'summary',
+        card: 'summary'
       }
     }
   end

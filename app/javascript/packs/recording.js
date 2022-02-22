@@ -210,23 +210,23 @@ record.addEventListener("click", () => {
 	} else {
 		text.textContent="〜録音準備中〜";
 		record.disabled = true;
-  	let constraints = {
-  	  audio: {
-  	    echoChancellation: true,
-  	    echoCancellationType: 'system',
-  	    noiseSuppression: false
-  	  },
-  	  video: false
-  	}
-  	navigator.mediaDevices.getUserMedia(constraints)
-  	.then((stream) => {
-  	  audioStream = stream;
-  	  console.log('supported');
+		let constraints = {
+			audio: {
+				echoChancellation: true,
+				echoCancellationType: 'system',
+				noiseSuppression: false
+			},
+			video: false
+		}
+		navigator.mediaDevices.getUserMedia(constraints)
+		.then((stream) => {
+			audioStream = stream;
+			console.log('supported');
 			startRecording(audioStream);
-  	})
-  	.catch((error) => {
-  	  console.error('error:', error);
-  	})
+		})
+		.catch((error) => {
+			console.error('error:', error);
+		})
 	}
 });
 
