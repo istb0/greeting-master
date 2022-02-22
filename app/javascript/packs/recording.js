@@ -3,6 +3,7 @@ axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 
 const record = document.querySelector('.record');
+const text = document.querySelector('.text');
 
 record.disabled = false;
 
@@ -179,6 +180,7 @@ let startRecording = () => {
 	isRecording = true;
 	record.disabled = false;
   console.log('record start');
+	text.innerHTML="〜録音中〜<br>もう一度押すと録音が停止するよ※5秒後に自動停止";
   handleSuccess(audioStream);
 };
 
@@ -187,6 +189,7 @@ let stopRecording = () => {
 	isRecording = false;
 	record.disabled = true;
   console.log('record stop');
+	text.textContent="〜録音完了*音声処理中〜";
 
   //接続の停止
   processor.disconnect();
@@ -205,6 +208,7 @@ record.addEventListener("click", () => {
 	if (isRecording == true) {
 		stopRecording(audioData);
 	} else {
+		text.textContent="〜録音準備中〜";
 		record.disabled = true;
   	let constraints = {
   	  audio: {
