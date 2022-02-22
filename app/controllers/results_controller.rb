@@ -1,5 +1,4 @@
 class ResultsController < ApplicationController
-
   def create
     connection = Faraday.new(Rails.application.credentials[:empath][:endpoint]) do |f|
       f.request :multipart
@@ -13,7 +12,7 @@ class ResultsController < ApplicationController
         wav: Faraday::Multipart::FilePart.new(params[:voice], 'audio/wav')
       }
     end
-    p response.body
+    logger.debug(response.body)
 
     hash = JSON.parse(response.body)
     calm = hash['calm']
@@ -21,7 +20,7 @@ class ResultsController < ApplicationController
     joy = hash['joy']
     sorrow = hash['sorrow']
     energy = hash['energy']
-    score = (50 + 0.5 * (joy + energy - anger - sorrow)).round
+    score = (50 + (0.5 * (joy + energy - anger - sorrow))).round
     @result = Result.new(
       score: score,
       calm: calm,
@@ -31,9 +30,7 @@ class ResultsController < ApplicationController
       energy: energy,
       greeting_id: params[:greeting_id]
     )
-    if @result.save
-      render json: { url: result_path(@result) }
-    end
+    render json: { url: result_path(@result) } if @result.save
   end
 
   def show
