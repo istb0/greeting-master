@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_17_074354) do
+ActiveRecord::Schema.define(version: 2022_02_23_091249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.string "comment", limit: 255, null: false
+    t.integer "max_score", null: false
+    t.integer "emotion_type", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "greetings", force: :cascade do |t|
     t.string "phrase", limit: 50, null: false
