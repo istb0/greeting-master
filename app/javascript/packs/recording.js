@@ -11,10 +11,10 @@ let isRecording = false;
 
 let audioStream = null;
 let source = null;
-let processor = null;
+let scriptProcessor = null;
 let biquadFilter = null;
 let audioBlob = null;
-let context = null;
+let audioCtx = null;
 
 let audioData = []; // 録音データ
 let bufferSize =1024;
@@ -23,33 +23,34 @@ let bufferSize =1024;
 let handleSuccess = () => {
 
   //EmpathAPI用にサンプリングレートを固定
-  context = new AudioContext({ sampleRate: 11025 });
-  console.log('sampleRate:', context.sampleRate);
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  audioCtx = new AudioContext({ sampleRate: 11025 });
+  console.log('sampleRate:', audioCtx.sampleRate);
 
   //MediaStreamAudioSourceNodeオブジェクトを生成
-	source = context.createMediaStreamSource(audioStream);
+	source = audioCtx.createMediaStreamSource(audioStream);
 
 	//ScriptProcessorNodeオブジェクトを作成
-	processor = context.createScriptProcessor(bufferSize,1,1);
+	scriptProcessor = audioCtx.createScriptProcessor(bufferSize,1,1);
 
 	//ローパスフィルターの設定
 	if (maskState == true) {
 		console.log(maskState);
-		biquadFilter = context.createBiquadFilter();
+		biquadFilter = audioCtx.createBiquadFilter();
 		biquadFilter.type = "lowpass";
 		biquadFilter.frequency.value = 2000;
 		//マスクフィルターONの場合はBiquadFilterNodeを接続
 		source.connect(biquadFilter);
-		biquadFilter.connect(processor);
-		processor.connect(context.destination);
+		biquadFilter.connect(scriptProcessor);
+		scriptProcessor.connect(audioCtx.destination);
 	} else {
 		//各ノードの接続
-		source.connect(processor);
-		processor.connect(context.destination);
+		source.connect(scriptProcessor);
+		scriptProcessor.connect(audioCtx.destination);
 	}
 
 	//1024bitのバッファサイズに達するごとにaudioDataにデータを追加する
-	processor.onaudioprocess = (e) => {
+	scriptProcessor.onaudioprocess = (e) => {
 
 		let input = e.inputBuffer.getChannelData(0);
 		let bufferData = new Float32Array(bufferSize);
@@ -122,7 +123,7 @@ let exportWAV = () => {
 		return samples;
 	};
 
-	let dataview = encodeWAV(mergeBuffers(audioData), context.sampleRate);
+	let dataview = encodeWAV(mergeBuffers(audioData), audioCtx.sampleRate);
   // console.log(dataview);
 	//できあがったwavデータをBlobにする
 	audioBlob = new Blob([dataview], { type: 'audio/wav' });
@@ -192,9 +193,9 @@ let stopRecording = () => {
 	text.textContent="〜録音完了*音声処理中〜";
 
   //接続の停止
-  processor.disconnect();
+  scriptProcessor.disconnect();
   source.disconnect();
-  context.close();
+  audioCtx.close();
 
   //取得した音声データをwavファイルに変換する
   exportWAV(audioData);
@@ -212,7 +213,7 @@ record.addEventListener("click", () => {
 		record.disabled = true;
 		let constraints = {
 			audio: {
-				echoChancellation: true,
+				echoCancellation: true,
 				echoCancellationType: 'system',
 				noiseSuppression: false
 			},
