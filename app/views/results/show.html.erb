@@ -14,37 +14,7 @@
       <p>　　　　　　　点です！</p>
     </div>
     <div class="col-md-8 offset-md-2 text-center mb-4">
-      <% if @result.score >= 70 %>
-        最っ高に気持ちの良い挨拶ですね！あなたは周りに幸せを運んでいます。<br>
-        <% if @result.energy >= @result.joy %>
-          元気度が非常に高く評価されています。パワー！！！
-        <% elsif @result.energy %>
-          喜びの数値が高く出ています。ハッピーハッピー
-        <% end %>
-      <% elsif @result.score < 70 && @result.score >= 50 %>
-        いよっ挨拶上手！<br>
-        <% if @result.anger == 0 && @result.sorrow == 0 %>
-          負の感情が一切出ていない。仏。
-        <% elsif @result.anger > @result.sorrow %>
-          ちょっとだけ怒りの感情も出ているので、気をつけてね〜〜
-        <% elsif @result.anger < @result.sorrow %>
-          すこーしだけ悲しげな感じになってます。気持ち明るめでいくと最高です！
-        <% end %>
-      <% elsif @result.score < 50 && @result.score >= 30 %>
-        うーん、あと一歩<br>
-        <% if @result.anger >= @result.sorrow %>
-          怒りが強めです。一旦深呼吸を
-        <% else %>
-          悲しみがすごい。心配になります。
-        <% end %>
-      <% else %>
-        ちょっとこれはまずいです<br>
-        <% if @result.anger >= @result.sorrow %>
-          めっちゃ怒ってますよね。嫌われても致し方なし。
-        <% else %>
-          悲しみがすごい。心配になります。
-        <% end %>
-      <% end %>
+      <p><%= simple_format(@feedback.comment) %>
     </div>
     <div class="col-md-8 offset-md-2 text-center mb-3">
       <%= link_to 'もう一度測定', greeting_path(@greeting), class: 'btn btn-info' %>
