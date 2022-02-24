@@ -1,6 +1,7 @@
 class CreateResults < ActiveRecord::Migration[6.1]
   def change
-    create_table :results do |t|
+    create_table :results, id: false do |t|
+      t.string  :id, limit: 36, null: false, primary_key: true
       t.integer :score,  null: false
       t.integer :calm,   null: false
       t.integer :anger,  null: false
