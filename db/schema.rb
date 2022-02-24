@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_091249) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "results", force: :cascade do |t|
+  create_table "results", id: { type: :string, limit: 36 }, force: :cascade do |t|
     t.integer "score", null: false
     t.integer "calm", null: false
     t.integer "anger", null: false

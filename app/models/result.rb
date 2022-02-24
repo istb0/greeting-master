@@ -1,4 +1,5 @@
 class Result < ApplicationRecord
+  include IdGenerator
   belongs_to :greeting
 
   validates :score, numericality: { only_integer: true }, presence: true
