@@ -2,6 +2,8 @@ class Result < ApplicationRecord
   include IdGenerator
   belongs_to :greeting
 
+  has_one_attached :voice
+
   validates :score, numericality: { only_integer: true }, presence: true
   validates :calm, numericality: { only_integer: true }, presence: true
   validates :anger, numericality: { only_integer: true }, presence: true
@@ -23,10 +25,10 @@ class Result < ApplicationRecord
       }
     end
     logger.debug(response.body)
-    judge(response, greeting_id)
+    judge(voice_data, greeting_id, response)
   end
 
-  def judge(response, greeting_id)
+  def judge(voice_data, greeting_id, response)
     hash = JSON.parse(response.body)
     self.calm = hash['calm']
     self.anger = hash['anger']
@@ -35,5 +37,6 @@ class Result < ApplicationRecord
     self.energy = hash['energy']
     self.score = (50 + (0.5 * (joy + energy - anger - sorrow))).round
     self.greeting_id = greeting_id
+    self.voice.attach(voice_data)
   end
 end
