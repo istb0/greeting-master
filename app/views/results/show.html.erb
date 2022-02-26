@@ -16,6 +16,9 @@
     <div class="col-md-8 offset-md-2 text-center mb-4">
       <p><%= simple_format(@feedback.comment) %>
     </div>
+    <div class="col-md-8 offset-md-2 text-center mb-4">
+      <%= audio_tag(url_for(@result.voice), controls: true, preload: 'metadata') %>
+    </div>
     <div class="col-md-8 offset-md-2 text-center mb-3">
       <%= link_to 'もう一度測定', greeting_path(@greeting), class: 'btn btn-info' %>
       <%= link_to '別の挨拶を測定', greetings_path, class: 'btn btn-info' %>
