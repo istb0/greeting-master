@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :greetings, only: %i[index show] do
     resources :results, only: %i[show create], shallow: true
   end
+  resources :users
 end
