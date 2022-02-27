@@ -24,7 +24,7 @@ class Result < ApplicationRecord
         wav: Faraday::Multipart::FilePart.new(voice_data, 'audio/wav')
       }
     end
-    logger.debug(response.body)
+    # logger.debug(response.body)
     judge(voice_data, greeting_id, response)
   end
 
@@ -37,6 +37,6 @@ class Result < ApplicationRecord
     self.energy = hash['energy']
     self.score = (50 + (0.5 * (joy + energy - anger - sorrow))).round
     self.greeting_id = greeting_id
-    self.voice.attach(voice_data)
+    voice.attach(voice_data)
   end
 end
