@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
   def create
     @result = Result.new
-    @result.analyse(result_params[:voice], result_params[:greeting_id])
+    @result.analyse(result_params)
     # joy = rand(50)
     # energy = rand(50)
     # anger = rand(50)
