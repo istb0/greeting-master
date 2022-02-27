@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  skip_before_action :require_login, only: [:index, :new, :create] # this should only be used if you are allowing users to register themselves.
 
   # GET /users or /users.json
   def index
@@ -25,8 +26,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
+        redirect_to(:users, notice: 'User was successfully created')
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
