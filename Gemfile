@@ -32,6 +32,7 @@ gem 'faraday'
 gem 'faraday-multipart'
 gem 'seed-fu'
 gem 'meta-tags'
+gem 'aws-sdk-s3', require: false
 gem 'sorcery'
 
 group :development, :test do
