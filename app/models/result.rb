@@ -39,4 +39,11 @@ class Result < ApplicationRecord
     self.greeting_id = formdata[:greeting_id]
     voice.attach(formdata[:voice])
   end
+
+  scope :score_ranks, -> { includes(:greeting).order(score: :desc).limit(5).select(:score, :greeting_id) }
+  scope :calm_ranks, -> { includes(:greeting).order(calm: :desc).limit(5).select(:calm, :greeting_id) }
+  scope :anger_ranks, -> { includes(:greeting).order(anger: :desc).limit(5).select(:anger, :greeting_id) }
+  scope :joy_ranks, -> { includes(:greeting).order(joy: :desc).limit(5).select(:joy, :greeting_id) }
+  scope :sorrow_ranks, -> { includes(:greeting).order(sorrow: :desc).limit(5).select(:sorrow, :greeting_id) }
+  scope :energy_ranks, -> { includes(:greeting).order(energy: :desc).limit(5).select(:energy, :greeting_id) }
 end
