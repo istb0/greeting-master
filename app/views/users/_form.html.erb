@@ -1,5 +1,5 @@
 <%= form_with(model: user) do |f| %>
-  <%= render 'layouts/error_messages', object: form.object %>
+  <%= render 'layouts/error_messages', object: f.object %>
 
   <div class="field">
     <%= f.label :name %>
