@@ -5,6 +5,7 @@
         <%= image_tag 'mask.png', size: '50x50'%> あいさつマスター
       <% end %>
     <div class="text-right">
+      <%= link_to '測定履歴', user_results_path(current_user.id) %>
       <%= link_to 'ユーザー情報', user_path(current_user.id) %>
       <%= link_to 'ログアウト', logout_path, method: :delete %>
     </div>
