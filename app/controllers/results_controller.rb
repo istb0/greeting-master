@@ -1,4 +1,6 @@
 class ResultsController < ApplicationController
+  skip_before_action :require_login, only: %i[create show]
+
   def create
     @result = Result.new
     @result.analyse(result_params)

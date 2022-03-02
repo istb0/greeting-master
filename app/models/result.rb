@@ -1,6 +1,7 @@
 class Result < ApplicationRecord
   include IdGenerator
   belongs_to :greeting
+  belongs_to :user
 
   has_one_attached :voice
 

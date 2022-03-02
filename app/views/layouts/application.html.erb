@@ -13,7 +13,12 @@
 
   <body>
     <header>
+    <% if logged_in? %>
       <%= render 'layouts/header' %>
+    <% else %>
+      <%= render 'layouts/before_login_header' %>
+    <% end %>
+    <%= render 'layouts/flash_message' %>
     </header>
     <%= yield %>
     <footer>
