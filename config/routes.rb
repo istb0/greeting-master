@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     resources :results, only: %i[show create], shallow: true
   end
 
-  resources :users
+  resources :users do
+    get 'results', to: 'users#results'
+  end
 
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'

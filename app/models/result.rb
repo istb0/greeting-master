@@ -12,6 +12,8 @@ class Result < ApplicationRecord
   validates :sorrow, numericality: { only_integer: true }, presence: true
   validates :energy, numericality: { only_integer: true }, presence: true
 
+  scope :own_results, ->(current_user) { where(user_id: current_user.id).includes(:user, :greeting).order(created_at: :desc) }
+
   def analyse(formdata)
     connection = Faraday.new(Rails.application.credentials[:empath][:endpoint]) do |f|
       f.request :multipart
