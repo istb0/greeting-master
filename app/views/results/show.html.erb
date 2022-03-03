@@ -19,6 +19,17 @@
     <div class="col-md-8 offset-md-2 text-center mb-4">
       <%= audio_tag(url_for(@result.voice), controls: true, preload: 'metadata') %>
     </div>
+    <div class="col-md-8 offset-md-2 text-center mb-1">
+      <%= link_to "https://twitter.com/share?url=#{request.url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です!%0a%0a%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn btn-outline-info', title: 'Twitter', target: '_blank' do %>
+        <i class="fa-brands fa-twitter"></i> 結果をツイートする
+      <% end %>
+      <p>【注意】音声が公開されます<br>恥ずかしい方は以下から本サービスのシェアを！</p>
+    </div>
+    <div class="col-md-8 offset-md-2 text-center mb-3">
+      <%= link_to "https://twitter.com/share?url=#{root_url}&text=%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn btn-outline-info', title: 'Twitter', target: '_blank' do %>
+        <i class="fa-brands fa-twitter"></i> サービスをシェアする
+      <% end %>
+    </div>
     <div class="col-md-8 offset-md-2 text-center mb-3">
       <%= link_to 'もう一度測定', greeting_path(@greeting), class: 'btn btn-info' %>
       <%= link_to '別の挨拶を測定', greetings_path, class: 'btn btn-info' %>
