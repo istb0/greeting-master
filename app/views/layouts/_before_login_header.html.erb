@@ -5,8 +5,9 @@
         <%= image_tag 'mask.png', size: '50x50'%> あいさつマスター
       <% end %>
       <div class="text-right">
-        <%= link_to 'ユーザー登録', new_user_path %>
-        <%= link_to 'ログイン', login_path %>
+        <%= link_to 'ランキング一覧', ranks_path, class: 'text-white text-decoration-none' %>
+        <%= link_to 'ユーザー登録', new_user_path, class: 'text-white text-decoration-none' %>
+        <%= link_to 'ログイン', login_path, class: 'text-white text-decoration-none' %>
       </div>
     </div>
   </nav>
