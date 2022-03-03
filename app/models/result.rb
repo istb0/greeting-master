@@ -14,6 +14,13 @@ class Result < ApplicationRecord
 
   scope :own_results, ->(current_user) { where(user_id: current_user.id).includes(:user, :greeting).order(created_at: :desc) }
 
+  scope :score_ranks, -> { includes(:user, :greeting).order(score: :desc).limit(5).select(:score, :user_id, :greeting_id) }
+  scope :calm_ranks, -> { includes(:user, :greeting).order(calm: :desc).limit(5).select(:calm, :user_id, :greeting_id) }
+  scope :anger_ranks, -> { includes(:user, :greeting).order(anger: :desc).limit(5).select(:anger, :user_id, :greeting_id) }
+  scope :joy_ranks, -> { includes(:user, :greeting).order(joy: :desc).limit(5).select(:joy, :user_id, :greeting_id) }
+  scope :sorrow_ranks, -> { includes(:user, :greeting).order(sorrow: :desc).limit(5).select(:sorrow, :user_id, :greeting_id) }
+  scope :energy_ranks, -> { includes(:user, :greeting).order(energy: :desc).limit(5).select(:energy, :user_id, :greeting_id) }
+
   def analyse(formdata)
     connection = Faraday.new(Rails.application.credentials[:empath][:endpoint]) do |f|
       f.request :multipart
