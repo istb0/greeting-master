@@ -1,0 +1,16 @@
+.container.pt-3.pb-3
+  .row.text-center
+    h1
+      | 判定履歴一覧
+    .col-md-4.offset-md-4.mb-3
+      table.table
+        thead
+          tr
+            th[scope="col"]
+              | 判定日
+            th[scope="col"]
+              | 結果
+            th[scope="col"]
+              | 挨拶
+        tbody
+          = render partial: 'result', collection: @results

@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title
+      | あいさつマスター
+    = display_meta_tags(default_meta_tags)
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    header
+      - if logged_in?
+        = render 'layouts/header'
+      - else
+        = render 'layouts/before_login_header'
+      = render 'layouts/flash_message'
+    = yield
+    footer
+      = render 'layouts/footer'

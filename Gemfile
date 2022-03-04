@@ -34,6 +34,7 @@ gem 'seed-fu'
 gem 'meta-tags'
 gem 'aws-sdk-s3', require: false
 gem 'sorcery'
+gem 'slim-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -60,6 +61,8 @@ group :development do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'html2slim'
+  gem 'slim_lint', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

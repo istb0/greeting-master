@@ -1,0 +1,37 @@
+.container.pt-3.pb-3
+  .row
+    .col-md-4.offset-md-2.mb-3
+      .card.text-dark.bg-info
+        .card-body
+          p
+            = @greeting.subtitle
+          |  <input type="hidden" id="greeting_id" value="
+          = @greeting.id
+          | ">
+          h1.text-center
+            = @greeting.phrase
+          p.text-end
+            | を測定する
+  .row
+    .col-md-8.offset-md-2.text-center.mb-3
+      h3
+        | マスクフィルター
+      #buttons
+        button#maskOn.btn.btn-outline-dark
+          | ON
+        button#maskOff.btn.btn-outline-dark
+          | OFF
+      p.pt-2
+        | ※音声加工によりマスク着用を想定した測定ができます。
+      p.text.fw-bold.fst-italic
+        | 〜マイクを押して録音を開始しよう〜
+  .row.mt-5.mb-5
+    span#mic.record.fa-layers
+      i.fa-regular.fa-circle.text-info.fa-8x
+      i.fa-solid.fa-microphone.text-info.fa-6x
+      i#mask.fa-solid.fa-mask-face.text-black.fa-3x
+      i.fa-solid.fa-circle.text-white-50.fa-8x[style="cursor: pointer;"]
+  .row.mt-5
+    .col-md-8.offset-md-2.text-center.mt-5.mb-3
+      audio#audio[controls]
+= javascript_pack_tag 'recording'

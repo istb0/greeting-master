@@ -1,0 +1,16 @@
+.container.mt-3
+  .row.text-center
+    h3
+      | ランキング一覧
+    .col-4.mb-2
+      = render 'rank', ranks: @score_ranks, type: @score
+    .col-4.mb-2
+      = render 'rank', ranks: @calm_ranks, type: @calm
+    .col-4.mb-2
+      = render 'rank', ranks: @anger_ranks, type: @anger
+    .col-4.mb-2
+      = render 'rank', ranks: @joy_ranks, type: @joy
+    .col-4.mb-2
+      = render 'rank', ranks: @sorrow_ranks, type: @sorrow
+    .col-4.mb-2
+      = render 'rank', ranks: @energy_ranks, type: @energy
