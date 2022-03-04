@@ -1,0 +1,10 @@
+header
+  nav.navbar.navbar-expand-md.navbar-light.bg-info
+    .container
+      = link_to root_path, class: 'navbar-brand text-white' do
+        = image_tag 'mask.png', size: '50x50'
+        | あいさつマスター
+    .text-right
+      = link_to 'ランキング一覧', ranks_path, class: 'text-white text-decoration-none'
+      = link_to 'ユーザー登録', new_user_path, class: 'text-white text-decoration-none'
+      = link_to 'ログイン', login_path, class: 'text-white text-decoration-none'

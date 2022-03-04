@@ -1,0 +1,9 @@
+= form_with url: login_path, method: :post do |f|
+  .field
+    = f.label :email
+    = f.text_field :email
+  .field
+    = f.label :password
+    = f.password_field :password
+  .actions
+    = f.submit "ログイン"

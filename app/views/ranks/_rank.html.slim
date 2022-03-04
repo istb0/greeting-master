@@ -1,0 +1,41 @@
+h3
+  = type
+table.table
+  thead
+    tr
+      th[scope="col"]
+        | #
+      th[scope="col"]
+        | ポイント
+      th[scope="col"]
+        | ユーザー名
+      th[scope="col"]
+        | 挨拶
+  tbody
+    - ranks.each_with_index  do |rank, index|
+      tr
+
+      th[scope="row"]
+        = index + 1
+      - if type == 'score'
+        td
+          = rank.score
+      - elsif type == 'calm'
+        td
+          = rank.calm * 2
+      - elsif type == 'anger'
+        td
+          = rank.anger * 2
+      - elsif type == 'joy'
+        td
+          = rank.joy * 2
+      - elsif type == 'sorrow'
+        td
+          = rank.sorrow * 2
+      - elsif type == 'energy'
+        td
+          = rank.energy * 2
+      td
+        = rank.user.name
+      td
+        = rank.greeting.phrase

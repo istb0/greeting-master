@@ -1,0 +1,7 @@
+tr
+  th[scope="row"]
+    = link_to result.created_at.strftime('%Y/%m/%d'), result_path(result)
+  td
+    = result.score
+  td
+    = result.greeting.phrase

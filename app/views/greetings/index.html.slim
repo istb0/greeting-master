@@ -1,0 +1,23 @@
+.container.pt-3.pb-3
+  .row
+    .col-md-8.offset-md-2.mb-3
+      h3
+        測定したい挨拶を選んでね
+    .col-md-8.offset-md-2.mb-3
+      .row.row-cols-1.row-cols-sm-2.g-3
+        - if @greetings.present?
+          - @greetings.each do |greeting|
+            .col
+              = link_to greeting_path(greeting), class: 'text-decoration-none' do
+                .card.text-dark.bg-info
+
+                .card-body
+                  p
+                    = greeting.subtitle
+                h1.text-center
+                  = greeting.phrase
+                p.text-end
+                  | を測定する
+        - else
+          p
+            | 未登録
