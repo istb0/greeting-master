@@ -1,11 +1,11 @@
-header
-  nav.navbar.navbar-expand-md.navbar-light.bg-info
-    .container
-      = link_to root_path, class: 'navbar-brand text-white' do
-        = image_tag 'mask.png', size: '50x50'
-        | あいさつマスター
-    .text-right
-      = link_to 'ランキング一覧', ranks_path, class: 'text-white text-decoration-none'
-      = link_to '測定履歴', user_results_path(current_user.id), class: 'text-white text-decoration-none'
-      = link_to 'ユーザー情報', user_path(current_user.id), class: 'text-white text-decoration-none'
-      = link_to 'ログアウト', logout_path, method: :delete, class: 'text-white text-decoration-none'
+.bg-ariel.text-shironeri.font-bold
+  .container.mx-auto.flex.flex-wrap.p-3.flex-col.items-center.md:flex-row
+    = link_to root_path, class: 'flex font-bold items-center hover:text-blue-100' do
+      = image_tag 'mask.png', size: '50x50'
+      p.ml-3.text-lg
+      | あいさつマスター
+    nav.flex.flex-wrap.items-center.text-base.justify-center.md:mr-auto.ml-4.py-1.pl-4.border-l.border-shironeri
+      = link_to 'ランキング', ranks_path, class: 'mr-5  font-bold hover:text-blue-100'
+      = link_to '測定履歴', user_results_path(current_user.id), class: 'mr-5  font-bold hover:text-blue-100'
+    = link_to 'マイページ', user_path(current_user.id), class: 'mr-5  font-bold hover:text-blue-100'
+    = link_to 'ログアウト', logout_path, method: :delete, class: 'bg-nibi border-0 py-1 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi rounded font-bold ml-2'

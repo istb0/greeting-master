@@ -9,13 +9,14 @@ html
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-  body
+  body.flex.flex-col.min-h-screen
     header
       - if logged_in?
         = render 'layouts/header'
       - else
         = render 'layouts/before_login_header'
       = render 'layouts/flash_message'
-    = yield
+    main.flex-1
+      = yield
     footer
       = render 'layouts/footer'
