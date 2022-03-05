@@ -1,13 +1,13 @@
-.container.pt-5.pb-5
-  .row
-    .col-md-8.offset-md-2.mb-3
-      .text-start
-        h3
-          | 君の挨拶ちゃんと相手に届いてる？
-        p
-          | 音声から感情を抽出し分析評価します。
-    .col-md-8.offset-md-2.mb-3
-      .text-center
-        h1
-          | あいさつマスター
-        = link_to 'はじめる', greetings_path, class: 'btn btn-info text-white'
+.container.mx-auto.flex.mx-10.px-5.py-5.flex-col.items-center.text-nibi.md:flex-row
+  .flex.flex-col.mb-16.md:mb-0.items-center.text-center.md:w-1/2
+    h1.text-3xl.font-bold.mb-2.text-gray-800
+      | 君の挨拶ちゃんと相手に届いてる？
+    p
+      | 音声から感情を抽出し分析評価します。
+    = image_tag 'https://dummyimage.com/720x200', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
+      | あいさつマスター
+    .flex.justify-center.h-14
+      = link_to 'ユーザー登録する', new_user_path, class: 'inline-flex text-shironeri bg-ariel border-0 py-2 px-6 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg'
+      = link_to '登録せずにはじめる', greetings_path, class: 'inline-flex text-shironeri bg-taikoh border-0 py-2 px-6 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg ml-4'
+  .lg:max-w-lg.w-full.md:w-1/2.w-5/6
+    = image_tag 'https://dummyimage.com/720x600', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
