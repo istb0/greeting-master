@@ -4,6 +4,14 @@
 
 @layer base {
   html {
-    font-family: 'Hannotate SC', sans-serif;
+    font-family: 'Zen Maru Gothic', sans-serif;
   }
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+}
+
+input:checked ~ .block {
+  background-color: #f69c9f;
 }
