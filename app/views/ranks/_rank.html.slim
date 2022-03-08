@@ -1,41 +1,39 @@
 h3
   = type
-table.table
-  thead
-    tr
-      th[scope="col"]
-        | #
-      th[scope="col"]
-        | ポイント
-      th[scope="col"]
+table.text-center.w-full.mt-4.text-sm
+  thead.bg-ariel.flex.text-white.w-full.rounded-t-lg
+    tr.flex.w-full
+      th.px-1.py-2.w-1/6 scope="col"
+      th.px-1.py-2.w-1/6 scope="col"
+        | 得点
+      th.px-1.py-2.w-1/3 scope="col"
         | ユーザー名
-      th[scope="col"]
-        | 挨拶
+      th.px-1.py-2.w-1/3 scope="col"
+        | 挨拶文
   tbody
-    - ranks.each_with_index  do |rank, index|
-      tr
-
-      th[scope="row"]
-        = index + 1
-      - if type == 'score'
-        td
-          = rank.score
-      - elsif type == 'calm'
-        td
-          = rank.calm * 2
-      - elsif type == 'anger'
-        td
-          = rank.anger * 2
-      - elsif type == 'joy'
-        td
-          = rank.joy * 2
-      - elsif type == 'sorrow'
-        td
-          = rank.sorrow * 2
-      - elsif type == 'energy'
-        td
-          = rank.energy * 2
-      td
-        = rank.user.name
-      td
-        = rank.greeting.phrase
+    - ranks.each_with_index do |rank, index|
+      tr.flex.w-full.border-b-2.mt-1.bg-aliceblue.rounded-b-lg
+        td.px-1.py-2.w-1/6
+          = index + 1
+        - if type == 'score'
+          td.px-1.py-2.w-1/6
+            = rank.score
+        - elsif type == 'calm'
+          td.px-1.py-2.w-1/6
+            = rank.calm * 2
+        - elsif type == 'anger'
+          td.px-1.py-2.w-1/6
+            = rank.anger * 2
+        - elsif type == 'joy'
+          td.px-1.py-2.w-1/6
+            = rank.joy * 2
+        - elsif type == 'sorrow'
+          td.px-1.py-2.w-1/6
+            = rank.sorrow * 2
+        - elsif type == 'energy'
+          td.px-1.py-2.w-1/6
+            = rank.energy * 2
+        td.px-1.py-2.w-1/3
+          = rank.user.name
+        td.px-1.py-2.w-1/3
+          = rank.greeting.phrase
