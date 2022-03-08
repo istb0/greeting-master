@@ -1,5 +1,6 @@
-.text-center
-  h1
-    | ログインページ
+.container.mx-auto.px-56.py-5.text-nibi
+  h1.inline.text-2xl.font-bold.border-b-2
+    | ログイン
   = render 'form'
-  = link_to 'TOPページ', root_path
+  .text-center.mt-4
+    = link_to 'TOPページへ', root_path, class: 'hover:text-gray-300'
