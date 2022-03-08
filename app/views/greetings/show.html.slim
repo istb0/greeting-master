@@ -1,16 +1,16 @@
 .container.mx-auto.px-56.py-5.text-nibi
-  p.inline.text-2xl.font-bold.border-b-2
+  .inline.text-2xl.font-bold.border-b-2
     = @greeting.phrase
     input type="hidden" id="greeting_id" value=@greeting.id
   .flex.items-center.justify-center.w-full.mb-2
-    p.text-sm.mr-5
+    .text-sm.mr-5
       | ※マスク着用(音声加工)
     label.flex.items-center.cursor-pointer
       .relative
         input#maskfilter.sr-only type="checkbox" checked=""
         .block.bg-nibi.w-14.h-8.rounded-full
         .dot.absolute.left-1.top-1.bg-white.w-6.h-6.rounded-full.transition
-  p#notice.font-bold.italic.mt-3.text-center
+  #notice.font-bold.italic.mt-3.text-center
     | 〜マイクを押して録音を開始しよう〜
   #mic.text-center.relative
     = image_tag 'mic.svg', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'

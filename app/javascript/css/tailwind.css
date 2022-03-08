@@ -15,3 +15,15 @@ input:checked ~ .dot {
 input:checked ~ .block {
   background-color: #f69c9f;
 }
+
+.text-shadow {
+  text-shadow: 2px 2px 3px red;
+}
+
+.btn-primary {
+  @apply inline-flex text-shironeri bg-ariel border-0 px-3 py-2 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg
+}
+
+.btn-secondary {
+  @apply inline-flex text-shironeri bg-taikoh border-0 px-3 py-2 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg
+}
