@@ -1,7 +1,6 @@
-.container.pt-3.pb-3
-  .row
-    .text-center.mb-3
-      h1
-        | 登録情報更新
-      = render 'form', user: @user
-      = link_to '詳細ページに戻る', @user
+.container.mx-auto.px-56.py-5.text-nibi
+  h1.inline.text-2xl.font-bold.border-b-2
+    | 登録情報更新
+  = render 'form', user: @user
+  .text-center.mt-4
+    = link_to 'マイページへ', @user, class: 'hover:text-gray-300'
