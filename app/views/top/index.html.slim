@@ -1,13 +1,13 @@
-.container.mx-auto.flex.mx-10.px-5.py-5.flex-col.items-center.text-nibi.md:flex-row
-  .flex.flex-col.mb-16.md:mb-0.items-center.text-center.md:w-1/2
-    h1.text-3xl.font-bold.mb-2.text-gray-800
+.container.mx-auto.flex.py-5.flex-col.justify-center.items-center.text-nibi.md:flex-row
+  .text-right.md:w-1/2.mb-0
+    h1.text-3xl.font-bold.text-gray-800
       | 君の挨拶ちゃんと相手に届いてる？
-    p
+    p.mt-2
       | 音声から感情を抽出し分析評価します。
-    = image_tag 'https://dummyimage.com/720x200', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
+    = image_tag 'https://dummyimage.com/600x200', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
       | あいさつマスター
-    .flex.justify-center.h-14
+    .h-14
       = link_to 'ユーザー登録する', new_user_path, class: 'btn-primary'
       = link_to '登録せずにはじめる', greetings_path, class: 'btn-secondary ml-4'
-  .lg:max-w-lg.w-full.md:w-1/2.w-5/6
-    = image_tag 'https://dummyimage.com/720x600', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
+  .md:max-w-lg.w-full
+    = image_tag 'human.png', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'

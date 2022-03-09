@@ -2,7 +2,7 @@
   .inline.text-2xl.font-bold.border-b-2
     = @greeting.phrase
     input type="hidden" id="greeting_id" value=@greeting.id
-  .flex.items-center.justify-center.w-full.mb-2
+  .flex.items-center.justify-center.w-full.mt-5
     .text-sm.mr-5
       | ※マスク着用(音声加工)
     label.flex.items-center.cursor-pointer
@@ -10,11 +10,11 @@
         input#maskfilter.sr-only type="checkbox" checked=""
         .block.bg-nibi.w-14.h-8.rounded-full
         .dot.absolute.left-1.top-1.bg-white.w-6.h-6.rounded-full.transition
-  #notice.font-bold.italic.mt-3.text-center
+  #notice.font-bold.italic.mt-5.text-center
     | 〜マイクを押して録音を開始しよう〜
-  #mic.text-center.relative
+  #mic.text-center.relative.mt-5
     = image_tag 'mic.svg', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
     = image_tag 'logo.svg', id: 'mask', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
-    /= image_tag 'mask.svg', id: 'mask', size: '100x100', class: 'cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-12 translate-y-1/2'
-    /= embedded_svg 'mic.svg', class: 'inline-block cursor-pointer w-32 h-32'
+  .text-center.mt-56
+    = link_to '-戻る-', greetings_path, class: 'hover:text-gray-300'
 = javascript_pack_tag 'recording'
