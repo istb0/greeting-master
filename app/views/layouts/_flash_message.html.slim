@@ -1,5 +1,10 @@
 - flash.each do |message_type, message|
-  |  <div class="alert alert-
-  = message_type
-  | ">
-  = message
+  div class="#{message_type}"
+    /= content_tag(:div, class:"#{message_type}")
+    .container.flex.items-center.justify-between.px-6.py-4.mx-auto
+      .flex
+        - if message_type == 'notice'
+            i.mr-1.text-lg.align-middle.fas.fa-check-circle
+        - else
+            i.mr-1.text-lg.align-middle.fas.fa-exclamation-triangle
+        p #{message}

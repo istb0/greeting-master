@@ -1,11 +1,17 @@
 module.exports = {
   mode: 'jit',
-  purge: [
+  purge: {
+    content: [
     './app/**/*.html.erb',
     './app/**/*.html.slim',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-  ],
+    ],
+    safelist: [
+      'bg-green-200',
+      'bg-taikoh',
+    ]
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
