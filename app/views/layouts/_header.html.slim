@@ -6,5 +6,5 @@
     nav.flex.flex-wrap.items-center.text-base.justify-center.md:mr-auto.ml-2.py-1
       = link_to 'ランキング', ranks_path, class: 'mr-5  font-bold hover:text-blue-100'
       = link_to '測定履歴', user_results_path(current_user.id), class: 'mr-5  font-bold hover:text-blue-100'
-    = link_to 'マイページ', user_path(current_user.id), class: 'mr-5  font-bold hover:text-blue-100'
+    = link_to 'マイページ', edit_user_path(current_user.id), class: 'mr-5  font-bold hover:text-blue-100'
     = link_to 'ログアウト', logout_path, method: :delete, class: 'bg-nibi border-0 py-1 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi rounded font-bold ml-2'

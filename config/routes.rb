@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :results, only: %i[show create], shallow: true
   end
 
-  resources :users do
+  resources :users, only: %i[new edit create update] do
     get 'results', to: 'users#results'
   end
 

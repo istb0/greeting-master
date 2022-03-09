@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[edit update]
   skip_before_action :require_login, only: %i[new create]
 
   def results
     @results = Result.all.own_results(current_user)
   end
-
-  def show; end
 
   def new
     @user = User.new
