@@ -9,6 +9,8 @@ html
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    - if Rails.env.production?
+      = render 'layouts/google_analytics'
   body.flex.flex-col.min-h-screen
     header
       - if logged_in?
