@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="500" height="500" viewBox="0 0 500 500" xml:space="preserve">
+<desc>Created with Fabric.js 4.6.0</desc>
+<defs>
+</defs>
+<g transform="matrix(0.91 0 0 0.91 240 260)" id="5rz-WoGqYVeya6Zx2JiGk"  >
+<filter id="SVGID_22" y="-21%" height="142%" x="-21%" width="142%" >
+	<feGaussianBlur in="SourceAlpha" stdDeviation="0"></feGaussianBlur>
+	<feOffset dx="4" dy="4" result="oBlur" ></feOffset>
+	<feFlood flood-color="rgb(170,214,236)" flood-opacity="1"/>
+	<feComposite in2="oBlur" operator="in" />
+	<feMerge>
+		<feMergeNode></feMergeNode>
+		<feMergeNode in="SourceGraphic"></feMergeNode>
+	</feMerge>
+</filter>
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,248,255); fill-rule: nonzero; opacity: 1;filter: url(#SVGID_22);" vector-effect="non-scaling-stroke"  transform=" translate(-256, -256)" d="M 512 256 C 512 397.4 397.4 512 256 512 C 114.6 512 0 397.4 0 256 C 0 114.6 114.6 0 256 0 C 397.4 0 512 114.6 512 256 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(0.73 0 0 0.73 240 260)" id="D8kmGWMlAxdIXw4BPhD0d"  >
+<filter id="SVGID_14" y="-21%" height="142%" x="-21%" width="142%" >
+	<feGaussianBlur in="SourceAlpha" stdDeviation="0"></feGaussianBlur>
+	<feOffset dx="4" dy="4" result="oBlur" ></feOffset>
+	<feFlood flood-color="rgb(101,103,101)" flood-opacity="1"/>
+	<feComposite in2="oBlur" operator="in" />
+	<feMerge>
+		<feMergeNode></feMergeNode>
+		<feMergeNode in="SourceGraphic"></feMergeNode>
+	</feMerge>
+</filter>
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(170,214,236); fill-rule: nonzero; opacity: 1;filter: url(#SVGID_14);" vector-effect="non-scaling-stroke"  transform=" translate(0, 0)" d="M 0 96 C 53.03 96 96 53.03 96 0 L 96 -160 C 96 -213.03 53.03 -256 0 -256 C -53.03 -256 -96 -213.03 -96 -160 L -96 0 C -96 53 -53.9 96 0 96 z M 152 -64 C 138.7 -64 128 -53.3 128 -40.9 L 128 0 C 128 73.33 66.03 132.4 -8.300000000000011 127.7 C -74.38000000000001 123.531 -128 61.11 -128 -5.1000000000000085 L -128 -40.900000000000006 C -128 -53.300000000000004 -138.75 -64 -152 -64 C -165.25 -64 -176 -53.3 -176 -40.9 L -176 -8.75 C -176 80.91 -112.03 160.85 -24 172.95 L -24 208 L -64 208 C -82.19 208 -96.84 223.18 -95.96000000000001 241.57 C -95.57000000000001 249.79999999999998 -88.2 256 -80 256 L 80 256 C 88.222 256 95.57 249.784 95.96000000000001 241.57 C 96.80000000000001 223.2 82.2 208 64 208 L 24 208 L 24 174.23 C 109.7 162.5 176 88.89999999999999 176 0 L 176 -40.9 C 176 -53.3 165.3 -64 152 -64 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(0.37 0 0 0.37 240 260)" id="xyTtrC4a2XqyQ0eM8x-Mx"  >
+<filter id="SVGID_24" y="-21%" height="142%" x="-21%" width="142%" >
+	<feGaussianBlur in="SourceAlpha" stdDeviation="0"></feGaussianBlur>
+	<feOffset dx="4" dy="4" result="oBlur" ></feOffset>
+	<feFlood flood-color="rgb(0,0,0)" flood-opacity="1"/>
+	<feComposite in2="oBlur" operator="in" />
+	<feMerge>
+		<feMergeNode></feMergeNode>
+		<feMergeNode in="SourceGraphic"></feMergeNode>
+	</feMerge>
+</filter>
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(101,103,101); fill-rule: nonzero; opacity: 1;filter: url(#SVGID_24);" vector-effect="non-scaling-stroke"  transform=" translate(-320, -256)" d="M 396.4 87.12 L 433.5 111.9 C 449.3 122.4 467.8 128 486.8 128 L 584 128 C 614.9 128 640 153.1 640 184 L 640 269 C 640 324.1 602.5 372.1 549.1 385.5 L 441.1 412.5 C 406.2 434.1 364.6 448 320 448 C 275.4 448 233.8 434.1 198.9 412.5 L 90.9 385.5 C 37.48 372.1 0 324.1 0 269 L 0 184 C 0 153.1 25.07 128 56 128 L 153.2 128 C 172.2 128 190.7 122.4 206.5 111.9 L 243.6 87.12 C 266.2 72.05 292.8 64 320 64 C 347.2 64 373.8 72.05 396.4 87.12 z M 132.3 346.3 C 109.4 311.2 96 269.1 96 224 L 96 176 L 56 176 C 51.58 176 48 179.6 48 184 L 48 269 C 48 302.1 70.49 330.9 102.5 338.9 L 132.3 346.3 z M 592 269 L 592 184 C 592 179.6 588.4 176 584 176 L 544 176 L 544 224 C 544 269.1 530.6 311.2 507.7 346.3 L 537.5 338.9 C 569.5 330.9 592 302.1 592 269 L 592 269 z M 208 224 L 432 224 C 440.8 224 448 216.8 448 208 C 448 199.2 440.8 192 432 192 L 208 192 C 199.2 192 192 199.2 192 208 C 192 216.8 199.2 224 208 224 z M 208 256 C 199.2 256 192 263.2 192 272 C 192 280.8 199.2 288 208 288 L 432 288 C 440.8 288 448 280.8 448 272 C 448 263.2 440.8 256 432 256 L 208 256 z M 240 352 L 400 352 C 408.8 352 416 344.8 416 336 C 416 327.2 408.8 320 400 320 L 240 320 C 231.2 320 224 327.2 224 336 C 224 344.8 231.2 352 240 352 z" stroke-linecap="round" />
+</g>
+</svg>

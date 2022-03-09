@@ -1,37 +1,20 @@
-.container.pt-3.pb-3
-  .row
-    .col-md-4.offset-md-2.mb-3
-      .card.text-dark.bg-info
-        .card-body
-          p
-            = @greeting.subtitle
-          |  <input type="hidden" id="greeting_id" value="
-          = @greeting.id
-          | ">
-          h1.text-center
-            = @greeting.phrase
-          p.text-end
-            | を測定する
-  .row
-    .col-md-8.offset-md-2.text-center.mb-3
-      h3
-        | マスクフィルター
-      #buttons
-        button#maskOn.btn.btn-outline-dark
-          | ON
-        button#maskOff.btn.btn-outline-dark
-          | OFF
-      p.pt-2
-        | ※音声加工によりマスク着用を想定した測定ができます。
-      p.text.fw-bold.fst-italic
-        | 〜マイクを押して録音を開始しよう〜
-  .row.mt-5.mb-5
-    span#mic.record.fa-layers
-      i.fa-regular.fa-circle.text-info.fa-8x
-      i.fa-solid.fa-microphone.text-info.fa-6x
-      i#mask.fa-solid.fa-mask-face.text-black.fa-3x
-      i.fa-solid.fa-circle.text-white-50.fa-8x[style="cursor: pointer;"]
-  .row.mt-5
-    .col-md-8.offset-md-2.text-center.mt-5.mb-3
-      audio#audio[controls]
+.container.mx-auto.px-56.py-5.text-nibi
+  .inline.text-2xl.font-bold.border-b-2
+    = @greeting.phrase
+    input type="hidden" id="greeting_id" value=@greeting.id
+  .flex.items-center.justify-center.w-full.mt-5
+    .text-sm.mr-5
+      | ※マスク着用(音声加工)
+    label.flex.items-center.cursor-pointer
+      .relative
+        input#maskfilter.sr-only type="checkbox" checked=""
+        .block.bg-nibi.w-14.h-8.rounded-full
+        .dot.absolute.left-1.top-1.bg-white.w-6.h-6.rounded-full.transition
+  #notice.font-bold.italic.mt-5.text-center
+    | 〜マイクを押して録音を開始しよう〜
+  #mic.text-center.relative.mt-5
+    = image_tag 'mic.svg', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
+    = image_tag 'logo.svg', id: 'mask', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
+  .text-center.mt-56
+    = link_to '-戻る-', greetings_path, class: 'hover:text-gray-300'
 = javascript_pack_tag 'recording'

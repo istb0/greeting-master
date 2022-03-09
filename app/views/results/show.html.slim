@@ -1,36 +1,23 @@
-.container.pt-3.pb-3
-  .row
-    .col-md-4.offset-md-2.mb-3
-      .card.text-dark.bg-info
-        .card-body
-          p
-            = @greeting.subtitle
-          h1.text-center
-            = @greeting.phrase
-    .col-md-8.offset-md-2.text-center.mb-2
-      p
-        | 結果は...　　　　　　　
-      p.fs-1.fw-bold
-        = @result.score
-      p
-        | 　　　　　　　点です！
-    .col-md-8.offset-md-2.text-center.mb-4
-      p
-        = simple_format(@feedback.comment)
-    .col-md-8.offset-md-2.text-center.mb-4
-      = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata')
-    .col-md-8.offset-md-2.text-center.mb-1
-      = link_to "https://twitter.com/share?url=#{request.url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です!%0a%0a%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn btn-outline-info', title: 'Twitter', target: '_blank' do
-        i.fa-brands.fa-twitter
-        | 結果をツイートする
-      p
-        | 【注意】音声が公開されます
-        br
-        | 恥ずかしい方は以下から本サービスのシェアを！
-    .col-md-8.offset-md-2.text-center.mb-3
-      = link_to "https://twitter.com/share?url=#{root_url}&text=%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn btn-outline-info', title: 'Twitter', target: '_blank' do
-        i.fa-brands.fa-twitter
-        | サービスをシェアする
-    .col-md-8.offset-md-2.text-center.mb-3
-      = link_to 'もう一度測定', greeting_path(@greeting), class: 'btn btn-info'
-      = link_to '別の挨拶を測定', greetings_path, class: 'btn btn-info'
+.container.mx-auto.px-56.py-5.text-nibi.text-center
+  .text-left
+    .inline.text-2xl.font-bold.border-b-2
+      = @greeting.phrase
+  .mx-auto.w-1/2.mt-8
+    .text-left
+      | 結果は...
+    .text-7xl.text-taikoh.font-black.text-shadow.mt-2
+      = @result.score
+    .text-right.mt-2
+      | 点です！
+  .mt-2
+    = simple_format(@feedback.comment)
+  = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'inline mt-5')
+  .mx-auto.mt-8
+    = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です!%0a%0a%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn-secondary', title: 'Twitter', target: '_blank' do
+      i.mr-1.fa-brands.fa-twitter
+      | 結果をツイート
+    .mt-1.text-sm
+      | ※音声は公開されません
+  .mt-8
+    = link_to 'もう一度測定', greeting_path(@greeting), class: 'btn-primary mr-2'
+    = link_to '別の挨拶を測定', greetings_path, class: 'btn-primary'

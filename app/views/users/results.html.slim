@@ -1,16 +1,17 @@
-.container.pt-3.pb-3
-  .row.text-center
-    h1
-      | 判定履歴一覧
-    .col-md-4.offset-md-4.mb-3
-      table.table
-        thead
-          tr
-            th[scope="col"]
-              | 判定日
-            th[scope="col"]
-              | 結果
-            th[scope="col"]
-              | 挨拶
-        tbody
-          = render partial: 'result', collection: @results
+.container.mx-auto.px-56.py-5.text-nibi
+  h1.inline.text-2xl.font-bold.border-b-2
+    | 測定履歴一覧
+  table.text-center.w-full.mt-4
+    thead.bg-ariel.flex.text-white.w-full.rounded-t-lg
+      tr.flex.w-full
+        th.p-2.w-1/4 scope="col"
+          | 測定日
+        th.p-2.w-1/4 scope="col"
+          | 結果
+        th.p-2.w-1/4 scope="col"
+          | 挨拶文
+        th.p-2.w-1/4
+    tbody.flex.flex-col.items-center.justify-between.overflow-y-scroll.w-full style="height: 50vh;"
+      = render partial: 'result', collection: @results
+  .text-center.mt-4
+    = link_to 'TOPページへ', root_path, class: 'hover:text-gray-300'

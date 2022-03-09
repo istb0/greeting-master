@@ -1,16 +1,21 @@
-= form_with(model: user) do |f|
-  = render 'layouts/error_messages', object: f.object
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :email
-    = f.text_field :email
-  .field
-    = f.label :password
-    = f.password_field :password
-  .field
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation
-  .actions
-    = f.submit
+.text-left.mx-36.mt-4
+  = form_with(model: user) do |f|
+    = render 'layouts/error_messages', object: f.object
+    .field.relative
+      = f.label :name
+      span.text-red-500 *
+      = f.text_field :name, class: 'text-field'
+    .field
+      = f.label :email
+      span.text-red-500 *
+      = f.email_field :email, class: 'text-field'
+    .field
+      = f.label :password
+      span.text-red-500 *
+      = f.password_field :password, class: 'text-field'
+    .field
+      = f.label :password_confirmation
+      span.text-red-500 *
+      = f.password_field :password_confirmation, class: 'text-field'
+    .actions.mt-2
+      = f.submit '登録', class: 'btn-secondary'

@@ -1,7 +1,9 @@
-tr
-  th[scope="row"]
+tr.flex.w-full.border-b-2.mt-1.bg-aliceblue.rounded-b-lg
+  td.p-2.w-1/4
     = link_to result.created_at.strftime('%Y/%m/%d'), result_path(result)
-  td
+  td.p-2.w-1/4
     = result.score
-  td
+  td.p-2.w-1/4
     = result.greeting.phrase
+  td.p-2.w-1/4.text-xs.underline.hover:text-gray-300
+    = link_to '詳細をみる', result_path(result)

@@ -2,10 +2,10 @@ import axios from 'axios';
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 
-const record = document.querySelector('.record');
-const text = document.querySelector('.text');
+const mic = document.getElementById('mic');
+const notice = document.getElementById('notice');
 
-record.disabled = false;
+mic.disabled = false;
 
 let isRecording = false;
 
@@ -34,8 +34,8 @@ let handleSuccess = () => {
 	scriptProcessor = audioCtx.createScriptProcessor(bufferSize,1,1);
 
 	//ローパスフィルターの設定
-	if (maskState == true) {
-		console.log(maskState);
+	if (wearingMask == true) {
+		console.log(wearingMask);
 		biquadFilter = audioCtx.createBiquadFilter();
 		biquadFilter.type = "lowpass";
 		biquadFilter.frequency.value = 2000;
@@ -134,9 +134,9 @@ let exportWAV = () => {
 	// downloadLink.href = URL.createObjectURL(audioBlob);
 	// downloadLink.download = 'test.wav';
 
-	let audio = document.getElementById('audio');
+	//let audio = document.getElementById('audio');
 	//オーディオ要素にもBlobをリンクする
-	audio.src = URL.createObjectURL(audioBlob);
+	//audio.src = URL.createObjectURL(audioBlob);
 	//音声を再生する
 	//audio.play();
 };
@@ -179,18 +179,18 @@ let sendToBackend = () => {
 //録音START
 let startRecording = () => {
 	isRecording = true;
-	record.disabled = false;
-  console.log('record start');
-	text.innerHTML="〜録音中〜<br>もう一度押すと録音が停止するよ※5秒後に自動停止";
+	mic.disabled = false;
+  console.log('startRecording');
+	notice.innerHTML="〜録音中〜<br>もう一度押すと録音が停止するよ※5秒後に自動停止";
   handleSuccess(audioStream);
 };
 
 //録音STOP
 let stopRecording = () => {
 	isRecording = false;
-	record.disabled = true;
-  console.log('record stop');
-	text.textContent="〜録音完了*音声処理中〜";
+	mic.disabled = true;
+  console.log('stopRecording');
+	notice.textContent="〜録音完了*音声処理中〜";
 
   //接続の停止
   scriptProcessor.disconnect();
@@ -205,12 +205,12 @@ let stopRecording = () => {
 };
 
 //マイク利用許可〜録音開始へ
-record.addEventListener("click", () => {
+mic.addEventListener("click", () => {
 	if (isRecording == true) {
 		stopRecording(audioData);
 	} else {
-		text.textContent="〜録音準備中〜";
-		record.disabled = true;
+		notice.textContent="〜録音準備中〜";
+		mic.disabled = true;
 		let constraints = {
 			audio: {
 				echoCancellation: true,
@@ -231,46 +231,56 @@ record.addEventListener("click", () => {
 	}
 });
 
-
 //以下マスク表示部分
-let maskOn = document.getElementById('maskOn');
-let maskOff = document.getElementById('maskOff');
-let mic = document.getElementById('mic');
-let mask = document.getElementById('mask');
+const maskfilter = document.getElementById('maskfilter');
+const mask = document.getElementById('mask');
+//const maskState = document.getElementById('maskState');
 
-let maskState = true;
-
-maskOn.disabled = true;
-maskOff.disabled = false;
+let wearingMask = maskfilter.checked
 
 //console.log(mic.children);
 //console.log(mask.parentNode);
 //console.log(mic.children[2]);
 
-maskOn.addEventListener('click', function() {
-  if (maskState == true) {
-    console.log(maskState);
-		return;
-	} else {
-    maskState = true;
-    maskOn.disabled = true;
-    maskOff.disabled = false;
-    console.log(maskState);
-    //console.log(mic.children[2]);
-		//mic.appendChild(mask);
-		mic.children[2].before(mask);
-  }
+maskfilter.addEventListener("click", () => {
+  wearingMask = maskfilter.checked;
+  console.log(maskfilter.checked);
+  wearingMask ? mic.appendChild(mask) : mic.removeChild(mask);
+  //if (wearingMask == true) {
+  //  maskState.textContent="ON";
+  //  console.log(mic.children[2]);
+  //  mic.appendChild(mask);
+  //  mic.children[2].before(mask);
+  //} else {
+  //  maskState.textContent="OFF";
+  //  console.log(mic.children[2]);
+  //  mic.removeChild(mic.children[2]);
+  //}
 });
-maskOff.addEventListener('click', function() {
-  if (maskState == false) {
-    console.log(maskState);
-		return;
-	} else {
-    maskState = false;
-    console.log(maskState);
-    maskOn.disabled = false;
-    maskOff.disabled = true;
-    //console.log(mic.children[2]);
-    mic.removeChild(mic.children[2]);
-  }
-});
+//maskOn.addEventListener('click', function() {
+//  if (maskState == true) {
+//    console.log(maskState);
+//		return;
+//	} else {
+//    maskState = true;
+//    maskOn.disabled = true;
+//    maskOff.disabled = false;
+//    console.log(maskState);
+//    //console.log(mic.children[2]);
+//		//mic.appendChild(mask);
+//		mic.children[2].before(mask);
+//  }
+//});
+//maskOff.addEventListener('click', function() {
+//  if (maskState == false) {
+//    console.log(maskState);
+//		return;
+//	} else {
+//    maskState = false;
+//    console.log(maskState);
+//    maskOn.disabled = false;
+//    maskOff.disabled = true;
+//    //console.log(mic.children[2]);
+//    mic.removeChild(mic.children[2]);
+//  }
+//});

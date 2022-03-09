@@ -1,10 +1,12 @@
-footer
-  .container.pt-1
-
-  .row.text-center
-    = link_to '利用規約', '#', class: 'col-md-2 offset-md-3 text-muted text-decoration-none'
-    = link_to 'プライバシーポリシー', '#', class: 'col-md-2 text-muted text-decoration-none'
-    = link_to 'お問い合わせ', '#', class: 'col-md-2 text-muted text-decoration-none'
-  .row.text-center.text-muted
-    p
-      | Copyright © 2022. あいさつマスター
+.bg-ariel.text-shironeri.font-bold.w-full.py-3
+  .max-w-screen-xl.mx-auto.px-4
+    ul.max-w-screen-md.mx-auto.text-base.font-light.flex.flex-wrap.justify-center
+      li.m-2
+        = link_to '利用規約', '#', class: 'hover:text-blue-100'
+      li.m-2
+        = link_to 'プライバシーポリシー', '#', class: 'hover:text-blue-100'
+      li.m-2
+        = link_to 'お問い合わせ', '#', class: 'hover:text-blue-100'
+      li.m-2
+        p.border-l.border-shironeri.text-aliceblue.pl-3
+          | © 2022 あいさつマスター
