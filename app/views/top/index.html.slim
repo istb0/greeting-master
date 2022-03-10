@@ -4,10 +4,13 @@
       | 君の挨拶ちゃんと相手に届いてる？
     p.mt-2
       | 音声から感情を抽出し分析評価します。
-    = image_tag 'https://dummyimage.com/600x200', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
+    = image_tag 'https://dummyimage.com/600x200', alt: 'あいさつマスター', class: 'my-10 object-cover'
       | あいさつマスター
     .h-14
-      = link_to 'ユーザー登録する', new_user_path, class: 'btn-primary'
-      = link_to '登録せずにはじめる', greetings_path, class: 'btn-secondary ml-4'
+      - if logged_in?
+        = link_to 'さっそくはじめる', greetings_path, class: 'btn-secondary ml-4'
+      - else
+        = link_to 'ユーザー登録してはじめる', new_user_path, class: 'btn-primary'
+        = link_to '登録せずにはじめる', greetings_path, class: 'btn-secondary ml-4'
   .md:max-w-lg.w-full
-    = image_tag 'human.png', alt: 'あいさつマスター', class: 'my-10 object-cover object-center rounded'
+    = image_tag 'human.png', alt: 'あいさつマスター', class: 'object-cover'
