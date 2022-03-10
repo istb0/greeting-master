@@ -1,4 +1,5 @@
 class ResultsController < ApplicationController
+  before_action :set_result, only: %i[show destroy]
   skip_before_action :require_login, only: %i[create show]
 
   def create
@@ -24,12 +25,20 @@ class ResultsController < ApplicationController
   end
 
   def show
-    @result = Result.find(params[:id])
     @greeting = Greeting.find(@result.greeting_id)
     @feedback = Feedback.find_comment(@result)
   end
 
+  def destroy
+    @result.destroy!
+    redirect_to user_results_path(current_user)
+  end
+
   private
+
+  def set_result
+    @result = Result.find(params[:id])
+  end
 
   def result_params
     params.permit(:voice, :greeting_id)
