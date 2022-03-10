@@ -1,11 +1,11 @@
 .text-left.mx-36.mt-4
   = form_with url: login_path, method: :post do |f|
     .field
-      = f.label :email
+      = f.label :email, User.human_attribute_name(:email)
       span.text-red-500 *
       = f.email_field :email, class: 'text-field'
     .field
-      = f.label :password
+      = f.label :password, User.human_attribute_name(:password)
       span.text-red-500 *
       = f.password_field :password, class: 'text-field'
     .actions.mt-2
