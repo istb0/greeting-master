@@ -6,11 +6,12 @@
       tr.flex.w-full
         th.p-2.w-1/4 scope="col"
           | 測定日
-        th.p-2.w-1/4 scope="col"
+        th.p-2.w-1/6 scope="col"
           | 結果
         th.p-2.w-1/4 scope="col"
           | 挨拶文
-        th.p-2.w-1/4
+        th.p-2.w-1/6
+        th.p-2.w-1/6
     tbody.flex.flex-col.items-center.justify-between.overflow-y-scroll.w-full style="height: 50vh;"
       = render partial: 'result', collection: @results
   .text-center.mt-4

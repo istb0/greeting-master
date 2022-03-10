@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'top#index'
 
   resources :greetings, only: %i[index show] do
-    resources :results, only: %i[show create], shallow: true
+    resources :results, only: %i[show create destroy], shallow: true
   end
 
   resources :users, only: %i[new edit create update] do
