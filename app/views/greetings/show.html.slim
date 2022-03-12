@@ -4,9 +4,8 @@
     | API利用上限が迫り、一時的に結果はランダム表示しています<br>
     | 使用感だけでも見ていただけますと幸いです
   /ここまで
-  .inline.text-2xl.font-bold.border-b-2
+  #phrase.inline.text-2xl.font-bold.border-b-2 data-id=@greeting.id
     = @greeting.phrase
-    input type="hidden" id="greeting_id" value=@greeting.id
   .flex.items-center.justify-center.w-full.mt-5
     .text-sm.mr-5
       | ※マスク着用(音声加工)
