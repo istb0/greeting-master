@@ -144,7 +144,7 @@ let exportWAV = () => {
 //WAV音声データをバックエンドに送信
 let sendToBackend = () => {
 	let formData = new FormData();
-	const greeting_id = document.getElementById('greeting_id').value;
+	const greeting_id = document.getElementById('phrase').dataset.id;
   formData.append('voice', audioBlob)
 	formData.append('greeting_id', greeting_id);
   axios.post(`/greetings/${greeting_id}/results`,  formData, {
