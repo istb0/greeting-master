@@ -23,12 +23,13 @@
         | 結果をツイート
       .mt-1.text-sm
         | ※音声は公開されません
-    .ml-2
-      = link_to new_user_path(result_id: @result.id), class: 'btn-secondary mr-2' do
-        i.mr-1.fa-solid.fa-user-pen
-        | ユーザー登録
-      .mt-1.text-sm
-        | ※この結果が保持されます
+    = unless logged_in?
+      .ml-2
+        = link_to new_user_path(result_id: @result.id), class: 'btn-secondary mr-2' do
+          i.mr-1.fa-solid.fa-user-pen
+          | ユーザー登録
+        .mt-1.text-sm
+          | ※この結果が保持されます
   .mt-6
     = link_to 'もう一度測定', greeting_path(@greeting), class: 'border-gray-300 border-b-2 hover:text-gray-300 mr-2'
     = link_to '別の挨拶を測定', greetings_path, class: 'border-gray-300 border-b-2 hover:text-gray-300'
