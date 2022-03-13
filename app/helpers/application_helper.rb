@@ -1,7 +1,7 @@
 module ApplicationHelper
   def default_meta_tags
     {
-      title: 'あいさつマスター | 気持ちの良い挨拶を相手に届けよう',
+      title: 'Gremas - あいさつマスター | 気持ちの良い挨拶を相手に届けよう',
       charset: 'utf-8',
       description: 'マスク着用時でも確実に相手に届く、気持ちの良い挨拶を身につける手助けをするサービスです。',
       keywords: '挨拶,マスク',
