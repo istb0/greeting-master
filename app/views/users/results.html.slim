@@ -12,7 +12,7 @@
           | 挨拶文
         th.p-2.w-1/6
         th.p-2.w-1/6
-    tbody.flex.flex-col.items-center.justify-between.overflow-y-scroll.w-full style="height: 50vh;"
+    tbody.flex.flex-col.items-center.justify-between.overflow-y-scroll.w-full.max-h-96
       = render partial: 'result', collection: @results
   .text-center.mt-4
     = link_to 'TOPページへ', root_path, class: 'hover:text-gray-300'
