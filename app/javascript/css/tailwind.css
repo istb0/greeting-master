@@ -39,3 +39,11 @@ input:checked ~ .block {
 .alert {
   @apply  w-full text-shironeri bg-taikoh;
 }
+
+.text-circle {
+  height:100px;
+  width:100px;
+  border-radius:50%;
+  line-height:85px;
+  text-align:center;
+}
