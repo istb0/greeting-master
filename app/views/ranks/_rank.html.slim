@@ -1,5 +1,17 @@
-h3
-  = type
+h2
+  - case type
+  - when 'score'
+    | 総合ランク~つよつよあいさつマスター~
+  - when 'calm'
+    | 平静度ランク~動じない心~
+  - when 'anger'
+    | 怒り度ランク~いらいらさん~
+  - when 'joy'
+    | 喜び度ランク~ハッピーさん~
+  - when 'sorrow'
+    | 悲しみ度ランク~しくしくさん~
+  - when 'energy'
+    | 元気度ランク~わんぱくさん~
 table.text-center.w-full.mt-4.text-sm
   thead.bg-ariel.flex.text-white.w-full.rounded-t-lg
     tr.flex.w-full
