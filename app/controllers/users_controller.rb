@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auto_login(@user)
-      if result_params
+      if result_params.present?
         @result = Result.find(result_params[:result][:id])
         @result.update(user_id: current_user.id)
       end
