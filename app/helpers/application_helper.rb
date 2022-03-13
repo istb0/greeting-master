@@ -9,14 +9,14 @@ module ApplicationHelper
       noindex: !Rails.env.production?,
       icon: [
         { href: image_url('favicon.ico') },
-        { href: image_url('favicon.ico'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' }
+        { href: image_url('apple-touch-icon.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' }
       ],
       og: {
         title: :title,
         description: :description,
         type: 'website',
         url: request.original_url,
-        image: image_url('logo.svg'),
+        image: image_url('ogp.png'),
         locale: 'ja_JP'
       },
       twitter: {

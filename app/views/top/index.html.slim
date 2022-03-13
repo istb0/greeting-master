@@ -1,16 +1,21 @@
 .container.mx-auto.flex.py-5.flex-col.justify-center.items-center.text-nibi.md:flex-row
   .text-right.md:w-1/2.mb-0
-    h1.text-3xl.font-bold.text-gray-800
+    h1.text-2xl.font-bold.text-gray-800
       | 君の挨拶ちゃんと相手に届いてる？
     p.mt-2
-      | 音声から感情を抽出し分析評価します。
-    = image_tag 'https://dummyimage.com/600x200', alt: 'あいさつマスター', class: 'my-10 object-cover'
-      | あいさつマスター
-    .h-14
+      | 音声から感情を抽出し分析評価します
+    p
+      | マスク越しでも気持ちの良い挨拶を！
+    h1.text-black.text-8xl.font-bold
+      | Gremas
+    p.text-2xl
+      | ~あいさつマスター~
+      /= image_tag 'top.png', alt: 'あいさつマスター', class: 'inline-block my-3'
+    .h-14.mt-2
       - if logged_in?
         = link_to 'さっそくはじめる', greetings_path, class: 'btn-secondary ml-4'
       - else
         = link_to 'ユーザー登録してはじめる', new_user_path, class: 'btn-primary'
         = link_to '登録せずにはじめる', greetings_path, class: 'btn-secondary ml-4'
-  .md:max-w-lg.w-full
+  .md:max-w-sm.w-full.mr-10
     = image_tag 'human.png', alt: 'あいさつマスター', class: 'object-cover'
