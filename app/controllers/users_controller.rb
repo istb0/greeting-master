@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @result = Result.find(params[:result_id]) if params[:result_id]
   end
 
   def edit; end
@@ -16,6 +17,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auto_login(@user)
+      if result_params
+        @result = Result.find(result_params[:result][:id])
+        @result.update(user_id: current_user.id)
+      end
       redirect_to root_path, notice: 'ユーザー登録に成功しました'
     else
       flash.now[:alert] = 'ユーザー登録に失敗しました'
@@ -40,5 +45,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :name)
+  end
+
+  def result_params
+    params.require(:user).permit(result: [:id])
   end
 end
