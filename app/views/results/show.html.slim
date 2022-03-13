@@ -16,13 +16,20 @@
     #result.ml-4 data-result=@result.to_json
       canvas#myChart
   = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'inline mt-5')
-  .mx-auto.mt-8
-    = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です!%0a%0a%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn-secondary', title: 'Twitter', target: '_blank' do
-      i.mr-1.fa-brands.fa-twitter
-      | 結果をツイート
-    .mt-1.text-sm
-      | ※音声は公開されません
-  .mt-8
-    = link_to 'もう一度測定', greeting_path(@greeting), class: 'btn-primary mr-2'
-    = link_to '別の挨拶を測定', greetings_path, class: 'btn-primary'
+  .flex.items-center.justify-center.mt-6
+    div
+      = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です!%0a%0a%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn-primary', title: 'Twitter', target: '_blank' do
+        i.mr-1.fa-brands.fa-twitter
+        | 結果をツイート
+      .mt-1.text-sm
+        | ※音声は公開されません
+    .ml-2
+      = link_to new_user_path(result_id: @result.id), class: 'btn-secondary mr-2' do
+        i.mr-1.fa-solid.fa-user-pen
+        | ユーザー登録
+      .mt-1.text-sm
+        | ※この結果が保持されます
+  .mt-6
+    = link_to 'もう一度測定', greeting_path(@greeting), class: 'border-gray-300 border-b-2 hover:text-gray-300 mr-2'
+    = link_to '別の挨拶を測定', greetings_path, class: 'border-gray-300 border-b-2 hover:text-gray-300'
 = javascript_pack_tag 'chart'
