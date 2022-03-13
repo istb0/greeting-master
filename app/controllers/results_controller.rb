@@ -19,6 +19,7 @@ class ResultsController < ApplicationController
       energy: energy,
       greeting_id: result_params[:greeting_id]
     )
+    @result.user_id = current_user.id if logged_in?
     @result.voice.attach(params[:voice])
     # ここまで
     render json: { url: result_path(@result) } if @result.save
