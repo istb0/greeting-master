@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'top#index'
+  root 'pages#top'
+  get 'terms', to: 'pages#terms'
+  get 'policy', to: 'pages#policy'
+  get 'contact', to: 'pages#contact'
 
   resources :greetings, only: %i[index show] do
     resources :results, only: %i[show create destroy], shallow: true
