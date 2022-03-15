@@ -1,8 +1,7 @@
 doctype html
 html
   head
-    title
-      | Gremas
+    title Gremas
     = display_meta_tags(default_meta_tags)
     meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
@@ -11,14 +10,14 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     - if Rails.env.production?
       = render 'layouts/google_analytics'
-  body.flex.flex-col.min-h-screen
+  body.relative.box-border.min-h-screen.pb-24.sm:pb-16
     header
       - if logged_in?
         = render 'layouts/header'
       - else
         = render 'layouts/before_login_header'
       = render 'layouts/flash_message'
-    main.flex-1
+    main
       = yield
-    footer
+    footer.absolute.bottom-0.bg-ariel.text-shironeri.w-full.py-3
       = render 'layouts/footer'

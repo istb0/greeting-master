@@ -1,10 +1,9 @@
-.bg-ariel.text-shironeri.font-bold
-  .container.mx-auto.flex.flex-wrap.p-3.flex-col.items-center.md:flex-row
-    = link_to root_path, class: 'flex font-bold items-center hover:text-blue-100' do
+.bg-ariel.text-shironeri
+  .container.mx-auto.flex.flex-wrap.flex-col.items-center.gap-2.p-3.md:flex-row
+    = link_to root_path do
       = image_tag 'logo.svg', size: '50x50'
-      p.ml-3.text-lg
-    nav.flex.flex-wrap.items-center.text-base.justify-center.md:mr-auto.ml-2.py-1
-      = link_to 'ランキング', ranks_path, class: 'mr-5  font-bold hover:text-blue-100'
-      = link_to '測定履歴', user_results_path(current_user), class: 'mr-5  font-bold hover:text-blue-100'
-    = link_to 'マイページ', edit_user_path(current_user), class: 'mr-5  font-bold hover:text-blue-100'
-    = link_to 'ログアウト', logout_path, method: :delete, class: 'bg-nibi border-0 py-1 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi rounded font-bold ml-2'
+    nav.flex.flex-wrap.items-center.justify-center.gap-2.py-1.md:mr-auto.ml-2
+      = link_to 'ランキング', ranks_path, class: 'hover:text-blue-100'
+      = link_to '測定履歴', user_results_path(current_user), class: 'hover:text-blue-100'
+    = link_to 'マイページ', edit_user_path(current_user), class: 'hover:text-blue-100'
+    = link_to 'ログアウト', logout_path, method: :delete, class: 'bg-nibi border-0 py-2 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi rounded md:ml-2'
