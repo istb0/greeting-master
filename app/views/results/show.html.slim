@@ -18,7 +18,7 @@
   = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'inline mt-5')
   .flex.items-center.justify-center.mt-6
     div
-      = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です!%0a%0a%23あいさつマスター%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶練習,マスク", class: 'btn-primary', title: 'Twitter', target: '_blank' do
+      = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です！%0a%0a%23Gremas%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶,マスク", class: 'btn-primary', title: 'Twitter', target: '_blank' do
         i.mr-1.fa-brands.fa-twitter
         | 結果をツイート
       .mt-1.text-sm
