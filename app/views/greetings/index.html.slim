@@ -1,17 +1,13 @@
-.container.mx-auto.px-56.py-5.text-nibi
-  h1.text-2xl.mb-5
+.container.mx-auto.text-center.py-5.px-2.lg:px-56
+  h1.text-left.text-2xl
     | 測定したい挨拶を選んでね
-  .mx-5.h-70.grid.grid-cols-2.gap-x-3.gap-y-4
-    - if @greetings.present?
-      - @greetings.each do |greeting|
-          = link_to greeting_path(greeting), class: 'col-auto border-solid border-t-2 border-b-2 max-w-lg p-10 h-auto hover:bg-gray-100 hover:text-current' do
-            p
-              = greeting.subtitle
-            .mt-2.text-center
-              p.inline-block.text-2xl.font-bold.border-b-2
-                = greeting.phrase
-            p.text-right.mt-2
-              | を測定する
-    - else
-      p
-        | 挨拶未登録
+  .mt-5.grid.grid-cols-2.gap-x-6.gap-y-4.md:h-70.md:mx-5
+    - @greetings.each do |greeting|
+        = link_to greeting_path(greeting), class: 'col-auto border-solid border-t-4 border-b-4 max-w-lg h-auto  py-5 md:px-10 lg:mt-4 hover:bg-gray-200 hover:text-current' do
+          .text-left
+            = greeting.subtitle
+          .text-center.mt-4
+            .inline-block.text-2xl.font-bold.border-b-4.border-taikoh
+              = greeting.phrase
+          .text-right.mt-4
+            | を測定する

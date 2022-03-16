@@ -1,23 +1,23 @@
-.container.mx-auto.flex.py-5.flex-col.justify-center.items-center.text-nibi.md:flex-row
-  .text-right.md:w-1/2.mb-0
-    h1.text-2xl.font-bold.text-gray-800
+.container.mx-auto.py-5.flex.flex-col.justify-center.items-center.gap-4.align-middle.min-h-75vh.md:flex-row
+  .inline-block.text-right.w-full.px-2.md:w-1/2.md:px-0
+    h1.text-xl.font-black.text-gray-800.lg:text-2xl
       | 君の挨拶ちゃんと相手に届いてる？
     p.mt-2
       | 音声から感情を抽出し分析評価します
     p
       | マスク越しでも気持ちの良い挨拶を！
-    h1.flex.text-black.text-8xl.font-bold.justify-end
-      .text-circle.bg-black.text-shironeri
-        span G
+    .flex.justify-end.text-8xl.font-black.text-black.mt-5
+      /.flex.justify-end.text-8xl.font-black.text-black.mt-5
+      /.text-circle.bg-black.text-shironeri
+      span.text-taikoh G
       p remas
     p.text-2xl
-      | ~あいさつマスター~
-      /= image_tag 'top.png', alt: 'あいさつマスター', class: 'inline-block my-3'
-    .h-14.mt-2
+      | -あいさつマスター-
+    .h-14.mt-5
       - if logged_in?
         = link_to 'さっそくはじめる', greetings_path, class: 'btn-secondary ml-4'
       - else
-        = link_to 'ユーザー登録してはじめる', new_user_path, class: 'btn-primary'
+        = link_to '登録してはじめる', new_user_path, class: 'btn-primary'
         = link_to '登録せずにはじめる', greetings_path, class: 'btn-secondary ml-4'
-  .md:max-w-sm.w-full.mr-10
-    = image_tag 'human.png', alt: 'あいさつマスター', class: 'object-cover'
+  .inline-block.w-full.px-2.md:w-1/2.md:px-0
+    = image_tag 'top.png', alt: 'Gremas', class: 'object-contain h-auto w-full lg:w-auto'

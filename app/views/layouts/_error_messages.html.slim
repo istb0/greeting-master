@@ -1,6 +1,6 @@
 - if object.errors.any?
-  .text-taikoh role="alert"
-    ul.mb-0
+  .text-taikoh.my-2 role="alert"
+    ul
       - object.errors.full_messages.each do |message|
-        li
+        li.list-disc.list-inside
           = message

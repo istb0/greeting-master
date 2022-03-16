@@ -1,19 +1,25 @@
-h2
+.mt-2
   - case type
   - when 'score'
-    | 総合ランク~つよつよあいさつマスター~
+    h2 総合ランク
+    p.text-sm ~あいさつマスター殿堂入り~
   - when 'calm'
-    | 平静度ランク~動じない心~
+    h2 平静度ランク
+    p.text-sm ~動じない心~
   - when 'anger'
-    | 怒り度ランク~いらいらさん~
+    h2 怒り度ランク
+    p.text-sm ~いらいらさん~
   - when 'joy'
-    | 喜び度ランク~ハッピーさん~
+    h2 喜び度ランク
+    p.text-sm ~ハッピーさん~
   - when 'sorrow'
-    | 悲しみ度ランク~しくしくさん~
+    h2 悲しみ度ランク
+    p.text-sm ~しくしくさん~
   - when 'energy'
-    | 元気度ランク~わんぱくさん~
-table.text-center.w-full.mt-4.text-sm
-  thead.bg-ariel.flex.text-white.w-full.rounded-t-lg
+    h2 元気度ランク
+    p.text-sm ~わんぱくさん~
+table.text-center.w-full.text-sm.mt-2
+  thead.bg-ariel.flex.text-shiro.w-full.rounded-t-lg
     tr.flex.w-full
       th.px-1.py-2.w-1/6 scope="col"
       th.px-1.py-2.w-1/6 scope="col"
@@ -24,28 +30,12 @@ table.text-center.w-full.mt-4.text-sm
         | 挨拶文
   tbody
     - ranks.each_with_index do |rank, index|
-      tr.flex.w-full.border-b-2.mt-1.bg-aliceblue.rounded-b-lg
+      tr.flex.w-full.mt-1.bg-aliceblue.border-b-2.rounded-b-lg.border-gray-300
         td.px-1.py-2.w-1/6
           = index + 1
-        - if type == 'score'
-          td.px-1.py-2.w-1/6
-            = rank.score
-        - elsif type == 'calm'
-          td.px-1.py-2.w-1/6
-            = rank.calm * 2
-        - elsif type == 'anger'
-          td.px-1.py-2.w-1/6
-            = rank.anger * 2
-        - elsif type == 'joy'
-          td.px-1.py-2.w-1/6
-            = rank.joy * 2
-        - elsif type == 'sorrow'
-          td.px-1.py-2.w-1/6
-            = rank.sorrow * 2
-        - elsif type == 'energy'
-          td.px-1.py-2.w-1/6
-            = rank.energy * 2
+        td.px-1.py-2.w-1/6
+          = type == 'score' ? rank.score : rank[type]
         td.px-1.py-2.w-1/3
           = rank.user.name
-        td.px-1.py-2.w-1/3
+        td.px-1.py-2.w-1/3.text-xs
           = rank.greeting.phrase

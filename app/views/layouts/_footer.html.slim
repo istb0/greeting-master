@@ -1,12 +1,10 @@
-.bg-ariel.text-shironeri.font-bold.w-full.py-3
-  .max-w-screen-xl.mx-auto.px-4
-    ul.max-w-screen-md.mx-auto.text-base.font-light.flex.flex-wrap.justify-center
-      li.m-2
-        = link_to '利用規約', terms_path, class: 'hover:text-blue-100'
-      li.m-2
-        = link_to 'プライバシーポリシー', policy_path, class: 'hover:text-blue-100'
-      li.m-2
-        = link_to 'お問い合わせ', contact_path, class: 'hover:text-blue-100'
-      li.m-2
-        p.border-l.border-shironeri.text-aliceblue.pl-3
-          | © 2022 あいさつマスター
+ul.mx-auto.flex.flex-wrap.justify-center.gap-x-4
+  li.my-2.hover:text-blue-100
+    = link_to '利用規約', terms_path
+  li.my-2.hover:text-blue-100
+    = link_to 'プライバシーポリシー', policy_path
+  li.my-2.hover:text-blue-100
+    = link_to 'お問い合わせ', contact_path
+  li.my-2
+    p.border-l.border-shironeri.text-aliceblue.pl-3
+      | © 2022 Gremas
