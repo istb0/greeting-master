@@ -10,7 +10,7 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     - if Rails.env.production?
       = render 'layouts/google_analytics'
-  body.relative.box-border.min-h-screen.pb-24.sm:pb-16
+  body.relative.box-border.min-h-screen.bg-shiro.text-nibi.pb-24.sm:pb-16
     header
       - if logged_in?
         = render 'layouts/header'
