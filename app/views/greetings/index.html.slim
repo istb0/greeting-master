@@ -1,9 +1,9 @@
 .container.mx-auto.text-center.py-5.px-2.lg:px-56
   h1.text-left.text-2xl
     | 測定したい挨拶を選んでね
-  .mt-5.grid.grid-cols-2.gap-x-3.gap-y-4.md:h-70.md:mx-5
+  .mt-5.grid.grid-cols-2.gap-x-6.gap-y-4.md:h-70.md:mx-5
     - @greetings.each do |greeting|
-        = link_to greeting_path(greeting), class: 'col-auto border-solid border-t-2 border-b-2 max-w-lg h-auto  py-5 md:px-10 lg:mt-4 hover:bg-gray-100 hover:text-current' do
+        = link_to greeting_path(greeting), class: 'col-auto border-solid border-t-4 border-b-4 max-w-lg h-auto  py-5 md:px-10 lg:mt-4 hover:bg-gray-200 hover:text-current' do
           .text-left
             = greeting.subtitle
           .text-center.mt-4
