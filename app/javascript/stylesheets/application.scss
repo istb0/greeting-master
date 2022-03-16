@@ -28,11 +28,11 @@ input:checked ~ .block {
 }
 
 .btn-primary {
-  @apply inline-flex text-shironeri bg-ariel border-0 px-3 py-2 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg;
+  @apply inline-flex gap-1 text-shironeri bg-ariel border-0 px-3 py-2 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg;
 }
 
 .btn-secondary {
-  @apply inline-flex text-shironeri bg-taikoh border-0 px-3 py-2 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg;
+  @apply inline-flex gap-1 text-shironeri bg-taikoh border-0 px-3 py-2 items-center focus:outline-none transform hover:scale-110 hover:text-shironeri rounded-lg;
 }
 
 .text-field {

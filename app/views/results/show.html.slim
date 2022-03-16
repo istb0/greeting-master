@@ -1,36 +1,35 @@
-.container.mx-auto.px-56.py-5.text-nibi.text-center
-  .text-left
-    .inline.text-2xl.font-bold.border-b-2
-      = @greeting.phrase
-  .flex.items-center.justify-center
-    div
+.container.mx-auto.py-5.px-2.lg:px-56
+  h1.inline.text-2xl.font-bold.border-b-2
+    = @greeting.phrase
+  .flex.flex-col.items-center.justify-center.gap-4.md:flex-row
+    .inline-block.w-full.mt-4.md:w-1/3.md:mt-0
       .mx-auto
-        .text-left
+        p
           | 結果は...
-        .text-7xl.text-taikoh.font-black.text-shadow.mt-2
+        .text-center.text-7xl.text-taikoh.font-black.text-shadow.mt-2
           = @result.score
         .text-right.mt-2
           | 点です！
       .mt-2
         = simple_format(@feedback.comment)
-    #result.ml-4 data-result=@result.to_json
+    #result.inline-block.w-full.md:w-1/3 data-result=@result.to_json
       canvas#myChart
-  = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'inline mt-5')
-  .flex.items-center.justify-center.mt-6
+  = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'mx-auto mt-2')
+  .flex.items-center.justify-center.gap-2.mt-2
     div
       = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です！%0a%0a%23Gremas%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶,マスク", class: 'btn-primary', title: 'Twitter', target: '_blank' do
-        i.mr-1.fa-brands.fa-twitter
+        i.fa-brands.fa-twitter
         | 結果をツイート
       .mt-1.text-sm
         | ※音声は公開されません
-    = unless logged_in?
-      .ml-2
-        = link_to new_user_path(result_id: @result.id), class: 'btn-secondary mr-2' do
-          i.mr-1.fa-solid.fa-user-pen
+    - unless logged_in?
+      div
+        = link_to new_user_path(result_id: @result.id), class: 'btn-secondary' do
+          i.fa-solid.fa-user-pen
           | ユーザー登録
         .mt-1.text-sm
           | ※この結果が保持されます
-  .mt-6
+  .mt-6.text-center
     = link_to 'もう一度測定', greeting_path(@greeting), class: 'border-gray-300 border-b-2 hover:text-gray-300 mr-2'
     = link_to '別の挨拶を測定', greetings_path, class: 'border-gray-300 border-b-2 hover:text-gray-300'
 = javascript_pack_tag 'chart'
