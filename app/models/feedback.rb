@@ -6,22 +6,21 @@ class Feedback < ApplicationRecord
   validates :emotion_type, numericality: { only_integer: true }, presence: true
 
   def self.find_comment(result)
-    emotion_type = emotion_type(result)
-    max_score = max_score(result)
-    find_by(max_score: max_score, emotion_type: emotion_type)
+    find_by(max_score: max_score(result), emotion_type: emotion_type(result))
   end
 
   def self.emotion_type(result)
     max_emotion = [result.anger, result.sorrow, result.joy, result.energy, result.calm].max
-    if max_emotion == result.anger
+    case max_emotion
+    when result.anger
       'anger'
-    elsif max_emotion == result.sorrow
+    when result.sorrow
       'sorrow'
-    elsif max_emotion == result.joy
+    when result.joy
       'joy'
-    elsif max_emotion == result.energy
+    when result.energy
       'energy'
-    else
+    when result.calm
       'calm'
     end
   end

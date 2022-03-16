@@ -181,7 +181,7 @@ let startRecording = () => {
 	isRecording = true;
 	mic.disabled = false;
   console.log('startRecording');
-	notice.innerHTML="〜録音中〜<br>もう一度押すと録音が停止するよ※5秒後に自動停止";
+	notice.innerHTML="〜録音中〜<br>もう一度押すと録音が停止するよ<br>※5秒後に自動停止";
   handleSuccess(audioStream);
 };
 

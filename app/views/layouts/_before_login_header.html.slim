@@ -1,9 +1,8 @@
-.bg-ariel.text-shironeri.font-bold
-  .container.mx-auto.flex.flex-wrap.p-3.flex-col.items-center.md:flex-row
-    = link_to root_path, class: 'flex font-bold items-center hover:text-blue-100' do
+.bg-ariel.text-shironeri
+  .container.mx-auto.flex.flex-wrap.flex-col.items-center.gap-2.p-3.md:flex-row
+    = link_to root_path do
       = image_tag 'logo.svg', size: '50x50'
-      p.ml-3.text-lg
-    nav.flex.flex-wrap.items-center.text-base.justify-center.md:mr-auto.ml-2.py-1
-      = link_to 'ランキング', ranks_path, class: 'mr-5 font-bold hover:text-blue-100'
-    = link_to 'ユーザー登録', new_user_path, class: 'bg-nibi border-0 py-1 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi rounded text-shironeri font-bold'
-    = link_to 'ログイン', login_path, class: 'bg-nibi border-0 py-1 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi rounded text-shironeri font-bold ml-2'
+    nav.flex.flex-wrap.items-center.justify-center.py-1.md:mr-auto.ml-2
+      = link_to 'ランキング', ranks_path, class: 'hover:text-blue-100'
+    = link_to 'ユーザー登録', new_user_path, class: 'bg-nibi text-shironeri border-0 rounded py-2 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi'
+    = link_to 'ログイン', login_path, class: 'bg-nibi text-shironeri border-0 rounded py-2 px-3 focus:outline-none hover:bg-shironeri hover:text-nibi'

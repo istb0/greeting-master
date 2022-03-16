@@ -1,19 +1,19 @@
-.container.mx-auto.px-56.py-5.text-nibi
+.container.mx-auto.py-5.px-2.lg:px-56
   /本リリースまでのAPI一時的処置
   .mx-auto.bg-taikoh.mb-2.pl-5
     | API利用上限が迫り、一時的に結果はランダム表示しています<br>
     | 使用感だけでも見ていただけますと幸いです
   /ここまで
-  #phrase.inline.text-2xl.font-bold.border-b-2 data-id=@greeting.id
+  #phrase.inline.text-left.text-2xl.font-bold.border-b-2 data-id=@greeting.id
     = @greeting.phrase
-  .flex.items-center.justify-center.w-full.mt-5
-    .text-sm.mr-5
+  .flex.items-center.justify-center.gap-4.w-full.mt-5
+    .text-sm
       | ※マスク着用(音声加工)
     label.flex.items-center.cursor-pointer
       .relative
         input#maskfilter.sr-only type="checkbox" checked=""
         .block.bg-nibi.w-14.h-8.rounded-full
-        .dot.absolute.left-1.top-1.bg-white.w-6.h-6.rounded-full.transition
+        .dot.absolute.left-1.top-1.bg-shiro.w-6.h-6.rounded-full.transition
   #notice.font-bold.italic.mt-5.text-center
     | 〜マイクを押して録音を開始しよう〜
   #mic.text-center.relative.mt-5

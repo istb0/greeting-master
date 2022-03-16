@@ -1,8 +1,8 @@
-.container.mx-auto.px-56.py-5.text-nibi
+.container.mx-auto.py-5.px-2.lg:px-56
   h1.inline.text-2xl.font-bold.border-b-2
     | ユーザー登録
   /= render 'form', locals{ user: @user, result: @result }
-  .text-left.mx-36.mt-4
+  .mt-4
   = form_with(model: @user) do |f|
     = render 'layouts/error_messages', object: f.object
     .field.relative
@@ -26,5 +26,3 @@
         = r.hidden_field :id
     .actions.mt-2
       = f.submit '登録', class: 'btn-secondary'
-  .text-center.mt-4
-    = link_to 'TOPページへ', root_path, class: 'hover:text-gray-300'

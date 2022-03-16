@@ -23,7 +23,8 @@ module.exports = {
         zincdust: '#5b5b5b',
         kamenozoki: '#a5dee4',
         wasurenagusa: '#7db9de',
-        shironeri: '#fcfaf2'
+        shironeri: '#fcfaf2',
+        shiro: '#f4f5f7',
       },
     },
   },
