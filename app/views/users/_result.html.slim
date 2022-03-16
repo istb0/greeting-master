@@ -1,12 +1,12 @@
-tr.flex.w-full.border-b-2.mt-1.bg-aliceblue.rounded-b-lg
+tr.flex.w-full.mt-1.bg-aliceblue.border-b-2.rounded-b-lg.border-gray-300
   td.p-2.w-1/4
     = link_to result.created_at.strftime('%Y/%m/%d'), result_path(result)
   td.p-2.w-1/6
     = result.score
   td.p-2.w-1/4
     = result.greeting.phrase
-  td.p-2.w-1/6.text-xs.align-middle.underline.hover:text-gray-300
-    = link_to '詳細をみる', result_path(result)
-  td.p-2.w-1/6.text-xs.align-middle.hover:text-gray-300
+  td.p-2.w-1/6.text-xs.underline.hover:text-gray-300
+    = link_to '詳細をみる', result_path(result), class: "align-middle"
+  td.p-2.w-1/6.text-xs.hover:text-gray-300
     = link_to result_path(result), method: :delete, data: { confirm: '削除しますか？' } do
-      i.fa-solid.fa-trash-can
+      i.fa-solid.fa-trash-can.align-middle
