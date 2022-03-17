@@ -10,6 +10,9 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     - if Rails.env.production?
       = render 'layouts/google_analytics'
+    link rel="preconnect" href="https://fonts.googleapis.com"
+    link rel="preconnect" href="https://fonts.gstatic.com" crossorigin
+    link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap"
   body.relative.box-border.min-h-screen.bg-shiro.text-nibi.pb-24.sm:pb-16
     header
       - if logged_in?
