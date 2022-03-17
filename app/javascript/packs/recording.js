@@ -226,6 +226,8 @@ mic.addEventListener("click", () => {
 			startRecording(audioStream);
 		})
 		.catch((error) => {
+      notice.textContent="※非対応の端末です、PCからご利用ください！";
+      notice.style.color="red";
 			console.error('error:', error);
 		})
 	}
