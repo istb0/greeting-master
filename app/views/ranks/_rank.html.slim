@@ -34,7 +34,7 @@ table.text-center.w-full.text-sm.mt-2
         td.px-1.py-2.w-1/6
           = index + 1
         td.px-1.py-2.w-1/6
-          = type == 'score' ? rank.score : rank[type]
+          = type == 'score' ? rank.score : rank[type] * 2
         td.px-1.py-2.w-1/3
           = rank.user.name
         td.px-1.py-2.w-1/3.text-xs
