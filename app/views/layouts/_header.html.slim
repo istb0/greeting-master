@@ -1,8 +1,8 @@
 .bg-ariel.text-shironeri
   .container.mx-auto.flex.flex-wrap.flex-col.items-center.gap-2.p-3.md:flex-row
     = link_to root_path do
-      = image_tag 'logo.svg', size: '50x50'
-    nav.flex.flex-wrap.items-center.justify-center.gap-2.py-1.md:mr-auto.ml-2
+      = image_tag 'logo.svg', size: '50x50', alt: 'Gremas'
+    nav.flex.flex-wrap.items-center.justify-center.gap-2.py-1.md:mr-auto.md:ml-2
       = link_to 'ランキング', ranks_path, class: 'hover:text-blue-100'
       = link_to '測定履歴', user_results_path(current_user), class: 'hover:text-blue-100'
     = link_to 'マイページ', edit_user_path(current_user), class: 'hover:text-blue-100'
