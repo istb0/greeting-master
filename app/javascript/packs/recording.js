@@ -25,7 +25,7 @@ let handleSuccess = () => {
   //EmpathAPI用にサンプリングレートを固定
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   audioCtx = new AudioContext({ sampleRate: 11025 });
-  console.log('sampleRate:', audioCtx.sampleRate);
+  //console.log('sampleRate:', audioCtx.sampleRate);
 
   //MediaStreamAudioSourceNodeオブジェクトを生成
 	source = audioCtx.createMediaStreamSource(audioStream);
@@ -35,7 +35,7 @@ let handleSuccess = () => {
 
 	//ローパスフィルターの設定
 	if (wearingMask == true) {
-		console.log(wearingMask);
+		//console.log(wearingMask);
 		biquadFilter = audioCtx.createBiquadFilter();
 		biquadFilter.type = "lowpass";
 		biquadFilter.frequency.value = 2000;
@@ -63,7 +63,7 @@ let handleSuccess = () => {
   //5秒後に録音を停止
 	setTimeout( () => {
     if (isRecording == true) {
-      console.log("5 sec passed");
+      //console.log("5 sec passed");
 			stopRecording(audioData);
     }
 	}, 5000);
@@ -226,6 +226,8 @@ mic.addEventListener("click", () => {
 			startRecording(audioStream);
 		})
 		.catch((error) => {
+      notice.textContent="※非対応の端末です、PCからご利用ください！";
+      notice.style.color="red";
 			console.error('error:', error);
 		})
 	}
@@ -244,7 +246,7 @@ let wearingMask = maskfilter.checked
 
 maskfilter.addEventListener("click", () => {
   wearingMask = maskfilter.checked;
-  console.log(maskfilter.checked);
+  //console.log(maskfilter.checked);
   wearingMask ? mic.appendChild(mask) : mic.removeChild(mask);
   //if (wearingMask == true) {
   //  maskState.textContent="ON";
