@@ -17,8 +17,8 @@
   #notice.font-bold.italic.mt-5.text-center
     | 〜マイクを押して録音を開始しよう〜
   #mic.text-center.relative.mt-5
-    = image_tag 'mic.svg', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
-    = image_tag 'mask.svg', id: 'mask', size: '150x150', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
+    = image_tag 'mic.svg', size: '150x150', alt: '', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
+    = image_tag 'mask.svg', id: 'mask', size: '150x150', alt: '', class: 'cursor-pointer absolute top-2 left-1/2 -translate-x-1/2'
   .text-center.mt-56
     = link_to '-戻る-', greetings_path, class: 'hover:text-gray-300'
 = javascript_pack_tag 'recording'
