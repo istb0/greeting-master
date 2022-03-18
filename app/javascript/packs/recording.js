@@ -5,7 +5,10 @@ axios.defaults.headers['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token'
 const mic = document.getElementById('mic');
 const notice = document.getElementById('notice');
 
-mic.disabled = false;
+const transcript = document.getElementById('transcript');
+const phrase = document.getElementById('phrase').dataset.phrase;
+
+let recognition = null;
 
 let isRecording = false;
 
@@ -64,7 +67,8 @@ let handleSuccess = () => {
 	setTimeout( () => {
     if (isRecording == true) {
       //console.log("5 sec passed");
-			stopRecording(audioData);
+      forceRetry();
+			//stopRecording(audioData);
     }
 	}, 5000);
 };
@@ -176,21 +180,64 @@ let sendToBackend = () => {
   })
 };
 
+
+
+//音声認識
+let startRecognition = () => {
+	notice.innerHTML = "〜録音中〜<br>※5秒以内に挨拶してね";
+  transcript.textContent = ""
+  console.log('startRecognition')
+  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+  recognition = new SpeechRecognition(audioStream);
+  recognition.lang = 'ja-JP';
+  //recognition.continuous = false;
+  //recognition.interimResults = true;
+
+  //音声を捕捉したら発火
+  recognition.onaudiostart = () => {
+		startRecording(audioStream);
+  };
+
+  //音声認識サービスから結果が返されたときに発火
+  recognition.onresult = (e) => {
+    isRecording = false;
+    let resultTranscript = e.results[0][0].transcript;
+    transcript.textContent = `聞こえた声：${resultTranscript}`;
+    console.log(e);
+    recognition.stop();
+    if (resultTranscript == phrase) {
+      stopRecording();
+    } else {
+      forceRetry();
+    }
+  };
+  recognition.start();
+};
+
+//リトライを促す
+let forceRetry = () => {
+  mic.style.pointerEvents = "auto";
+  //console.log("forceRetry");
+	notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
+  scriptProcessor.disconnect();
+  source.disconnect();
+  audioCtx.close();
+  audioData = [];
+}
+
 //録音START
 let startRecording = () => {
 	isRecording = true;
-	mic.disabled = false;
-  console.log('startRecording');
-	notice.innerHTML="〜録音中〜<br>もう一度押すと録音が停止するよ<br>※5秒後に自動停止";
+  //console.log('startRecording');
+	//notice.innerHTML = "〜録音中〜<br>※5秒以内に挨拶してね";
+  //transcript.textContent = ""
   handleSuccess(audioStream);
 };
 
 //録音STOP
 let stopRecording = () => {
-	isRecording = false;
-	mic.disabled = true;
-  console.log('stopRecording');
-	notice.textContent="〜録音完了*音声処理中〜";
+  //console.log('stopRecording');
+	notice.textContent = "〜録音完了*音声処理中〜";
 
   //接続の停止
   scriptProcessor.disconnect();
@@ -206,31 +253,28 @@ let stopRecording = () => {
 
 //マイク利用許可〜録音開始へ
 mic.addEventListener("click", () => {
-	if (isRecording == true) {
-		stopRecording(audioData);
-	} else {
-		notice.textContent="〜録音準備中〜";
-		mic.disabled = true;
-		let constraints = {
-			audio: {
-				echoCancellation: true,
-				echoCancellationType: 'system',
-				noiseSuppression: false
-			},
-			video: false
-		}
-		navigator.mediaDevices.getUserMedia(constraints)
-		.then((stream) => {
-			audioStream = stream;
-			console.log('supported');
-			startRecording(audioStream);
-		})
-		.catch((error) => {
-      notice.textContent="※非対応の端末です、PCからご利用ください！";
-      notice.style.color="red";
-			console.error('error:', error);
-		})
-	}
+  notice.textContent = "〜録音準備中〜";
+  mic.style.pointerEvents = "none";
+  let constraints = {
+    audio: {
+      echoCancellation: true,
+      echoCancellationType: 'system',
+      noiseSuppression: false
+    },
+    video: false
+  }
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then((stream) => {
+    audioStream = stream;
+    console.log('supported');
+    //startRecording(audioStream);
+    startRecognition(audioStream);
+  })
+  .catch((error) => {
+    notice.innerHTML = "▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！";
+    notice.style.color = "red";
+    console.error('error:', error);
+  })
 });
 
 //以下マスク表示部分
