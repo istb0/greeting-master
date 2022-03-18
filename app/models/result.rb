@@ -47,7 +47,6 @@ class Result < ApplicationRecord
     self.energy = hash['energy']
     self.score = (50 + (0.5 * (joy + energy - anger - sorrow))).round
     self.greeting_id = formdata[:greeting_id]
-    self.user_id = current_user.id if logged_in?
     voice.attach(formdata[:voice])
   end
 end
