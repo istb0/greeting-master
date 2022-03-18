@@ -11,7 +11,9 @@
         .text-right.mt-2
           | 点です！
       .mt-2
-        - if [@result.anger, @result.sorrow, @result.joy, @result.energy, @result.calm].sum.zero?
+        - if @result.score == -999
+          | ご好評賜り、API利用回数上限に達したため、感情分析機能は停止しております。次月より再開しますので、しばらくお待ち下さい。
+        - elsif [@result.anger, @result.sorrow, @result.joy, @result.energy, @result.calm].sum.zero?
           | おそらく不具合が生じています。申し訳ありませんが、再度測定をお願いします。
         - else
           = simple_format(@feedback.comment)
