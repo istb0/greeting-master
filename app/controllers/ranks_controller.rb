@@ -2,18 +2,17 @@ class RanksController < ApplicationController
   skip_before_action :require_login, only: %i[index]
 
   def index
-    result = Result.all
-    @score_ranks = result.score_ranks
+    @score_ranks = Result.score_ranks
     @score = 'score'
-    @calm_ranks = result.calm_ranks
+    @calm_ranks = Result.calm_ranks
     @calm = 'calm'
-    @anger_ranks = result.anger_ranks
+    @anger_ranks = Result.anger_ranks
     @anger = 'anger'
-    @joy_ranks = result.joy_ranks
+    @joy_ranks = Result.joy_ranks
     @joy = 'joy'
-    @sorrow_ranks = result.sorrow_ranks
+    @sorrow_ranks = Result.sorrow_ranks
     @sorrow = 'sorrow'
-    @energy_ranks = result.energy_ranks
+    @energy_ranks = Result.energy_ranks
     @energy = 'energy'
   end
 end
