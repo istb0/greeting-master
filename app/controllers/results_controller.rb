@@ -19,7 +19,6 @@ class ResultsController < ApplicationController
     #   energy: energy,
     #   greeting_id: result_params[:greeting_id]
     # )
-    # @result.user_id = current_user.id if logged_in?
     # @result.voice.attach(params[:voice])
     # ここまで
     @result.user_id = current_user.id if logged_in?

@@ -184,9 +184,7 @@ let sendToBackend = () => {
 
 //音声認識
 let startRecognition = () => {
-	notice.innerHTML = "〜録音中〜<br>※5秒以内に挨拶してね";
-  transcript.textContent = ""
-  console.log('startRecognition')
+  //console.log('startRecognition')
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
   recognition = new SpeechRecognition(audioStream);
   recognition.lang = 'ja-JP';
@@ -203,9 +201,9 @@ let startRecognition = () => {
     isRecording = false;
     let resultTranscript = e.results[0][0].transcript;
     transcript.textContent = `聞こえた声：${resultTranscript}`;
-    console.log(e);
-    recognition.stop();
+    //console.log(e);
     if (resultTranscript == phrase) {
+      recognition.stop();
       stopRecording();
     } else {
       forceRetry();
@@ -216,21 +214,23 @@ let startRecognition = () => {
 
 //リトライを促す
 let forceRetry = () => {
+  isRecording = 'forceRetry';
+  recognition.stop();
   mic.style.pointerEvents = "auto";
   //console.log("forceRetry");
 	notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
-  scriptProcessor.disconnect();
-  source.disconnect();
-  audioCtx.close();
-  audioData = [];
+  //scriptProcessor.disconnect();
+  //source.disconnect();
+  //audioCtx.close();
+  //audioData = [];
 }
 
 //録音START
 let startRecording = () => {
 	isRecording = true;
   //console.log('startRecording');
-	//notice.innerHTML = "〜録音中〜<br>※5秒以内に挨拶してね";
-  //transcript.textContent = ""
+	notice.innerHTML = "〜録音中〜<br>※5秒以内に挨拶してね";
+  transcript.textContent = ""
   handleSuccess(audioStream);
 };
 
@@ -253,28 +253,32 @@ let stopRecording = () => {
 
 //マイク利用許可〜録音開始へ
 mic.addEventListener("click", () => {
-  notice.textContent = "〜録音準備中〜";
-  mic.style.pointerEvents = "none";
-  let constraints = {
-    audio: {
-      echoCancellation: true,
-      echoCancellationType: 'system',
-      noiseSuppression: false
-    },
-    video: false
+  if (isRecording == 'forceRetry') {
+    location.reload();
+  } else {
+    notice.textContent = "〜録音準備中〜";
+    mic.style.pointerEvents = "none";
+    let constraints = {
+      audio: {
+        echoCancellation: true,
+        echoCancellationType: 'system',
+        noiseSuppression: false
+      },
+      video: false
+    }
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      audioStream = stream;
+      console.log('supported');
+      //startRecording(audioStream);
+      startRecognition(audioStream);
+    })
+    .catch((error) => {
+      notice.innerHTML = "▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！";
+      notice.style.color = "red";
+      console.error('error:', error);
+    })
   }
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then((stream) => {
-    audioStream = stream;
-    console.log('supported');
-    //startRecording(audioStream);
-    startRecognition(audioStream);
-  })
-  .catch((error) => {
-    notice.innerHTML = "▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！";
-    notice.style.color = "red";
-    console.error('error:', error);
-  })
 });
 
 //以下マスク表示部分

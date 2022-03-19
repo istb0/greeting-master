@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update]
   skip_before_action :require_login, only: %i[new create]
 
   def results
@@ -11,7 +10,9 @@ class UsersController < ApplicationController
     @result = Result.find(params[:result_id]) if params[:result_id]
   end
 
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   def create
     @user = User.new(user_params)
@@ -29,6 +30,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = current_user
     if @user.update(user_params)
       flash.now[:notice] = '登録情報を更新しました'
     else
@@ -38,10 +40,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def set_user
-    @user = User.find(params[:id])
-  end
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :name)

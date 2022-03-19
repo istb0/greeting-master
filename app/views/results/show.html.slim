@@ -11,7 +11,12 @@
         .text-right.mt-2
           | 点です！
       .mt-2
-        = simple_format(@feedback.comment)
+        - if @result.score == -999
+          | ご好評賜り、API利用回数上限に達したため、感情分析機能は停止しております。次月より再開しますので、しばらくお待ち下さい。
+        - elsif [@result.anger, @result.sorrow, @result.joy, @result.energy, @result.calm].sum.zero?
+          | おそらく不具合が生じています。申し訳ありませんが、再度測定をお願いします。
+        - else
+          = simple_format(@feedback.comment)
     #result.inline-block.w-full.md:w-1/3 data-result=@result.to_json
       canvas#myChart
   = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'mx-auto mt-2')

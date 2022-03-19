@@ -40,12 +40,21 @@ class Result < ApplicationRecord
 
   def judge(formdata, response)
     hash = JSON.parse(response.body)
-    self.calm = hash['calm']
-    self.anger = hash['anger']
-    self.joy = hash['joy']
-    self.sorrow = hash['sorrow']
-    self.energy = hash['energy']
-    self.score = (50 + (0.5 * (joy + energy - anger - sorrow))).round
+    if hash['error'] == 2001
+      self.score = -999
+      self.calm = 0
+      self.anger = 0
+      self.joy = 0
+      self.sorrow = 0
+      self.energy = 0
+    else
+      self.calm = hash['calm']
+      self.anger = hash['anger']
+      self.joy = hash['joy']
+      self.sorrow = hash['sorrow']
+      self.energy = hash['energy']
+      self.score = (50 + (0.5 * (joy + energy - anger - sorrow))).round
+    end
     self.greeting_id = formdata[:greeting_id]
     voice.attach(formdata[:voice])
   end
