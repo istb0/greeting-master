@@ -18,4 +18,8 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   get 'ranks', to: 'ranks#index'
+
+  namespace :admin do
+    root 'dashboards#index'
+  end
 end
