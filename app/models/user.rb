@@ -10,5 +10,5 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :name, length: { maximum: 10 }, presence: true
 
-  enum role: { general: , admin: 1 }
+  enum role: { general: 0, admin: 1 }
 end
