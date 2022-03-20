@@ -1,0 +1,12 @@
+tr.flex.w-full.mt-1.bg-aliceblue.border-b-2.rounded-b-lg.border-gray-300
+  td.p-2.w-1/6
+    = user.id
+  td.p-2.w-1/4
+    = user.name
+  td.p-2.w-1/4
+    = user.email
+  td.p-2.w-1/6.text-xs.underline.hover:text-gray-300
+    = link_to '詳細をみる', edit_admin_user_path(user), class: "align-middle"
+  td.p-2.w-1/6.text-xs.hover:text-gray-300
+    = link_to admin_user_path(user), method: :delete, data: { confirm: '削除しますか？' } do
+      i.fa-solid.fa-trash-can.align-middle

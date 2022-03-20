@@ -1,0 +1,18 @@
+.container.mx-auto.py-5.px-2.lg:px-56
+  h1.inline.text-2xl.font-bold.border-b-2
+    | ユーザー一覧
+  table.text-center.w-full.mt-4
+    thead.flex.bg-ariel.text-shiro.w-full.rounded-t-lg
+      tr.flex.w-full.lg:pr-4
+        th.p-2.w-1/6 scope="col"
+          | id
+        th.p-2.w-1/4 scope="col"
+          | ニックネーム
+        th.p-2.w-1/4 scope="col"
+          | メールアドレス
+        th.p-2.w-1/6
+        th.p-2.w-1/6
+    tbody.flex.flex-col.items-center.justify-between.overflow-y-scroll.w-full.max-h-96
+      = render partial: 'user', collection: @users
+  .text-center.mt-4
+    = link_to 'Dashboardへ', admin_root_path, class: 'hover:text-gray-300'
