@@ -1,6 +1,7 @@
 class Admin::UserSessionsController < Admin::BaseController
   skip_before_action :require_login, only: %i[new create]
   skip_before_action :check_admin, only: %i[new create]
+  layout 'admin/layouts/admin_login'
 
   def new; end
 
@@ -16,6 +17,6 @@ class Admin::UserSessionsController < Admin::BaseController
 
   def destroy
     logout
-    redirect_to admin_login_path, alert: 'ログアウトしました'
+    redirect_to admin_login_path, notice: 'ログアウトしました'
   end
 end

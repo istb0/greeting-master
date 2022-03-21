@@ -1,6 +1,6 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::BaseController
   before_action :find_user, only: %i[edit update destroy]
-  
+
   def index
     @users = User.all.order(id: :desc)
   end

@@ -1,0 +1,7 @@
+.w-auto.shadow-lg.bg-white.h-16.rounded-2xl.align-middle.m-2
+  .mx-auto.text-right.pr-10.py-5
+    - if current_user && current_user.admin?
+      = current_user.name
+      = link_to 'ログアウト', admin_logout_path, method: :delete, class: "ml-4 hover:text-gray-300"
+    - else
+      = link_to 'TOPページ', root_path, class: "hover:text-gray-300"
