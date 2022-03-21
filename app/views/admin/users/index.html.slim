@@ -1,0 +1,16 @@
+.container.mx-auto.px-2
+  h1.inline.text-2xl.font-bold.border-b-2
+    | ユーザー一覧
+  table.text-center.w-full.mt-4
+    thead.flex.bg-ariel.text-shiro.w-full.rounded-t-lg
+      tr.flex.w-full
+        th.p-2.w-1/6 scope="col"
+          | id
+        th.p-2.w-1/4 scope="col"
+          | ニックネーム
+        th.p-2.w-1/4 scope="col"
+          | メールアドレス
+        th.p-2.w-1/6
+        th.p-2.w-1/6
+    tbody.flex.flex-col.items-center.justify-between.overflow-y-scroll.w-full.max-h-70vh
+      = render partial: 'user', collection: @users

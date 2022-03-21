@@ -1,0 +1,22 @@
+tr.flex.w-full.mt-1.bg-aliceblue.border-b-2.rounded-b-lg.border-gray-300
+  td.p-2.w-1/12
+    = result.created_at.strftime('%Y/%m/%d')
+  td.p-2.w-2/12
+    = result.user.name
+  td.p-2.w-2/12
+    = result.greeting.phrase
+  td.p-2.w-1/12
+    = result.score
+  td.p-2.w-1/12
+    = result.calm
+  td.p-2.w-1/12
+    = result.anger
+  td.p-2.w-1/12
+    = result.joy
+  td.p-2.w-1/12
+    = result.sorrow
+  td.p-2.w-1/12
+    = result.energy
+  td.p-2.w-1/12.text-xs.hover:text-gray-300
+    = link_to admin_result_path(result), method: :delete, data: { confirm: '削除しますか？' } do
+      i.fa-solid.fa-trash-can.align-middle
