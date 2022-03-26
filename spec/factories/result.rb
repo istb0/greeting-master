@@ -8,5 +8,6 @@ FactoryBot.define do
     energy { rand(50) }
     user
     greeting
+    voice { Rack::Test::UploadedFile.new('spec/fixtures/test.wav', 'audio/wav') }
   end
 end
