@@ -1,41 +1,24 @@
 .mt-2
-  - case type
-  - when 'score'
-    h2 総合ランク
-    p.text-sm ~あいさつマスター殿堂入り~
-  - when 'calm'
-    h2 平静度ランク
-    p.text-sm ~動じない心~
-  - when 'anger'
-    h2 怒り度ランク
-    p.text-sm ~いらいらさん~
-  - when 'joy'
-    h2 喜び度ランク
-    p.text-sm ~ハッピーさん~
-  - when 'sorrow'
-    h2 悲しみ度ランク
-    p.text-sm ~しくしくさん~
-  - when 'energy'
-    h2 元気度ランク
-    p.text-sm ~わんぱくさん~
-table.text-center.w-full.text-sm.mt-2
-  thead.bg-ariel.flex.text-shiro.w-full.rounded-t-lg
-    tr.flex.w-full
-      th.px-1.py-2.w-1/6 scope="col"
-      th.px-1.py-2.w-1/6 scope="col"
-        | 得点
-      th.px-1.py-2.w-1/3 scope="col"
-        | ユーザー名
-      th.px-1.py-2.w-1/3 scope="col"
-        | 挨拶文
-  tbody
-    - ranks.each_with_index do |rank, index|
-      tr.flex.w-full.mt-1.bg-aliceblue.border-b-2.rounded-b-lg.border-gray-300
-        td.px-1.py-2.w-1/6
-          = index + 1
-        td.px-1.py-2.w-1/6
-          = type == 'score' ? rank.score : rank[type] * 2
-        td.px-1.py-2.w-1/3
-          = rank.user.name
-        td.px-1.py-2.w-1/3.text-xs
-          = rank.greeting.phrase
+  h2 = t("ranks.h2_text.#{type}")
+  p.text-sm = t("ranks.sub_text.#{type}")
+  table.text-center.w-full.text-sm.mt-2
+    thead.bg-ariel.flex.text-shiro.w-full.rounded-t-lg
+      tr.flex.w-full
+        th.px-1.py-2.w-1/6 scope="col"
+        th.px-1.py-2.w-1/6 scope="col"
+          | 得点
+        th.px-1.py-2.w-1/3 scope="col"
+          | ユーザー名
+        th.px-1.py-2.w-1/3 scope="col"
+          | 挨拶文
+    tbody
+      - ranks.each.with_index(1) do |rank, index|
+        tr.flex.w-full.mt-1.bg-aliceblue.border-b-2.rounded-b-lg.border-gray-300
+          td.px-1.py-2.w-1/6
+            = index
+          td.px-1.py-2.w-1/6
+            = type == :score ? rank.score : rank[type] * 2
+          td.px-1.py-2.w-1/3
+            = rank.user.name
+          td.px-1.py-2.w-1/3.text-xs
+            = rank.greeting.phrase

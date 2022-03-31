@@ -1,0 +1,16 @@
+ja:
+  ranks:
+    h2_text:
+      score: 総合ランク
+      calm: 平静度ランク
+      anger: 怒り度ランク
+      joy: 喜び度ランク
+      sorrow: 悲しみ度ランク
+      energy: 元気度ランク
+    sub_text:
+      score: ~挨拶マスター殿堂入り~
+      calm: ~動じない心~
+      anger: ~いらいらさん~
+      joy: ~ハッピーさん~
+      sorrow: ~しくしくさん~
+      energy: ~わんぱくさん~

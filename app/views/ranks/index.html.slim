@@ -2,17 +2,7 @@
   h1.inline.text-2xl.font-bold.border-b-2
     | ランキング
   .grid.grid-cols-1.grid-rows-2.gap-2.text-center.mt-4.md:grid-cols-3
-    div
-      = render 'rank', ranks: @score_ranks, type: @score
-    div
-      = render 'rank', ranks: @calm_ranks, type: @calm
-    div
-      = render 'rank', ranks: @anger_ranks, type: @anger
-    div
-      = render 'rank', ranks: @joy_ranks, type: @joy
-    div
-      = render 'rank', ranks: @sorrow_ranks, type: @sorrow
-    div
-      = render 'rank', ranks: @energy_ranks, type: @energy
+    - @ranks.each do |type, ranks|
+      = render 'rank', ranks: ranks, type: type
   .text-center.mt-4
     = link_to 'TOPページへ', root_path, class: 'hover:text-gray-300'
