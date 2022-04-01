@@ -4,9 +4,9 @@ https://github.com/googlefonts/zen-marugothic
 http://scripts.sil.org/OFL
 */
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer base {
   html {
@@ -39,21 +39,21 @@ input:checked ~ .block {
 }
 
 .notice {
-  @apply  w-full text-shironeri bg-green-200;
+  @apply w-full text-shironeri bg-green-200;
 }
 
 .alert {
-  @apply  w-full text-shironeri bg-taikoh;
+  @apply w-full text-shironeri bg-taikoh;
 }
 
-.min-h-75vh{
+.min-h-75vh {
   min-height: 75vh;
 }
 
-.h-85vh{
+.h-85vh {
   height: 85vh;
 }
 
-.max-h-70vh{
+.max-h-70vh {
   max-height: 70vh;
 }

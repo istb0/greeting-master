@@ -13,7 +13,6 @@ amazon:
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
   region: <%= Rails.application.credentials.dig(:aws, :region) %>
   bucket: <%= Rails.application.credentials.dig(:aws, :bucket) %>
-
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS
