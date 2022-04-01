@@ -1,0 +1,7 @@
+# Ignore artifacts:
+coverage
+
+.github
+/public/packs
+/public/packs-test
+*.md
