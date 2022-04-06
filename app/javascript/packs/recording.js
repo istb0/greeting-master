@@ -29,7 +29,6 @@ let handleSuccess = () => {
   //EmpathAPI用にサンプリングレートを固定
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   audioCtx = new AudioContext({ sampleRate: 11025 });
-  //console.log('sampleRate:', audioCtx.sampleRate);
 
   //MediaStreamAudioSourceNodeオブジェクトを生成
   source = audioCtx.createMediaStreamSource(audioStream);
@@ -39,7 +38,6 @@ let handleSuccess = () => {
 
   //ローパスフィルターの設定
   if (wearingMask == true) {
-    //console.log(wearingMask);
     biquadFilter = audioCtx.createBiquadFilter();
     biquadFilter.type = 'lowpass';
     biquadFilter.frequency.value = 2000;
@@ -66,9 +64,7 @@ let handleSuccess = () => {
   //5秒後に録音を停止
   setTimeout(() => {
     if (isRecording == true) {
-      //console.log("5 sec passed");
       forceRetry();
-      //stopRecording(audioData);
     }
   }, 5000);
 };
@@ -127,21 +123,8 @@ let exportWAV = () => {
   };
 
   let dataview = encodeWAV(mergeBuffers(audioData), audioCtx.sampleRate);
-  // console.log(dataview);
   //できあがったwavデータをBlobにする
   audioBlob = new Blob([dataview], { type: 'audio/wav' });
-  //console.log(audioBlob);
-
-  // let downloadLink = document.getElementById('download');
-  // //BlobへのアクセスURLをダウンロードリンクに設定する
-  // downloadLink.href = URL.createObjectURL(audioBlob);
-  // downloadLink.download = 'test.wav';
-
-  //let audio = document.getElementById('audio');
-  //オーディオ要素にもBlobをリンクする
-  //audio.src = URL.createObjectURL(audioBlob);
-  //音声を再生する
-  //audio.play();
 };
 
 //WAV音声データをバックエンドに送信
@@ -157,24 +140,8 @@ let sendToBackend = () => {
       },
     })
     .then((response) => {
-      //console.log(response.data)
       window.location.href = response.data.url;
     })
-    //バックエンドからのレスポンスをformに格納
-    //.then(response => {
-    //  let data = response.data.body
-    ////console.log(data)
-    ////window.location.href = data.url
-    //
-    //  let q = document.createElement('input');
-    //  q.type = 'hidden';
-    //  q.name = 'data';
-    //  q.value = data;
-    //  document.forms[0].appendChild(q);
-    //
-    //  stop.disabled = true;
-    //  result.disabled = false;
-    //})
     .catch((error) => {
       console.log(error.response);
     });
@@ -182,13 +149,10 @@ let sendToBackend = () => {
 
 //音声認識
 let startRecognition = () => {
-  //console.log('startRecognition')
   window.SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition(audioStream);
   recognition.lang = 'ja-JP';
-  //recognition.continuous = false;
-  //recognition.interimResults = true;
 
   //音声を捕捉したら発火
   recognition.onaudiostart = () => {
@@ -200,7 +164,6 @@ let startRecognition = () => {
     isRecording = false;
     let resultTranscript = e.results[0][0].transcript;
     transcript.textContent = `聞こえた声：${resultTranscript}`;
-    //console.log(e);
     if (resultTranscript == phrase) {
       recognition.stop();
       stopRecording();
@@ -216,18 +179,12 @@ let forceRetry = () => {
   isRecording = 'forceRetry';
   recognition.stop();
   mic.style.pointerEvents = 'auto';
-  //console.log("forceRetry");
   notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
-  //scriptProcessor.disconnect();
-  //source.disconnect();
-  //audioCtx.close();
-  //audioData = [];
 };
 
 //録音START
 let startRecording = () => {
   isRecording = true;
-  //console.log('startRecording');
   notice.innerHTML = '〜録音中〜<br>※5秒以内に挨拶してね';
   transcript.textContent = '';
   handleSuccess(audioStream);
@@ -235,7 +192,6 @@ let startRecording = () => {
 
 //録音STOP
 let stopRecording = () => {
-  //console.log('stopRecording');
   notice.textContent = '〜録音完了*音声処理中〜';
 
   //接続の停止
@@ -270,7 +226,6 @@ mic.addEventListener('click', () => {
       .then((stream) => {
         audioStream = stream;
         console.log('supported');
-        //startRecording(audioStream);
         startRecognition(audioStream);
       })
       .catch((error) => {
@@ -285,53 +240,10 @@ mic.addEventListener('click', () => {
 //以下マスク表示部分
 const maskfilter = document.getElementById('maskfilter');
 const mask = document.getElementById('mask');
-//const maskState = document.getElementById('maskState');
 
 let wearingMask = maskfilter.checked;
 
-//console.log(mic.children);
-//console.log(mask.parentNode);
-//console.log(mic.children[2]);
-
 maskfilter.addEventListener('click', () => {
   wearingMask = maskfilter.checked;
-  //console.log(maskfilter.checked);
   wearingMask ? mic.appendChild(mask) : mic.removeChild(mask);
-  //if (wearingMask == true) {
-  //  maskState.textContent="ON";
-  //  console.log(mic.children[2]);
-  //  mic.appendChild(mask);
-  //  mic.children[2].before(mask);
-  //} else {
-  //  maskState.textContent="OFF";
-  //  console.log(mic.children[2]);
-  //  mic.removeChild(mic.children[2]);
-  //}
 });
-//maskOn.addEventListener('click', function() {
-//  if (maskState == true) {
-//    console.log(maskState);
-//		return;
-//	} else {
-//    maskState = true;
-//    maskOn.disabled = true;
-//    maskOff.disabled = false;
-//    console.log(maskState);
-//    //console.log(mic.children[2]);
-//		//mic.appendChild(mask);
-//		mic.children[2].before(mask);
-//  }
-//});
-//maskOff.addEventListener('click', function() {
-//  if (maskState == false) {
-//    console.log(maskState);
-//		return;
-//	} else {
-//    maskState = false;
-//    console.log(maskState);
-//    maskOn.disabled = false;
-//    maskOff.disabled = true;
-//    //console.log(mic.children[2]);
-//    mic.removeChild(mic.children[2]);
-//  }
-//});
