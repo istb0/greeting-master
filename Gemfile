@@ -36,6 +36,7 @@ gem 'aws-sdk-s3', require: false
 gem 'sorcery'
 gem 'slim-rails'
 gem 'rails-i18n'
+gem 'google-cloud-speech'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -7,10 +7,8 @@ axios.defaults.headers['X-CSRF-TOKEN'] = document
 const mic = document.getElementById('mic');
 const notice = document.getElementById('notice');
 
-//const transcript = document.getElementById('transcript');
-//const phrase = document.getElementById('phrase').dataset.phrase;
-
-//let recognition = null;
+const transcript = document.getElementById('transcript');
+const phrase = document.getElementById('phrase').dataset.phrase;
 
 let isRecording = false;
 
@@ -67,7 +65,7 @@ let handleSuccess = () => {
       //forceRetry();
       stopRecording();
     }
-  }, 3000);
+  }, 5000);
 };
 
 //WAVに変換
@@ -141,7 +139,11 @@ let sendToBackend = () => {
       },
     })
     .then((response) => {
-      window.location.href = response.data.url;
+      if (response.data.url != undefined) {
+        window.location.href = response.data.url;
+      } else {
+        forceRetry(response.data);
+      }
     })
     .catch((error) => {
       console.log(error.response);
@@ -176,12 +178,13 @@ let sendToBackend = () => {
 //};
 //
 ////リトライを促す
-//let forceRetry = () => {
-//  isRecording = 'forceRetry';
-//  recognition.stop();
-//  mic.style.pointerEvents = 'auto';
-//  notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
-//};
+let forceRetry = (responce) => {
+  isRecording = 'forceRetry';
+  //recognition.stop();
+  mic.style.pointerEvents = 'auto';
+  notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
+  transcript.textContent = `聞こえた声：${responce}`;
+};
 
 //録音START
 let startRecording = () => {
@@ -209,33 +212,34 @@ let stopRecording = () => {
 
 //マイク利用許可〜録音開始へ
 mic.addEventListener('click', () => {
-  //if (isRecording == 'forceRetry') {
-  //  location.reload();
-  //} else {
-  notice.textContent = '〜録音準備中〜';
-  mic.style.pointerEvents = 'none';
-  let constraints = {
-    audio: {
-      echoCancellation: true,
-      echoCancellationType: 'system',
-      noiseSuppression: false,
-    },
-    video: false,
-  };
-  navigator.mediaDevices
-    .getUserMedia(constraints)
-    .then((stream) => {
-      audioStream = stream;
-      console.log('supported');
-      //startRecognition(audioStream);
-      startRecording(audioStream);
-    })
-    .catch((error) => {
-      notice.innerHTML =
-        '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
-      notice.style.color = 'red';
-      console.error('error:', error);
-    });
+  if (isRecording == 'forceRetry') {
+    location.reload();
+  } else {
+    notice.textContent = '〜録音準備中〜';
+    mic.style.pointerEvents = 'none';
+    let constraints = {
+      audio: {
+        echoCancellation: true,
+        echoCancellationType: 'system',
+        noiseSuppression: false,
+      },
+      video: false,
+    };
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then((stream) => {
+        audioStream = stream;
+        console.log('supported');
+        //startRecognition(audioStream);
+        startRecording(audioStream);
+      })
+      .catch((error) => {
+        notice.innerHTML =
+          '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
+        notice.style.color = 'red';
+        console.error('error:', error);
+      });
+  }
 });
 
 //以下マスク表示部分

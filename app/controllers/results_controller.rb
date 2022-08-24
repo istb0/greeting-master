@@ -4,7 +4,8 @@ class ResultsController < ApplicationController
 
   def create
     @result = Result.new
-    @result.analyse(result_params)
+    @result.recognize(result_params)
+    # @result.analyse(result_params)
     # 以下本リリースまでの一時的処置
     # joy = rand(50)
     # energy = rand(50)
@@ -22,7 +23,11 @@ class ResultsController < ApplicationController
     # @result.voice.attach(params[:voice])
     # ここまで
     @result.user_id = current_user.id if logged_in?
-    render json: { url: result_path(@result) } if @result.save
+    if @result.save
+      render json: { url: result_path(@result) }
+    else
+      render json: @result.greeting.phrase
+    end
   end
 
   def show

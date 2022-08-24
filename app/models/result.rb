@@ -21,6 +21,37 @@ class Result < ApplicationRecord
   scope :sorrow_ranks, -> { where.not(user_id: 1).includes(:user, :greeting).order(sorrow: :desc).limit(3).select(:sorrow, :user_id, :greeting_id) }
   scope :energy_ranks, -> { where.not(user_id: 1).includes(:user, :greeting).order(energy: :desc).limit(3).select(:energy, :user_id, :greeting_id) }
 
+  def recognize(formdata)
+    require 'google/cloud/speech'
+    speech = Google::Cloud::Speech.speech
+
+    audio_file = File.binread formdata[:voice]
+    config = {
+      encoding: :LINEAR16,
+      sample_rate_hertz: 11_025,
+      language_code: 'ja-JP',
+      audio_channel_count: 1
+    }
+    audio = { content: audio_file }
+
+    response = speech.recognize config: config, audio: audio
+    results = response.results
+
+    # alternatives = results.first.alternatives
+    # alternatives.each do |alternative|
+    #   puts "Transcription: #{alternative.transcript}"
+    # end
+    transcript = results.first&.alternatives&.first&.transcript
+    phrase = Greeting.find(formdata[:greeting_id]).phrase
+
+    if transcript == phrase
+      analyse(formdata)
+    else
+      self.greeting_id = formdata[:greeting_id]
+      greeting.phrase = transcript || 'no_text'
+    end
+  end
+
   def analyse(formdata)
     connection = Faraday.new(Rails.application.credentials[:empath][:endpoint]) do |f|
       f.request :multipart
