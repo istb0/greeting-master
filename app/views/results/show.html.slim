@@ -19,7 +19,8 @@
           = simple_format(@feedback.comment)
     #result.inline-block.w-full.md:w-1/3 data-result=@result.to_json
       canvas#myChart
-  = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'mx-auto mt-2')
+  .text-center
+    = audio_tag(url_for(@result.voice), controls: true, preload: 'metadata', class: 'inline mt-2')
   .flex.items-center.justify-center.gap-2.mt-2
     div
       = link_to "https://twitter.com/share?url=#{root_url}&text=あなたの「#{@greeting.phrase}」は#{@result.score}点です！%0a%0a%23Gremas%20でマスク越しでも相手に届く気持ちの良い挨拶を身につけよう！%0a&hashtags=挨拶,マスク", class: 'btn-primary', title: 'Twitter', target: '_blank' do
