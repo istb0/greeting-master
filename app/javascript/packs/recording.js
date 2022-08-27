@@ -151,37 +151,9 @@ let sendToBackend = () => {
     });
 };
 
-//音声認識
-//let startRecognition = () => {
-//  window.SpeechRecognition =
-//    window.SpeechRecognition || window.webkitSpeechRecognition;
-//  recognition = new SpeechRecognition(audioStream);
-//  recognition.lang = 'ja-JP';
-//
-//  //音声を捕捉したら発火
-//  recognition.onaudiostart = () => {
-//    startRecording(audioStream);
-//  };
-//
-//  //音声認識サービスから結果が返されたときに発火
-//  recognition.onresult = (e) => {
-//    isRecording = false;
-//    let resultTranscript = e.results[0][0].transcript;
-//    transcript.textContent = `聞こえた声：${resultTranscript}`;
-//    if (resultTranscript == phrase) {
-//      recognition.stop();
-//      stopRecording();
-//    } else {
-//      forceRetry();
-//    }
-//  };
-//  recognition.start();
-//};
-//
 ////リトライを促す
 let forceRetry = (responce) => {
   isRecording = 'forceRetry';
-  //recognition.stop();
   mic.style.pointerEvents = 'auto';
   notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
   transcript.textContent = `聞こえた声：${responce}`;
@@ -191,7 +163,6 @@ let forceRetry = (responce) => {
 let startRecording = () => {
   isRecording = true;
   notice.innerHTML = '〜録音中〜<br>※5秒以内に挨拶してね';
-  //transcript.textContent = '';
   handleSuccess(audioStream);
 };
 
@@ -231,7 +202,6 @@ mic.addEventListener('click', () => {
       .then((stream) => {
         audioStream = stream;
         console.log('supported');
-        //startRecognition(audioStream);
         startRecording(audioStream);
       })
       .catch((error) => {
