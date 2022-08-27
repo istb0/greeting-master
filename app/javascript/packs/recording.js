@@ -1,3 +1,4 @@
+import { wearingMask } from './mask.js';
 import axios from 'axios';
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers['X-CSRF-TOKEN'] = document
@@ -240,15 +241,4 @@ mic.addEventListener('click', () => {
         console.error('error:', error);
       });
   }
-});
-
-//以下マスク表示部分
-const maskfilter = document.getElementById('maskfilter');
-const mask = document.getElementById('mask');
-
-let wearingMask = maskfilter.checked;
-
-maskfilter.addEventListener('click', () => {
-  wearingMask = maskfilter.checked;
-  wearingMask ? mic.appendChild(mask) : mic.removeChild(mask);
 });
