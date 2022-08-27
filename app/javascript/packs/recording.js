@@ -1,3 +1,6 @@
+import { wearingMask } from './mask.js';
+import { exportWAV } from './export-wav.js';
+
 import axios from 'axios';
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers['X-CSRF-TOKEN'] = document
@@ -15,12 +18,8 @@ let isRecording = false;
 let audioStream = null;
 let source = null;
 let scriptProcessor = null;
-let biquadFilter = null;
-let audioBlob = null;
 let audioCtx = null;
-
 let audioData = []; // 録音データ
-let bufferSize = 1024;
 
 //録音部分
 let handleSuccess = () => {
@@ -32,11 +31,12 @@ let handleSuccess = () => {
   source = audioCtx.createMediaStreamSource(audioStream);
 
   //ScriptProcessorNodeオブジェクトを作成
+  let bufferSize = 1024;
   scriptProcessor = audioCtx.createScriptProcessor(bufferSize, 1, 1);
 
   //ローパスフィルターの設定
   if (wearingMask == true) {
-    biquadFilter = audioCtx.createBiquadFilter();
+    let biquadFilter = audioCtx.createBiquadFilter();
     biquadFilter.type = 'lowpass';
     biquadFilter.frequency.value = 2000;
     //マスクフィルターONの場合はBiquadFilterNodeを接続
@@ -62,72 +62,13 @@ let handleSuccess = () => {
   //5秒後に録音を停止
   setTimeout(() => {
     if (isRecording == true) {
-      //forceRetry();
       stopRecording();
     }
   }, 5000);
 };
 
-//WAVに変換
-let exportWAV = () => {
-  let encodeWAV = (samples, sampleRate) => {
-    let buffer = new ArrayBuffer(44 + samples.length * 2);
-    let view = new DataView(buffer);
-
-    let writeString = (view, offset, string) => {
-      for (let i = 0; i < string.length; i++) {
-        view.setUint8(offset + i, string.charCodeAt(i));
-      }
-    };
-
-    let floatTo16BitPCM = (output, offset, input) => {
-      for (let i = 0; i < input.length; i++, offset += 2) {
-        let s = Math.max(-1, Math.min(1, input[i]));
-        output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
-      }
-    };
-
-    writeString(view, 0, 'RIFF'); // RIFFヘッダ
-    view.setUint32(4, 32 + samples.length * 2, true); // これ以降のファイルサイズ
-    writeString(view, 8, 'WAVE'); // WAVEヘッダ
-    writeString(view, 12, 'fmt '); // fmtチャンク
-    view.setUint32(16, 16, true); // fmtチャンクのバイト数
-    view.setUint16(20, 1, true); // フォーマットID
-    view.setUint16(22, 1, true); // チャンネル数
-    view.setUint32(24, sampleRate, true); // サンプリングレート
-    view.setUint32(28, sampleRate * 2, true); // データ速度
-    view.setUint16(32, 2, true); // ブロックサイズ
-    view.setUint16(34, 16, true); // サンプルあたりのビット数
-    writeString(view, 36, 'data'); // dataチャンク
-    view.setUint32(40, samples.length * 2, true); // 波形データのバイト数
-    floatTo16BitPCM(view, 44, samples); // 波形データ
-
-    return view;
-  };
-
-  let mergeBuffers = (audioData) => {
-    let sampleLength = 0;
-    for (let i = 0; i < audioData.length; i++) {
-      sampleLength += audioData[i].length;
-    }
-    let samples = new Float32Array(sampleLength);
-    let sampleIdx = 0;
-    for (let i = 0; i < audioData.length; i++) {
-      for (let j = 0; j < audioData[i].length; j++) {
-        samples[sampleIdx] = audioData[i][j];
-        sampleIdx++;
-      }
-    }
-    return samples;
-  };
-
-  let dataview = encodeWAV(mergeBuffers(audioData), audioCtx.sampleRate);
-  //できあがったwavデータをBlobにする
-  audioBlob = new Blob([dataview], { type: 'audio/wav' });
-};
-
 //WAV音声データをバックエンドに送信
-let sendToBackend = () => {
+let sendToBackend = (audioBlob) => {
   let formData = new FormData();
   const greeting_id = document.getElementById('phrase').dataset.id;
   formData.append('voice', audioBlob);
@@ -150,37 +91,9 @@ let sendToBackend = () => {
     });
 };
 
-//音声認識
-//let startRecognition = () => {
-//  window.SpeechRecognition =
-//    window.SpeechRecognition || window.webkitSpeechRecognition;
-//  recognition = new SpeechRecognition(audioStream);
-//  recognition.lang = 'ja-JP';
-//
-//  //音声を捕捉したら発火
-//  recognition.onaudiostart = () => {
-//    startRecording(audioStream);
-//  };
-//
-//  //音声認識サービスから結果が返されたときに発火
-//  recognition.onresult = (e) => {
-//    isRecording = false;
-//    let resultTranscript = e.results[0][0].transcript;
-//    transcript.textContent = `聞こえた声：${resultTranscript}`;
-//    if (resultTranscript == phrase) {
-//      recognition.stop();
-//      stopRecording();
-//    } else {
-//      forceRetry();
-//    }
-//  };
-//  recognition.start();
-//};
-//
-////リトライを促す
+//リトライを促す
 let forceRetry = (responce) => {
   isRecording = 'forceRetry';
-  //recognition.stop();
   mic.style.pointerEvents = 'auto';
   notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
   transcript.textContent = `聞こえた声：${responce}`;
@@ -190,7 +103,6 @@ let forceRetry = (responce) => {
 let startRecording = () => {
   isRecording = true;
   notice.innerHTML = '〜録音中〜<br>※5秒以内に挨拶してね';
-  //transcript.textContent = '';
   handleSuccess(audioStream);
 };
 
@@ -204,7 +116,7 @@ let stopRecording = () => {
   audioCtx.close();
 
   //取得した音声データをwavファイルに変換する
-  exportWAV(audioData);
+  const audioBlob = exportWAV(audioData, audioCtx);
 
   //WAV音声データをバックエンドに送信する
   sendToBackend(audioBlob);
@@ -217,7 +129,7 @@ mic.addEventListener('click', () => {
   } else {
     notice.textContent = '〜録音準備中〜';
     mic.style.pointerEvents = 'none';
-    let constraints = {
+    const constraints = {
       audio: {
         echoCancellation: true,
         echoCancellationType: 'system',
@@ -230,25 +142,12 @@ mic.addEventListener('click', () => {
       .then((stream) => {
         audioStream = stream;
         console.log('supported');
-        //startRecognition(audioStream);
         startRecording(audioStream);
       })
       .catch((error) => {
-        notice.innerHTML =
-          '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
+        notice.innerHTML = '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
         notice.style.color = 'red';
         console.error('error:', error);
       });
   }
-});
-
-//以下マスク表示部分
-const maskfilter = document.getElementById('maskfilter');
-const mask = document.getElementById('mask');
-
-let wearingMask = maskfilter.checked;
-
-maskfilter.addEventListener('click', () => {
-  wearingMask = maskfilter.checked;
-  wearingMask ? mic.appendChild(mask) : mic.removeChild(mask);
 });
