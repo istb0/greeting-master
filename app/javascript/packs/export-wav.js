@@ -51,7 +51,7 @@ let exportWAV = (audioData, audioCtx) => {
     return samples;
   };
 
-  let dataview = encodeWAV(mergeBuffers(audioData), audioCtx.sampleRate);
+  const dataview = encodeWAV(mergeBuffers(audioData), audioCtx.sampleRate);
   //できあがったwavデータをBlobにする
   return new Blob([dataview], { type: 'audio/wav' });
 };

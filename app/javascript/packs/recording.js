@@ -18,12 +18,8 @@ let isRecording = false;
 let audioStream = null;
 let source = null;
 let scriptProcessor = null;
-let biquadFilter = null;
-let audioBlob = null;
 let audioCtx = null;
-
 let audioData = []; // 録音データ
-let bufferSize = 1024;
 
 //録音部分
 let handleSuccess = () => {
@@ -35,11 +31,12 @@ let handleSuccess = () => {
   source = audioCtx.createMediaStreamSource(audioStream);
 
   //ScriptProcessorNodeオブジェクトを作成
+  let bufferSize = 1024;
   scriptProcessor = audioCtx.createScriptProcessor(bufferSize, 1, 1);
 
   //ローパスフィルターの設定
   if (wearingMask == true) {
-    biquadFilter = audioCtx.createBiquadFilter();
+    let biquadFilter = audioCtx.createBiquadFilter();
     biquadFilter.type = 'lowpass';
     biquadFilter.frequency.value = 2000;
     //マスクフィルターONの場合はBiquadFilterNodeを接続
@@ -65,14 +62,13 @@ let handleSuccess = () => {
   //5秒後に録音を停止
   setTimeout(() => {
     if (isRecording == true) {
-      //forceRetry();
       stopRecording();
     }
   }, 5000);
 };
 
 //WAV音声データをバックエンドに送信
-let sendToBackend = () => {
+let sendToBackend = (audioBlob) => {
   let formData = new FormData();
   const greeting_id = document.getElementById('phrase').dataset.id;
   formData.append('voice', audioBlob);
@@ -95,7 +91,7 @@ let sendToBackend = () => {
     });
 };
 
-////リトライを促す
+//リトライを促す
 let forceRetry = (responce) => {
   isRecording = 'forceRetry';
   mic.style.pointerEvents = 'auto';
@@ -120,7 +116,7 @@ let stopRecording = () => {
   audioCtx.close();
 
   //取得した音声データをwavファイルに変換する
-  audioBlob = exportWAV(audioData, audioCtx);
+  const audioBlob = exportWAV(audioData, audioCtx);
 
   //WAV音声データをバックエンドに送信する
   sendToBackend(audioBlob);
@@ -133,7 +129,7 @@ mic.addEventListener('click', () => {
   } else {
     notice.textContent = '〜録音準備中〜';
     mic.style.pointerEvents = 'none';
-    let constraints = {
+    const constraints = {
       audio: {
         echoCancellation: true,
         echoCancellationType: 'system',
@@ -149,8 +145,7 @@ mic.addEventListener('click', () => {
         startRecording(audioStream);
       })
       .catch((error) => {
-        notice.innerHTML =
-          '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
+        notice.innerHTML = '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
         notice.style.color = 'red';
         console.error('error:', error);
       });
