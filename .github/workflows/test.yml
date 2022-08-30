@@ -1,0 +1,107 @@
+name: Test
+
+on: [push]
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    # container:
+    #   image: ruby:3.0.3
+    #   env:
+    #     RAILS_ENV: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.3'
+          bundler-cache: true
+
+      - name: Setup Yarn and Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13.1'
+          cache: 'yarn'
+
+      - name: Install Bundler and Gem
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Set up DB
+        run: bundle exec rails db:setup RAILS_ENV=test
+
+      - name: Run Rspec
+        run: bundle exec rspec
+
+  rubocop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.3'
+          bundler-cache: true
+
+      - name: Run Rubocop
+        run: bundle exec rubocop
+
+  eslint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Yarn and Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13.1'
+          cache: 'yarn'
+
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Run Eslint
+        run: yarn eslint app/javascript
+
+  prettier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Yarn and Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13.1'
+          cache: 'yarn'
+
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Run Prettier
+        run: yarn prettier --check app/javascript
