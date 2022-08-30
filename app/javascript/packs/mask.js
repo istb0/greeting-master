@@ -6,6 +6,7 @@ let wearingMask = maskfilter.checked;
 
 maskfilter.addEventListener('click', () => {
   wearingMask = maskfilter.checked;
+  // eslint-disable-next-line no-undef
   wearingMask ? mic.appendChild(mask) : mic.removeChild(mask);
 });
 

@@ -145,7 +145,8 @@ mic.addEventListener('click', () => {
         startRecording(audioStream);
       })
       .catch((error) => {
-        notice.innerHTML = '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
+        notice.innerHTML =
+          '▲非対応のブラウザもしくは端末です▲<br>PCからご利用ください！';
         notice.style.color = 'red';
         console.error('error:', error);
       });
