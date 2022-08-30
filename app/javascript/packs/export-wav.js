@@ -1,7 +1,7 @@
 //WAV形式で出力
-let exportWAV = (audioData, audioCtx) => {
-  let encodeWAV = (samples, sampleRate) => {
-    let buffer = new ArrayBuffer(44 + samples.length * 2);
+const exportWAV = (audioData, audioCtx) => {
+  const encodeWAV = (samples, sampleRate) => {
+    const buffer = new ArrayBuffer(44 + samples.length * 2);
     let view = new DataView(buffer);
 
     let writeString = (view, offset, string) => {
@@ -10,7 +10,7 @@ let exportWAV = (audioData, audioCtx) => {
       }
     };
 
-    let floatTo16BitPCM = (output, offset, input) => {
+    const floatTo16BitPCM = (output, offset, input) => {
       for (let i = 0; i < input.length; i++, offset += 2) {
         let s = Math.max(-1, Math.min(1, input[i]));
         output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
@@ -35,7 +35,7 @@ let exportWAV = (audioData, audioCtx) => {
     return view;
   };
 
-  let mergeBuffers = (audioData) => {
+  const mergeBuffers = (audioData) => {
     let sampleLength = 0;
     for (let i = 0; i < audioData.length; i++) {
       sampleLength += audioData[i].length;
