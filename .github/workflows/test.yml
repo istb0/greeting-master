@@ -19,10 +19,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-    # container:
-    #   image: ruby:3.0.3
-    #   env:
-    #     RAILS_ENV: test
 
     steps:
       - name: Checkout code
@@ -49,7 +45,13 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Set up DB
-        run: bundle exec rails db:setup
+        env:
+          RAILS_ENV: test
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
+          bundle exec rails db:seed_fu
 
       - name: Run Rspec
         run: bundle exec rspec
