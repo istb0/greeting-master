@@ -55,7 +55,6 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create
           bundle exec rails db:schema:load
-          bundle exec rails db:seed_fu
 
       - name: Run Rspec
         run: bundle exec rspec
