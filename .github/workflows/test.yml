@@ -47,7 +47,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Set up DB
-        run: bundle exec rails db:setup RAILS_ENV=test
+        run: bundle exec rails db:setup
 
       - name: Run Rspec
         run: bundle exec rspec
