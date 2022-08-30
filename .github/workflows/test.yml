@@ -49,6 +49,8 @@ jobs:
       - name: Set up DB
         env:
           RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
         run: |
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create
