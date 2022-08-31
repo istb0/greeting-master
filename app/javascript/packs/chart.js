@@ -3,14 +3,14 @@ import Chart from 'chart.js/auto';
 const ctx = document.getElementById('myChart');
 const result = document.getElementById('result');
 let resultHash = JSON.parse(result.getAttribute('data-result'));
-let resultArray = [
+const resultArray = [
   resultHash.calm,
   resultHash.anger,
   resultHash.joy,
   resultHash.sorrow,
   resultHash.energy,
 ];
-let data = resultArray.map((e) => e * 2);
+const data = resultArray.map((e) => e * 2);
 
 Chart.defaults.font.color = '#656765';
 Chart.defaults.font.family = "'Zen Maru Gothic', sans-serif";

@@ -22,7 +22,7 @@ let audioCtx = null;
 let audioData = []; // 録音データ
 
 //録音部分
-let handleSuccess = () => {
+const handleSuccess = () => {
   //EmpathAPI用にサンプリングレートを固定
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   audioCtx = new AudioContext({ sampleRate: 11025 });
@@ -51,7 +51,7 @@ let handleSuccess = () => {
 
   //1024bitのバッファサイズに達するごとにaudioDataにデータを追加する
   scriptProcessor.onaudioprocess = (e) => {
-    let input = e.inputBuffer.getChannelData(0);
+    const input = e.inputBuffer.getChannelData(0);
     let bufferData = new Float32Array(bufferSize);
     for (let i = 0; i < bufferSize; i++) {
       bufferData[i] = input[i];
@@ -68,7 +68,7 @@ let handleSuccess = () => {
 };
 
 //WAV音声データをバックエンドに送信
-let sendToBackend = (audioBlob) => {
+const sendToBackend = (audioBlob) => {
   let formData = new FormData();
   const greeting_id = document.getElementById('phrase').dataset.id;
   formData.append('voice', audioBlob);
@@ -92,7 +92,7 @@ let sendToBackend = (audioBlob) => {
 };
 
 //リトライを促す
-let forceRetry = (responce) => {
+const forceRetry = (responce) => {
   isRecording = 'forceRetry';
   mic.style.pointerEvents = 'auto';
   notice.innerHTML = `『${phrase}』が聞こえませんでした<br>リトライしてください(>_<)`;
@@ -100,14 +100,14 @@ let forceRetry = (responce) => {
 };
 
 //録音START
-let startRecording = () => {
+const startRecording = () => {
   isRecording = true;
   notice.innerHTML = '〜録音中〜<br>※5秒以内に挨拶してね';
   handleSuccess(audioStream);
 };
 
 //録音STOP
-let stopRecording = () => {
+const stopRecording = () => {
   notice.textContent = '〜録音完了*音声処理中〜';
 
   //接続の停止
