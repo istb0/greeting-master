@@ -14,7 +14,7 @@ class ResultsController < ApplicationController
   end
 
   def show
-    @greeting = Greeting.find(@result.greeting_id)
+    @greeting = @result.greeting
     @feedback = Feedback.find_comment(@result)
   end
 
