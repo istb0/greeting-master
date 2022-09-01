@@ -37,10 +37,6 @@ class Result < ApplicationRecord
     response = speech.recognize config: config, audio: audio
     results = response.results
 
-    # alternatives = results.first.alternatives
-    # alternatives.each do |alternative|
-    #   puts "Transcription: #{alternative.transcript}"
-    # end
     transcript = results.first&.alternatives&.first&.transcript
     phrase = Greeting.find(formdata[:greeting_id]).phrase
 
@@ -65,7 +61,6 @@ class Result < ApplicationRecord
         wav: Faraday::Multipart::FilePart.new(formdata[:voice], 'audio/wav')
       }
     end
-    # logger.debug(response.body)
     judge(formdata, response)
   end
 
