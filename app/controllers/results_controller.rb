@@ -2,6 +2,10 @@ class ResultsController < ApplicationController
   before_action :set_result, only: %i[show destroy]
   skip_before_action :require_login, only: %i[create show]
 
+  def index
+    @results = current_user.results.order(created_at: :desc)
+  end
+
   def create
     @result = Result.new
     @result.recognize(result_params)
