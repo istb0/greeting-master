@@ -10,19 +10,8 @@ class Feedback < ApplicationRecord
   end
 
   def self.emotion_type(result)
-    max_emotion = [result.anger, result.sorrow, result.joy, result.energy, result.calm].max
-    case max_emotion
-    when result.anger
-      'anger'
-    when result.sorrow
-      'sorrow'
-    when result.joy
-      'joy'
-    when result.energy
-      'energy'
-    when result.calm
-      'calm'
-    end
+    emotion = { anger: result.anger, sorrow: result.sorrow, joy: result.joy, energy: result.energy, calm: result.calm }
+    emotion.max_by { |e| e[1] }[0]
   end
 
   def self.max_score(result)

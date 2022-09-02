@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: %i[new create]
 
-  def results
-    @results = Result.all.own_results(current_user)
-  end
-
   def new
     @user = User.new
     @result = Result.find(params[:result_id]) if params[:result_id]

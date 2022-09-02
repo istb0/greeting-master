@@ -2,26 +2,13 @@ class ResultsController < ApplicationController
   before_action :set_result, only: %i[show destroy]
   skip_before_action :require_login, only: %i[create show]
 
+  def index
+    @results = current_user.results.order(created_at: :desc)
+  end
+
   def create
     @result = Result.new
     @result.recognize(result_params)
-    # @result.analyse(result_params)
-    # 以下本リリースまでの一時的処置
-    # joy = rand(50)
-    # energy = rand(50)
-    # anger = rand(50)
-    # sorrow = rand(50)
-    # @result = Result.new(
-    #   score: (50 + (0.5 * (joy + energy - anger - sorrow))).round,
-    #   calm: rand(50),
-    #   anger: anger,
-    #   joy: joy,
-    #   sorrow: sorrow,
-    #   energy: energy,
-    #   greeting_id: result_params[:greeting_id]
-    # )
-    # @result.voice.attach(params[:voice])
-    # ここまで
     @result.user_id = current_user.id if logged_in?
     if @result.save
       render json: { url: result_path(@result) }
@@ -31,7 +18,7 @@ class ResultsController < ApplicationController
   end
 
   def show
-    @greeting = Greeting.find(@result.greeting_id)
+    @greeting = @result.greeting
     @feedback = Feedback.find_comment(@result)
   end
 

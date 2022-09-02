@@ -12,8 +12,6 @@ class Result < ApplicationRecord
   validates :sorrow, numericality: { only_integer: true }, presence: true
   validates :energy, numericality: { only_integer: true }, presence: true
 
-  scope :own_results, ->(current_user) { where(user_id: current_user.id).includes(:user, :greeting).order(created_at: :desc) }
-
   scope :score_ranks, -> { where.not(user_id: 1).includes(:user, :greeting).order(score: :desc).limit(3).select(:score, :user_id, :greeting_id) }
   scope :calm_ranks, -> { where.not(user_id: 1).includes(:user, :greeting).order(calm: :desc).limit(3).select(:calm, :user_id, :greeting_id) }
   scope :anger_ranks, -> { where.not(user_id: 1).includes(:user, :greeting).order(anger: :desc).limit(3).select(:anger, :user_id, :greeting_id) }
@@ -37,10 +35,6 @@ class Result < ApplicationRecord
     response = speech.recognize config: config, audio: audio
     results = response.results
 
-    # alternatives = results.first.alternatives
-    # alternatives.each do |alternative|
-    #   puts "Transcription: #{alternative.transcript}"
-    # end
     transcript = results.first&.alternatives&.first&.transcript
     phrase = Greeting.find(formdata[:greeting_id]).phrase
 
@@ -65,7 +59,6 @@ class Result < ApplicationRecord
         wav: Faraday::Multipart::FilePart.new(formdata[:voice], 'audio/wav')
       }
     end
-    # logger.debug(response.body)
     judge(formdata, response)
   end
 

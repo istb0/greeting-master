@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[new edit create update] do
-    get 'results', to: 'users#results'
+    resources :results, only: %i[index]
   end
 
   get 'login', to: 'user_sessions#new'
